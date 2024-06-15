@@ -4,9 +4,10 @@ import {Icon} from '../../atoms';
 import "./headerBar.scss"
 
 const HeaderBar: React.FC = () => {
-    const { theme, toggleTheme } = useTheme();
+    const { theme,  toggleTheme } = useTheme();
     return (
-        <div className="content">
+        <div className='content'>
+        <div className="body-content">
             {theme === "dark" ? (
                 <Icon
                     icon={
@@ -49,6 +50,7 @@ const HeaderBar: React.FC = () => {
                 onclick={toggleTheme}
                 style={{ cursor: 'pointer' , color:theme === "dark" ? "white" : "black" ,  width:"20px" , background:"none" , border:"none" }}
             />
+        </div>
         </div>
     );
 };

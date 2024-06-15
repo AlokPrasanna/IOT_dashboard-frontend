@@ -1,8 +1,15 @@
 .content {
-    height: 30px;
+    flex: 0 1 auto;
+    height: 52px;
     display: flex;
     align-items: center;
+    justify-content:end;
+    margin-right: 10px;
+}
+
+.body-content {
+    display: flex;
     justify-content: end;
-    gap: 6px;
-    padding-right: 15px;
+    align-items: center;
+    gap: 10px;
 }
