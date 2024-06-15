@@ -6,7 +6,7 @@ import { useTheme } from './context/Theme/ThemeContext';
 const App: React.FC = () => {
   const {colors} = useTheme();
   return (
-   <div style={{backgroundColor:colors.blueAccent[400] , width:"100%" , height: "100vh"}}>
+   <div style={{backgroundColor:colors.primary[400] , width:"100%" , height: "100vh"}}>
       <HeaderBar />
    </div>
   );
