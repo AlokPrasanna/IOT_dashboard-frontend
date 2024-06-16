@@ -1,9 +1,14 @@
-import React from 'react'
+import React from 'react';
+import { PageTitle } from '../../components/molecules';
+import "./dashboard.scss"
 
 const Dashboard:React.FC = () => {
   return (
-    <div>
-      
+    <div className='dashboard-content'>
+      <PageTitle 
+        title='Dashboard'
+        subTitle='This is the IOT Dashboard'
+      />
     </div>
   )
 }
