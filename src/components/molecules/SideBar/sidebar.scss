@@ -1,30 +1,101 @@
-.sidebar-content {
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins";
+}
+
+.sidebar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
     width: 250px;
-    transition: width 0.3s;
-    transition: visibility 0.3s; 
+    padding: 0.4rem 0.8rem;
+    transition: width 0.5s ease-in-out;
 
-    &.collapsed {
-        width: 80px; // Width when collapsed
+    &.collaps {
+        width: 80px;
 
-        .sidebar-head p {
-            display: none; // Hide the text when sidebar is collapsed
+        .sidebar-header-title {
+            display: none;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0s 0.3s;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        ul {
+            li {
+                justify-content: center;
+                span {
+                    display: none;
+                }
+            }
+        }
+
+        .user {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            .user-image {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            p {
+                display: none;
+            }
         }
     }
 
-    .sidebar-inner-content {
-        transition: opacity 0.3s;
-        opacity: 1;
-
-        &.collapsed {
-            opacity: 0; // Hide content when collapsed
-        }
-    }
-
-    .sidebar-head {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+    .top {
         height: 52px;
-        padding: 10px;
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            span {
+                font-size: 18px;
+                font-weight: 700;
+                transition: opacity 0.3s, visibility 0s 0.3s;
+            }
+        }
+    }
+
+    .user {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin: 1rem 0;
+
+        p {
+            margin: 0;
+            font-size: 1rem;
+        }
+    }
+
+    ul {
+        list-style: none;
+
+        li {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 0;
+            cursor: pointer;
+
+            span {
+                margin-left: 10px;
+                font-size: 13px;
+                transition: opacity 0.3s, visibility 0s 0.3s;
+            }
+        }
     }
 }
