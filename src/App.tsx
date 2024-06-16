@@ -25,7 +25,7 @@ const App: React.FC = () => {
           <Route path='/devices'  element={<Devices />}/>
           <Route path='/linechart'  element={<LineChart />}/>
           <Route path='/piechart'  element={<PieChart />}/>
-          <Route path='/users'  element={<Users />}/>
+          <Route path='/users'  element={<Users isCollapsed={isCollapsed} />}/>
         </Routes>
       </main>
    </div>

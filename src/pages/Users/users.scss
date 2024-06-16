@@ -2,6 +2,7 @@
     margin: 20px;
     display: flex;
     flex-direction: column;
+    height: 75vh;
 }
 
 .users-header{
@@ -53,7 +54,7 @@
   .icon {
     position: absolute;
     z-index: 100;
-    transform: translateY(-95%) translateX(465px);
+    transform: translateY(-95%) translateX(var(--icon-transform));
     cursor: pointer;
   }
   

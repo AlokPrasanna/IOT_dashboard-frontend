@@ -49,7 +49,11 @@ const validationSchema = Yup.object({
     .required('Confirm Password is required'),
 });
 
-const Team: React.FC = () => {
+interface UsersProps {
+  isCollapsed: boolean
+}
+
+const Users: React.FC<UsersProps> = ({isCollapsed}) => {
   const [addUser, setAddUser] = useState<boolean>(true);
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
@@ -60,6 +64,12 @@ const Team: React.FC = () => {
     document.documentElement.style.setProperty('--btn-bg', colors.greenAccent[500]);
     document.documentElement.style.setProperty('--text', colors.grey[100]);
     document.documentElement.style.setProperty('--btn-clear', colors.blueAccent[400]);
+  }
+
+  if(isCollapsed){
+    document.documentElement.style.setProperty('--icon-transform', "550px");
+  }else{
+    document.documentElement.style.setProperty('--icon-transform', "470px");
   }
 
   const handleAddNewUserButton = () => {
@@ -300,4 +310,4 @@ const Team: React.FC = () => {
   )
 }
 
-export default Team;
+export default Users;
