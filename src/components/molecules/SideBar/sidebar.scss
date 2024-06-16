@@ -17,17 +17,17 @@
     &.collaps {
         width: 80px;
 
-        .sidebar-header-title {
-            display: none;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s, visibility 0s 0.3s;
-        }
-
         .logo {
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
+            .sidebar-header-title {
+                display: none;
+                // opacity: 0;
+                // visibility: hidden;
+                // transition: opacity 0.3s, visibility 0s 0.3s;
+            }
         }
 
         ul {
@@ -56,7 +56,6 @@
     }
 
     .top {
-        height: 52px;
         .logo {
             display: flex;
             align-items: center;
@@ -98,4 +97,9 @@
             }
         }
     }
+}
+
+.hover-icon:hover {
+    color: var(--hover-color);
+    transition: color 0.3s ease-in-out;
 }
