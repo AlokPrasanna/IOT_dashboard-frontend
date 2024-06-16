@@ -2,17 +2,23 @@ import React, { useState } from 'react';
 import { useTheme } from '../../../context/Theme/ThemeContext';
 import { Icon  , Image} from '../../atoms';
 import "./sidebar.scss";
+import { useNavigate } from 'react-router-dom';
 
-const SideBar: React.FC = () => {
+interface SideBarProps {
+    isCollapsed: boolean;
+    toggleSidebar: () => void;
+}
+
+const SideBar: React.FC<SideBarProps> = ({isCollapsed , toggleSidebar}) => {
+    const navigate = useNavigate();
     const { colors, theme } = useTheme();
-    const [isCollapsed, setIsCollapsed] = useState(false);
-
-    const toggleSidebar = () => {
-        setIsCollapsed(!isCollapsed);
-    };
     
     if(colors){
         document.documentElement.style.setProperty('--hover-color', colors.blueAccent[400]);  
+    }
+
+    const HandelNavigate = (url:string) => () => {
+        navigate(url);
     }
 
     return (
@@ -44,7 +50,7 @@ const SideBar: React.FC = () => {
                 </div>
             </div>
             <ul>
-                <li className='hover-icon'>
+                <li className='hover-icon' onClick={HandelNavigate("/")}>
                     <Icon 
                     icon={
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 hover-icon">
@@ -56,7 +62,7 @@ const SideBar: React.FC = () => {
                     />
                     <span style={{color: colors.grey[100]}}>Dashboard</span>
                 </li>
-                <li>
+                <li onClick={HandelNavigate("/devices")}>
                     <Icon 
                     icon={
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 hover-icon">
@@ -68,7 +74,7 @@ const SideBar: React.FC = () => {
                     />
                     <span style={{color: colors.grey[100]}}>Devices</span>
                 </li>
-                <li>
+                <li onClick={HandelNavigate("/barchart")}>
                     <Icon 
                     icon={
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 hover-icon">
@@ -80,7 +86,7 @@ const SideBar: React.FC = () => {
                     />
                     <span style={{color: colors.grey[100]}}>Bar Chart</span>
                 </li>
-                <li>
+                <li onClick={HandelNavigate("/linechart")}>
                     <Icon 
                     icon={
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 hover-icon">
@@ -92,7 +98,7 @@ const SideBar: React.FC = () => {
                     />
                     <span style={{color: colors.grey[100]}}>Line Chart</span>
                 </li>
-                <li>
+                <li onClick={HandelNavigate("/piechart")}>
                     <Icon 
                     icon={
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 hover-icon">
@@ -105,7 +111,7 @@ const SideBar: React.FC = () => {
                     />
                     <span style={{color: colors.grey[100]}}>Pie Chart</span>
                 </li>
-                <li>
+                <li onClick={HandelNavigate("/team")}>
                     <Icon 
                     icon={
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 hover-icon">

@@ -4,10 +4,17 @@
 
 .app-sidebar {
     flex: 0 0 250px;
+    transition: flex 0.3s ease-in-out;    
+}
+
+.collapsed {
+    flex: 0 0 80px;
+    transition: flex 0.3s ease-in-out; 
 }
 
 .app-content{
     flex: 1;
     display: flex;
     flex-direction: column;
+    height: 100vh;
 }
