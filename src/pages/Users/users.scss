@@ -1,0 +1,94 @@
+.users-content{
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.users-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.users-add-button{
+    padding: 5px 8px;
+    background-color: var(--btn-bg);
+    color: var(--text);
+    border: none;
+    border-radius: 4px;
+}
+
+.users-add-button:hover{
+    background-color: #808080;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.form-container {
+    margin: 20px;
+  }
+  
+  .form-header {
+    margin-bottom: 20px;
+    color: var(--text);
+  }
+  
+  .form-grid {
+    display: grid;
+    gap: 30px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  
+  .form-grid > div {
+    grid-column: span 2;
+  }
+
+  .form-grid  input , select{
+    height: 35px;
+  }
+
+  .pasword {
+    position: relative;
+  }
+
+  .icon {
+    position: absolute;
+    z-index: 100;
+    transform: translateY(-95%) translateX(465px);
+    cursor: pointer;
+  }
+  
+  @media (max-width: 600px) {
+    .form-grid > div {
+      grid-column: span 4;
+    }
+  }
+  
+  .full-width {
+    width: 100%;
+  }
+
+  .submit-button{
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 20px;
+  }
+  
+  .submit-button button {
+    margin-top: 20px;
+    padding: 5px 8px;
+    background-color: var(--btn-bg);
+    color: var(--text);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  #clear-btn{
+    background-color: var(--btn-clear);
+  }
+
+  .submit-button button:hover , #clear-btn:hover {
+    background-color: #808080;
+    transition: background-color 0.3s ease-in-out;
+  }

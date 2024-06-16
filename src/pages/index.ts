@@ -4,7 +4,7 @@ import Dashboard from "./Dashboard/Dashboard";
 import Devices from "./Devices/Devices";
 import LineChart from "./LineChart/LineChart";
 import PieChart from "./PieChart/PieChart";
-import Team from "./Team/Team";
+import Users from "./Users/Users";
 
 // -------------------- Exports --------------------
 export {
@@ -13,5 +13,5 @@ export {
     Devices,
     LineChart,
     PieChart,
-    Team
+    Users
 }

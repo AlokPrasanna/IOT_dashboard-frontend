@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { HeaderBar , SideBar } from './components/molecules';
-import { BarChart , Dashboard , Devices , LineChart , PieChart , Team } from './pages';
+import { BarChart , Dashboard , Devices , LineChart , PieChart , Users } from './pages';
 import './App.css';
 import { useTheme } from './context/Theme/ThemeContext';
 import { Route , Routes } from 'react-router-dom';
@@ -25,7 +25,7 @@ const App: React.FC = () => {
           <Route path='/devices'  element={<Devices />}/>
           <Route path='/linechart'  element={<LineChart />}/>
           <Route path='/piechart'  element={<PieChart />}/>
-          <Route path='/team'  element={<Team />}/>
+          <Route path='/users'  element={<Users />}/>
         </Routes>
       </main>
    </div>
