@@ -7,7 +7,7 @@ const Dashboard:React.FC = () => {
     <div className='dashboard-content'>
       <PageTitle 
         title='Dashboard'
-        subTitle='This is the IOT Dashboard'
+        subTitle='This is the IOT Dashboard Page'
       />
     </div>
   )

@@ -1,9 +1,14 @@
-import React from 'react'
+import React from 'react';
+import { PageTitle } from '../../components/molecules';
+import "./lineChart.scss"
 
 const LineChart:React.FC = () => {
   return (
-    <div>
-      
+    <div className='linechart-content'>
+      <PageTitle 
+        title='Line Chart'
+        subTitle='This is the Line Chart Page'
+      />
     </div>
   )
 }
