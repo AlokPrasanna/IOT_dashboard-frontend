@@ -54,7 +54,7 @@ interface UsersProps {
 }
 
 const Users: React.FC<UsersProps> = ({isCollapsed}) => {
-  const [addUser, setAddUser] = useState<boolean>(true);
+  const [addUser, setAddUser] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
 
@@ -63,7 +63,8 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
   if (colors) {
     document.documentElement.style.setProperty('--btn-bg', colors.greenAccent[500]);
     document.documentElement.style.setProperty('--text', colors.grey[100]);
-    document.documentElement.style.setProperty('--btn-clear', colors.blueAccent[400]);
+    document.documentElement.style.setProperty('--btn-clear', colors.redAccent[400]);
+    document.documentElement.style.setProperty('--edit-btn', colors.blueAccent[400]);
     document.documentElement.style.setProperty('--bg-color', colors.primary[400]);
   }
 
@@ -114,12 +115,13 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
         />
         {addUser === false ? (
           <div style={{ display:'flex' , gap:"10px"}}>
-            <button type='button' className='users-add-button' onClick={handleAddNewUserButton}>Edit User</button>
-            <button type='button' className='users-add-button' onClick={handleAddNewUserButton}>Delete User</button>
+            <button type='button' className='users-add-button' id='edit-user-btn' onClick={handleAddNewUserButton}>Edit User</button>
+            <button type='button' className='users-add-button' id='delete-user-btn' onClick={handleAddNewUserButton}>Delete User</button>
             <button type='button' className='users-add-button' onClick={handleAddNewUserButton}>Add New User</button>
           </div>
         ): (
-          <button type='button' className='users-add-button' onClick={handleAddNewUserButton}>Add New User</button>
+          // <button type='button' className='users-add-button' onClick={handleAddNewUserButton}>Add New User</button>
+          ""
         )}
         
       </div>
@@ -321,7 +323,7 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
               </div>
             </div>
             <div className="submit-button">
-              <button type="button" id='cancel-btn' onClick={handleCancelButton}>Cancel</button>
+              <button type="button" id='cansel-btn' onClick={handleCancelButton}>Cancel</button>
               <button type="button" id='clear-btn' onClick={handleClearButton}>Clear</button>
               <button type="submit">Create New User</button>
             </div>

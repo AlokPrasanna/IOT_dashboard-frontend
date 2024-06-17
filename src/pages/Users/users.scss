@@ -19,6 +19,19 @@
     border-radius: 4px;
 }
 
+#edit-user-btn{
+  background-color: var(--edit-btn);
+}
+
+#delete-user-btn{
+ background-color: var(--btn-clear);
+}
+
+#edit-user-btn:hover , #delete-user-btn:hover{
+  background-color: #808080;
+  transition: background-color 0.3s ease-in-out;
+}
+
 .users-add-button:hover{
     background-color: #808080;
     transition: background-color 0.3s ease-in-out;
@@ -89,7 +102,11 @@
     background-color: var(--btn-clear);
   }
 
-  .submit-button button:hover , #clear-btn:hover {
+  #cansel-btn{
+    background-color: var(--edit-btn);
+  }
+
+  .submit-button button:hover , #clear-btn:hover ,  #cansel-btn:hover {
     background-color: #808080;
     transition: background-color 0.3s ease-in-out;
   }
