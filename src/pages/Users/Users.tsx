@@ -83,6 +83,26 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
   let data = [
     { id: "0001", name: "Alok", age: "26" },
     { id: "0002", name: "Jone", age: "28" },
+    { id: "0001", name: "Alok", age: "26" },
+    { id: "0002", name: "Jone", age: "28" },
+    { id: "0001", name: "Alok", age: "26" },
+    { id: "0002", name: "Jone", age: "28" },
+    { id: "0001", name: "Alok", age: "26" },
+    { id: "0002", name: "Jone", age: "28" },
+    { id: "0001", name: "Alok", age: "26" },
+    { id: "0002", name: "Jone", age: "28" },
+    { id: "0001", name: "Alok", age: "26" },
+    { id: "0002", name: "Jone", age: "28" },
+    { id: "0001", name: "Alok", age: "26" },
+    { id: "0002", name: "Jone", age: "28" },
+    { id: "0001", name: "Alok", age: "26" },
+    { id: "0002", name: "Jone", age: "28" },
+    { id: "0001", name: "Alok", age: "26" },
+    { id: "0002", name: "Jone", age: "28" },
+    { id: "0001", name: "Alok", age: "26" },
+    { id: "0002", name: "Jone", age: "28" },
+    { id: "0001", name: "Alok", age: "26" },
+    { id: "0002", name: "Jone", age: "28" },
     { id: "0003", name: "Jane", age: "24" }
   ];
 

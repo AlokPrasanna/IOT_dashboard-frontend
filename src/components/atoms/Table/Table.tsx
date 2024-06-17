@@ -94,6 +94,8 @@ const Table: React.FC<TableDataProps> = ({ columns, data }) => {
     const [sortBy, setSortBy] = useState<string>(''); 
     const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
     const [searchTerm, setSearchTerm] = useState<string>('');
+    const [currentPage, setCurrentPage] = useState<number>(1);
+    const [itemsPerPage, setItemsPerPage] = useState<number>(10);
 
     const handleSort = (accessKey: string) => {
         if (sortBy === accessKey) {
@@ -106,6 +108,7 @@ const Table: React.FC<TableDataProps> = ({ columns, data }) => {
 
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(event.target.value);
+        setCurrentPage(1);
     }
 
     const filteredData = data.filter((row) =>
@@ -113,6 +116,24 @@ const Table: React.FC<TableDataProps> = ({ columns, data }) => {
             String(value).toLowerCase().includes(searchTerm.toLowerCase())
         )
     );
+
+    const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const currentData = filteredData.slice(startIndex, endIndex);
+
+    const nextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    }
+
+    const prevPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    }
 
     if (colors) {
         document.documentElement.style.setProperty('--bg-color', colors.primary[400]);
@@ -133,8 +154,25 @@ const Table: React.FC<TableDataProps> = ({ columns, data }) => {
             </div>
             <table className='table'>
                 <Headers columns={columns} onSort={handleSort} sortBy={sortBy} sortOrder={sortOrder} />
-                <SortingData data={filteredData} sortBy={sortBy} sortOrder={sortOrder} />
+                <SortingData data={currentData} sortBy={sortBy} sortOrder={sortOrder} />
             </table>
+            <div>
+                    <button onClick={prevPage} disabled={currentPage === 1} className="pagination-btn">
+                        {
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
+                                <path fill-rule="evenodd" d="M7.72 12.53a.75.75 0 0 1 0-1.06l7.5-7.5a.75.75 0 1 1 1.06 1.06L9.31 12l6.97 6.97a.75.75 0 1 1-1.06 1.06l-7.5-7.5Z" clip-rule="evenodd" />
+                            </svg>
+                        }
+                    </button>
+                    <span className="pagination-text">{currentPage} of {totalPages}</span>
+                    <button onClick={nextPage} disabled={currentPage === totalPages} className="pagination-btn">
+                       {
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
+                            <path fill-rule="evenodd" d="M16.28 11.47a.75.75 0 0 1 0 1.06l-7.5 7.5a.75.75 0 0 1-1.06-1.06L14.69 12 7.72 5.03a.75.75 0 0 1 1.06-1.06l7.5 7.5Z" clip-rule="evenodd" />
+                        </svg>
+                       }
+                    </button>
+                </div>
         </div>
     );
 }

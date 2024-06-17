@@ -69,3 +69,25 @@
     font-weight: 500;
     color: var(--text-color);
 }
+
+.pagination-btn{
+    margin-top: 5px;
+    width: 25px;
+    height: 25px;
+    justify-content: end;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    border: 1px solid grey;
+    border-radius: 3px;
+}
+
+.pagination-btn:hover{
+    background-color: #80808080;
+    transition: background-color 0.3s ease-in-out , transform 0.3s ease-in-out;  
+}
+
+.pagination-text{
+    font-size: 12px;
+    padding: 2px 5px;
+    color: var(--text-color);
+}
