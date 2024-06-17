@@ -201,9 +201,9 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
                   value={formik.values.address}
                   className="full-width"
                 />
-                {formik.touched.address && formik.errors.address && (
+                {/* {formik.touched.address && formik.errors.address && (
                   <div style={{color: colors.redAccent[500], fontSize: "12px", fontWeight: "normal"}}>{formik.errors.address}</div>
-                )}
+                )} */}
               </div>
               <div>
                 <input
@@ -215,9 +215,9 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
                   value={formik.values.birthday}
                   className="full-width"
                 />
-                {formik.touched.birthday && formik.errors.birthday && (
+                {/* {formik.touched.birthday && formik.errors.birthday && (
                   <div style={{color: colors.redAccent[500], fontSize: "12px", fontWeight: "normal"}}>{formik.errors.birthday}</div>
-                )}
+                )} */}
               </div>
               <div>
                 <select
