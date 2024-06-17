@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { PageTitle } from '../../components/molecules';
+import { PageTitle  } from '../../components/molecules';
 import "./users.scss";
 import { useTheme } from '../../context/Theme/ThemeContext';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { Icon } from '../../components/atoms';
+import { Icon , Table } from '../../components/atoms';
 
 interface FormValues {
   fullName: string;
@@ -64,6 +64,7 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
     document.documentElement.style.setProperty('--btn-bg', colors.greenAccent[500]);
     document.documentElement.style.setProperty('--text', colors.grey[100]);
     document.documentElement.style.setProperty('--btn-clear', colors.blueAccent[400]);
+    document.documentElement.style.setProperty('--bg-color', colors.primary[400]);
   }
 
   if(isCollapsed){
@@ -71,6 +72,18 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
   }else{
     document.documentElement.style.setProperty('--icon-transform', "470px");
   }
+
+  const columns = [
+    { accessKey: "id", value: "ID" },
+    { accessKey: "name", value: "Name" },
+    { accessKey: "age", value: "Age" }
+  ];
+
+  let data = [
+    { id: "0001", name: "Alok", age: "26" },
+    { id: "0002", name: "Jone", age: "28" },
+    { id: "0003", name: "Jane", age: "24" }
+  ];
 
   const handleAddNewUserButton = () => {
     setAddUser(!addUser);
@@ -99,7 +112,16 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
           title='Users'
           subTitle='This is the Users Page'
         />
-        <button type='button' className='users-add-button' onClick={handleAddNewUserButton}>Add New User</button>
+        {addUser === false ? (
+          <div style={{ display:'flex' , gap:"10px"}}>
+            <button type='button' className='users-add-button' onClick={handleAddNewUserButton}>Edit User</button>
+            <button type='button' className='users-add-button' onClick={handleAddNewUserButton}>Delete User</button>
+            <button type='button' className='users-add-button' onClick={handleAddNewUserButton}>Add New User</button>
+          </div>
+        ): (
+          <button type='button' className='users-add-button' onClick={handleAddNewUserButton}>Add New User</button>
+        )}
+        
       </div>
       {addUser === true ? (
         <div className="form-container">
@@ -305,7 +327,11 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
             </div>
           </form>
         </div>
-      ) : "Non"}
+      ) : (
+        <div>
+          <Table columns={columns} data={data}/>
+        </div>
+      )}
     </div>
   )
 }
