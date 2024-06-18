@@ -5,6 +5,9 @@ import Devices from "./Devices/Devices";
 import LineChart from "./LineChart/LineChart";
 import PieChart from "./PieChart/PieChart";
 import Users from "./Users/Users";
+import Login from "./Login/Login";
+import EditProfile from "./EditProfile/EditProfile";
+import ViewProfile from "./ViewProfile/ViewProfile";
 
 // -------------------- Exports --------------------
 export {
@@ -13,5 +16,8 @@ export {
     Devices,
     LineChart,
     PieChart,
-    Users
+    Users,
+    Login,
+    EditProfile,
+    ViewProfile
 }

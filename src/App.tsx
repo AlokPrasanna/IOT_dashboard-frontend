@@ -1,26 +1,44 @@
 import React, { useState } from 'react';
 import { HeaderBar , SideBar } from './components/molecules';
-import { BarChart , Dashboard , Devices , LineChart , PieChart , Users } from './pages';
+import { 
+  BarChart, 
+  Dashboard, 
+  Devices, 
+  LineChart, 
+  PieChart, 
+  Users,
+  Login,
+  EditProfile,
+  ViewProfile 
+} from './pages';
 import './App.css';
 import { useTheme } from './context/Theme/ThemeContext';
-import { Route , Routes } from 'react-router-dom';
+import { Route , Routes , useLocation } from 'react-router-dom';
 
 const App: React.FC = () => {
   const [isCollapsed , setIsCollapsed] = useState(false);
   const {theme , colors} = useTheme();
+  const location = useLocation();
 
   const toggleSidebar = () => {
     setIsCollapsed(!isCollapsed);
   };
   return (
    <div className='app' style={{backgroundColor: theme=== 'dark' ? colors.primary[500]: "#fcfcfc"}}>
-      <div className={` ${isCollapsed === true ? "collapsed" : "app-sidebar"}`}>
-        <SideBar isCollapsed={isCollapsed} toggleSidebar={toggleSidebar} />
-      </div>
+      {location.pathname !== "/" && (
+        <div className={` ${isCollapsed === true ? "collapsed" : "app-sidebar"}`}>
+          <SideBar isCollapsed={isCollapsed} toggleSidebar={toggleSidebar} />
+        </div>
+      )}
       <main className="app-content">
-        <HeaderBar />
+        {location.pathname !== "/" && (
+          <HeaderBar />
+        )}
         <Routes>
-          <Route path='/'  element={<Dashboard />}/>
+          <Route path='/'  element={<Login />}/>
+          <Route path='/edit-profile'  element={<EditProfile />}/>
+          <Route path='/view-profile'  element={<ViewProfile />}/>
+          <Route path='/dashboard'  element={<Dashboard />}/>
           <Route path='/barchart'  element={<BarChart />}/>
           <Route path='/devices'  element={<Devices />}/>
           <Route path='/linechart'  element={<LineChart />}/>
