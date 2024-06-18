@@ -1,10 +1,22 @@
 import React from 'react';
 import { useTheme } from '../../../context/Theme/ThemeContext';
 import {Icon} from '../../atoms';
-import "./headerBar.scss"
+import "./headerBar.scss";
+import { useNavigate } from 'react-router-dom';
 
 const HeaderBar: React.FC = () => {
     const { theme,  toggleTheme } = useTheme();
+    const navigate = useNavigate();
+
+    const handelChangePages = (url:string) => () => {
+        navigate(url);
+    }
+
+    const handelLogout = () => {
+        if(confirm("are you sure to log out?")){
+            navigate("/");
+        }
+    }
     return (
         <div className='content'>
         <div className="body-content">
@@ -37,7 +49,7 @@ const HeaderBar: React.FC = () => {
                     </svg>
 
                 }
-                onclick={toggleTheme}
+                onclick={handelChangePages("/edit-profile")}
                 style={{ cursor: 'pointer' , color:theme === "dark" ? "white" : "black" , width:"20px" , background:"none" , border:"none" }}
             />
             <Icon
@@ -47,7 +59,7 @@ const HeaderBar: React.FC = () => {
                     </svg>
 
                 }
-                onclick={toggleTheme}
+                onclick={handelChangePages("/view-profile")}
                 style={{ cursor: 'pointer' , color:theme === "dark" ? "white" : "black" ,  width:"20px" , background:"none" , border:"none" }}
             />
             <Icon
@@ -56,7 +68,7 @@ const HeaderBar: React.FC = () => {
                         <path stroke-linecap="round" stroke-linejoin="round" d="M5.636 5.636a9 9 0 1 0 12.728 0M12 3v9" />
                     </svg>
                 }
-                onclick={toggleTheme}
+                onclick={handelLogout}
                 style={{ cursor: 'pointer' , color:theme === "dark" ? "white" : "black" ,  width:"20px" , background:"none" , border:"none" }}
             />
         </div>

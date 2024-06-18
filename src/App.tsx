@@ -36,7 +36,7 @@ const App: React.FC = () => {
         )}
         <Routes>
           <Route path='/'  element={<Login />}/>
-          <Route path='/edit-profile'  element={<EditProfile />}/>
+          <Route path='/edit-profile'  element={<EditProfile isCollapsed={isCollapsed} />}/>
           <Route path='/view-profile'  element={<ViewProfile />}/>
           <Route path='/dashboard'  element={<Dashboard />}/>
           <Route path='/barchart'  element={<BarChart />}/>

@@ -103,7 +103,7 @@ const Login:React.FC = () => {
                 </div>
               </div>
               <div className='login-btn'>
-                <button>Login</button>
+                <button type='submit'>Login</button>
               </div>
             </form>
           </div>

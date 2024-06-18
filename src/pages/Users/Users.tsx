@@ -71,7 +71,7 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
   if(isCollapsed){
     document.documentElement.style.setProperty('--icon-transform', "550px");
   }else{
-    document.documentElement.style.setProperty('--icon-transform', "470px");
+    document.documentElement.style.setProperty('--icon-transform', "465px");
   }
 
   const columns = [
@@ -313,7 +313,7 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
                   type={showConfirmPassword ? "text" : "password"}
                   id="confirmPassword"
                   name="confirmPassword"
-                  placeholder="ReEnter Password"
+                  placeholder="Re Enter Password"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
                   value={formik.values.confirmPassword}
@@ -340,6 +340,20 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
                 {formik.touched.confirmPassword && formik.errors.confirmPassword && (
                   <div style={{color: colors.redAccent[500], fontSize: "12px", fontWeight: "normal"}}>{formik.errors.confirmPassword}</div>
                 )}
+              </div>
+              <div>
+                <span className='auth-header'>Send Emails</span>
+                <select
+                  id="sendEmail"
+                  name="sendEmail"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  value={formik.values.sendEmail}
+                  className="full-width"
+                >
+                  <option value="No">No</option>
+                  <option value="Yes">Yes</option>
+                </select>
               </div>
             </div>
             <div className="submit-button">
