@@ -7,5 +7,5 @@ import Table from "./Table/Table";
 export {
     Icon,
     Image,
-    Table
+    Table 
 }

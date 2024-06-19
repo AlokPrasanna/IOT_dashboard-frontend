@@ -1,0 +1,28 @@
+.dashboard-card-content{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background-color: var(--bg-color);
+    width: 340px;
+    height: 150px;
+    padding: 5px 12px;
+    border-radius: 4px;
+    color: var(--text-color);
+}
+
+.dashboard-card-dis{
+    display: flex;
+    align-items: center;
+    justify-content:space-around;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.dashboard-card-data{
+    display: flex;
+    justify-content: center;
+    color: var(--count-color);
+    font-size: 28px;
+}
