@@ -82,6 +82,11 @@
     width: 100%;
   }
 
+  .full-width::placeholder{
+    color: black;
+    padding-left: 4px;
+  }
+
   .submit-button{
     display: flex;
     align-items: center;

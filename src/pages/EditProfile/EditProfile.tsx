@@ -91,7 +91,7 @@ const EditProfile:React.FC<EditeProps> = ({isCollapsed}) => {
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
                   value={formik.values.fullName}
-                  className="edit-input"
+                  className="edit-input placeholder"
                 />
               </div>
               <div>
@@ -103,7 +103,7 @@ const EditProfile:React.FC<EditeProps> = ({isCollapsed}) => {
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
                   value={formik.values.email}
-                  className="edit-input"
+                  className="edit-input placeholder"
                 />
                 {formik.touched.email && formik.errors.email && (
                   <div style={{color: colors.redAccent[500], fontSize: "12px", fontWeight: "normal"}}>{formik.errors.email}</div>
@@ -118,7 +118,7 @@ const EditProfile:React.FC<EditeProps> = ({isCollapsed}) => {
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
                   value={formik.values.phoneNumber}
-                  className="edit-input"
+                  className="edit-input placeholder"
                 />
               </div>
               <div>
@@ -130,7 +130,7 @@ const EditProfile:React.FC<EditeProps> = ({isCollapsed}) => {
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
                   value={formik.values.nic}
-                  className="edit-input"
+                  className="edit-input placeholder"
                 />
               </div>
               <div>
@@ -142,7 +142,7 @@ const EditProfile:React.FC<EditeProps> = ({isCollapsed}) => {
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
                   value={formik.values.address}
-                  className="edit-input"
+                  className="edit-input placeholder"
                 />
               </div>
               <div>
@@ -153,7 +153,7 @@ const EditProfile:React.FC<EditeProps> = ({isCollapsed}) => {
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
                   value={formik.values.birthday}
-                  className="edit-input"
+                  className="edit-input placeholder"
                 />
               </div>
               <div>
@@ -183,7 +183,7 @@ const EditProfile:React.FC<EditeProps> = ({isCollapsed}) => {
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
                   value={formik.values.password}
-                  className="edit-input"
+                  className="edit-input placeholder"
                 />
                 <div className='icon'>
                 <Icon 
@@ -213,7 +213,7 @@ const EditProfile:React.FC<EditeProps> = ({isCollapsed}) => {
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
                   value={formik.values.confirmPassword}
-                  className="edit-input"
+                  className="edit-input placeholder"
                 />
                 <div className='icon'>
                 <Icon 

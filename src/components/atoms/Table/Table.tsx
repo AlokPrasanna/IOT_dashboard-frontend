@@ -84,7 +84,7 @@ const SortingData: React.FC<{ data: Record<string, any>[], sortBy: string, sortO
                         <td className='table-cell table-td' key={colIndex}>{value}</td>
                     ))}
                 </tr>
-            )): <tr className='not-data'>Data Not Found!</tr>}
+            )): <td className='not-data table-tr'>Data Not Found!</td>}
         </tbody>
     );
 }

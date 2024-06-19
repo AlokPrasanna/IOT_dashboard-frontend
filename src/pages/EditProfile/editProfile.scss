@@ -40,6 +40,11 @@
     transform: translateY(-95%) translateX(var(--icon-transform));
     cursor: pointer;
   }
+
+  .placeholder::placeholder{
+    color: black;
+    padding-left: 4px;
+  }
   
   @media (max-width: 600px) {
     .form-grid > div {

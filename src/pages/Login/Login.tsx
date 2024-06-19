@@ -37,6 +37,13 @@ const Login:React.FC = () => {
   });
   return (
       <div className="login-content">
+        <div className='login-logo'>
+          <Image 
+              src='../../logo.png'
+              alt='Logo'
+              style={{width:"45px" ,display:"flex" , alignItems:"center" , justifyContent:"center"}}
+          />
+        </div>
         <div className='mode-icon'>
           {theme === "dark" ? (
                 <Icon
@@ -62,11 +69,6 @@ const Login:React.FC = () => {
         </div>
         <div className="login-area">
           <div className="login-title">
-            <Image 
-              src='../../logo.png'
-              alt='Logo'
-              style={{width:"35px" ,display:"flex" , alignItems:"center" , justifyContent:"center"}}
-            />
             <p className='login-title-text'>Login Page</p>
           </div>
           <div className="login-form">
