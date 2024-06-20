@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { HeaderBar , SideBar } from './components/molecules';
+import { HeaderBar , SideBar , Footer } from './components/molecules';
 import { 
   BarChart, 
   Dashboard, 
@@ -45,6 +45,7 @@ const App: React.FC = () => {
           <Route path='/piechart'  element={<PieChart />}/>
           <Route path='/users'  element={<Users isCollapsed={isCollapsed} />}/>
         </Routes>
+        <Footer />
       </main>
    </div>
   );
