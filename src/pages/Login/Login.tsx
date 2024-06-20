@@ -4,6 +4,7 @@ import { useTheme } from '../../context/Theme/ThemeContext';
 import "./login.scss";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { useNavigate } from 'react-router-dom';
 
 interface FormValues  {
   email:string;
@@ -16,11 +17,13 @@ const initialValues: FormValues = {
 }
 
 const validationSchema = Yup.object({
-  email: Yup.string().email('Invalid email format'),
+  email: Yup.string().email('Invalid email format').required("Email is required"),
+  password: Yup.string().required('Password is required'),
 })
 
 const Login:React.FC = () => {
   const {colors , toggleTheme , theme} = useTheme();
+  const navigate  = useNavigate();
 
   if(colors){
     document.documentElement.style.setProperty("--bg-color" , colors.primary[400]);
@@ -33,8 +36,10 @@ const Login:React.FC = () => {
     validationSchema,
     onSubmit: (values) => {
       console.log(values);
+      navigate("/dashboard");
     },
   });
+
   return (
       <div className="login-content">
         <div className='login-logo'>
@@ -93,7 +98,7 @@ const Login:React.FC = () => {
                 <div>
                   <label htmlFor="name">Password</label>
                   <input 
-                    type="text"
+                    type="password"
                     id="password"
                     name="password"
                     placeholder="Enter Pasowrd"
@@ -102,6 +107,9 @@ const Login:React.FC = () => {
                     value={formik.values.password}
                     className="login-input"
                   />
+                  {formik.errors.password && (
+                    <div style={{color: colors.redAccent[500], fontSize: "12px", fontWeight: "normal"}}>{formik.errors.password}</div>
+                  )}
                 </div>
               </div>
               <div className='login-btn'>

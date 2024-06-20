@@ -81,6 +81,7 @@
   
   .full-width {
     width: 100%;
+    padding-left: 5px;
   }
 
   .full-width::placeholder{
@@ -116,4 +117,32 @@
   .submit-button button:hover , #clear-btn:hover ,  #cansel-btn:hover {
     background-color: #808080;
     transition: background-color 0.3s ease-in-out;
+  }
+
+  .edit-user-popup{
+    position: absolute;
+    top: 20%;
+    left: 25%;
+    right: 25%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 50%;
+    height: 85V;
+    background-color: var(--bg-color);
+    padding: 5px 5px;
+    border: 1px solid gray;
+    border-radius: 4px;
+  }
+
+  .popup-header{
+    color: var(--text);
+    padding: 6px 0;
+  }
+
+  .popup-form{
+    width: 100%;
+    margin-top: 5px;
+    padding: 5px 12px;
   }
