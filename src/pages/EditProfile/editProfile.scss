@@ -38,6 +38,7 @@
     position: absolute;
     z-index: 100;
     transform: translateY(-95%) translateX(var(--icon-transform));
+    transition: transform 0.3s ease-in-out;
     cursor: pointer;
   }
 

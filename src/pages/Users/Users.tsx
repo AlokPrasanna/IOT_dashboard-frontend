@@ -57,8 +57,14 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
   const [addUser, setAddUser] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
+  const [selectedRow, setSelectedRow] = useState<Record<string, any> | null>(null);
 
   const { colors } = useTheme();
+
+  const handleRowSelect = (rowData: Record<string, any>) => {
+    setSelectedRow(rowData);
+    console.log('Selected Row Data:', rowData);
+  };
 
   if (colors) {
     document.documentElement.style.setProperty('--btn-bg', colors.greenAccent[500]);
@@ -69,9 +75,9 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
   }
 
   if(isCollapsed){
-    document.documentElement.style.setProperty('--icon-transform', "550px");
+    document.documentElement.style.setProperty('--icon-transform', "730px");
   }else{
-    document.documentElement.style.setProperty('--icon-transform', "465px");
+    document.documentElement.style.setProperty('--icon-transform', "645px");
   }
 
   const columns = [
@@ -365,7 +371,7 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
         </div>
       ) : (
         <div>
-          <Table columns={columns} data={data}/>
+          <Table columns={columns} data={data} onRowSelect={handleRowSelect}/>
         </div>
       )}
     </div>

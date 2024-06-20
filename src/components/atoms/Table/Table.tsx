@@ -11,6 +11,7 @@ interface Column {
 interface TableDataProps {
     columns: Column[];
     data: Record<string, any>[];
+    onRowSelect: (rowData: Record<string, any>) => void;
 }
 
 const Headers: React.FC<{ columns: Column[], onSort: (accessKey: string) => void, sortBy: string, sortOrder: 'asc' | 'desc' }> = ({ columns, onSort, sortBy, sortOrder }) => {
@@ -58,7 +59,7 @@ const Headers: React.FC<{ columns: Column[], onSort: (accessKey: string) => void
     );
 }
 
-const SortingData: React.FC<{ data: Record<string, any>[], sortBy: string, sortOrder: 'asc' | 'desc' }> = ({ data, sortBy, sortOrder }) => {
+const SortingData: React.FC<{ data: Record<string, any>[], sortBy: string, sortOrder: 'asc' | 'desc' ,onRowClick: (rowData: Record<string, any> , rowIndex: number ) => void, selectedRowIndex: number | null  }> = ({ data, sortBy, sortOrder , onRowClick , selectedRowIndex }) => {
     const sortedData = [...data];
 
     sortedData.sort((a, b) => {
@@ -79,7 +80,7 @@ const SortingData: React.FC<{ data: Record<string, any>[], sortBy: string, sortO
     return (
         <tbody>
             {sortedData.length > 0 ? sortedData.map((row, rowIndex) => (
-                <tr className='table-tr' key={rowIndex}>
+                <tr className={`table-tr ${selectedRowIndex === rowIndex ? 'selected-row' : ''}`} key={rowIndex} onClick={() => onRowClick(row , rowIndex)}>
                     {Object.values(row).map((value, colIndex) => (
                         <td className='table-cell table-td' key={colIndex}>{value}</td>
                     ))}
@@ -89,13 +90,14 @@ const SortingData: React.FC<{ data: Record<string, any>[], sortBy: string, sortO
     );
 }
 
-const Table: React.FC<TableDataProps> = ({ columns, data }) => {
+const Table: React.FC<TableDataProps> = ({ columns, data , onRowSelect }) => {
     const { colors } = useTheme();
     const [sortBy, setSortBy] = useState<string>(''); 
     const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [itemsPerPage, setItemsPerPage] = useState<number>(10);
+    const [selectedRowIndex, setSelectedRowIndex] = useState<number | null>(null);
 
     const handleSort = (accessKey: string) => {
         if (sortBy === accessKey) {
@@ -110,6 +112,11 @@ const Table: React.FC<TableDataProps> = ({ columns, data }) => {
         setSearchTerm(event.target.value);
         setCurrentPage(1);
     }
+
+    const handleRowClick = (rowData: Record<string, any>, rowIndex: number) => {
+        setSelectedRowIndex(rowIndex);
+        onRowSelect(rowData);
+    };
 
     const filteredData = data.filter((row) =>
         Object.values(row).some((value) =>
@@ -154,7 +161,7 @@ const Table: React.FC<TableDataProps> = ({ columns, data }) => {
             </div>
             <table className='table'>
                 <Headers columns={columns} onSort={handleSort} sortBy={sortBy} sortOrder={sortOrder} />
-                <SortingData data={currentData} sortBy={sortBy} sortOrder={sortOrder} />
+                <SortingData data={currentData} sortBy={sortBy} sortOrder={sortOrder} onRowClick={handleRowClick} selectedRowIndex={selectedRowIndex}/>
             </table>
             <div>
                     <button onClick={prevPage} disabled={currentPage === 1} className="pagination-btn">

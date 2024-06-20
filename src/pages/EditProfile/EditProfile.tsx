@@ -56,9 +56,9 @@ const EditProfile:React.FC<EditeProps> = ({isCollapsed}) => {
   }
 
   if(isCollapsed){
-    document.documentElement.style.setProperty('--icon-transform', "550px");
+    document.documentElement.style.setProperty('--icon-transform', "730px");
   }else{
-    document.documentElement.style.setProperty('--icon-transform', "470px");
+    document.documentElement.style.setProperty('--icon-transform', "645px");
   }
 
   const formik = useFormik({
