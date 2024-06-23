@@ -18,6 +18,7 @@
 
 .table-tr{
     padding: 5px 6px;
+    cursor: pointer;
 }
 
 .table-tr:hover{
@@ -79,6 +80,7 @@
     background-color: var(--bg-color);
     border: 1px solid grey;
     border-radius: 3px;
+    cursor: pointer;
 }
 
 .pagination-btn:hover{

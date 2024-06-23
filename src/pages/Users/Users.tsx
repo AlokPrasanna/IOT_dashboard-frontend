@@ -579,7 +579,7 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
                   <div style={{color: colors.redAccent[500], fontSize: "12px", fontWeight: "normal"}}>{formik.errors.userType}</div>
                 )}
               </div>
-              <div className='password'>
+              <div className='password' style={{position:"relative"}}>
                 <input
                   type={showPassword ? "text" : "password"}
                   id="password"
@@ -590,7 +590,7 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
                   value={formik.values.password}
                   className="full-width"
                 />
-                <div className='icon'>
+             
                 <Icon 
                   icon={
                     showPassword ? (
@@ -605,14 +605,13 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
                     )
                   }
                   onclick={() => setShowPassword(!showPassword)}
-                  style={{ cursor: 'pointer' , color: "black" ,  width:"25px" , background:"none" , border:"none" }}
+                  style={{ cursor: 'pointer' , color: "black" , backgroundColor:"none",  width:"25px" , background:"none" , border:"none",position:"absolute" , right:"5px", top:"60%", transform:"translateY(-50%)"}}
                 />
-                </div>
                 {formik.touched.password && formik.errors.password && (
                   <div style={{color: colors.redAccent[500], fontSize: "12px", fontWeight: "normal"}}>{formik.errors.password}</div>
                 )}
               </div>
-              <div className='password'>
+              <div className='password' style={{position:"relative"}}>
                 <input
                   type={showConfirmPassword ? "text" : "password"}
                   id="confirmPassword"
@@ -623,7 +622,6 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
                   value={formik.values.confirmPassword}
                   className="full-width"
                 />
-                <div className='icon'>
                 <Icon 
                   icon={
                     showConfirmPassword ? (
@@ -638,9 +636,8 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
                     )
                   }
                   onclick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  style={{ cursor: 'pointer' , color: "black" ,  width:"25px" , background:"none" , border:"none" }}
+                  style={{ cursor: 'pointer' , backgroundColor:"none", color: "black" ,  width:"25px" , background:"none" , border:"none",position:"absolute" , right:"5px", top:"60%", transform:"translateY(-50%)"} }
                 />
-                </div>
                 {formik.touched.confirmPassword && formik.errors.confirmPassword && (
                   <div style={{color: colors.redAccent[500], fontSize: "12px", fontWeight: "normal"}}>{formik.errors.confirmPassword}</div>
                 )}

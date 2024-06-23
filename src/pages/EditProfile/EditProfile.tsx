@@ -174,7 +174,7 @@ const EditProfile:React.FC<EditeProps> = ({isCollapsed}) => {
             <div className='auth'>
               <span className='auth-header'>Authentication Details</span>
               <div className='auth-content'>
-              <div className='edit-password'>
+              <div className='edit-password' style={{position:"relative"}}>
                 <input
                   type={showPassword ? "text" : "password"}
                   id="edit-password"
@@ -185,7 +185,6 @@ const EditProfile:React.FC<EditeProps> = ({isCollapsed}) => {
                   value={formik.values.password}
                   className="edit-input placeholder"
                 />
-                <div className='icon'>
                 <Icon 
                   icon={
                     showPassword ? (
@@ -200,11 +199,10 @@ const EditProfile:React.FC<EditeProps> = ({isCollapsed}) => {
                     )
                   }
                   onclick={() => setShowPassword(!showPassword)}
-                  style={{ cursor: 'pointer' , color: "black" ,  width:"25px" , background:"none" , border:"none" }}
+                  style={{ cursor: 'pointer' , backgroundColor:"none", color: "black" ,  width:"25px" , background:"none" , border:"none",position:"absolute" , right:"5px", top:"60%", transform:"translateY(-50%)"}}
                 />
-                </div>
               </div>
-              <div className='edit-password'>
+              <div className='edit-password' style={{position:"relative"}}>
                 <input
                   type={showConfirmPassword ? "text" : "password"}
                   id="edit-confirmPassword"
@@ -215,7 +213,6 @@ const EditProfile:React.FC<EditeProps> = ({isCollapsed}) => {
                   value={formik.values.confirmPassword}
                   className="edit-input placeholder"
                 />
-                <div className='icon'>
                 <Icon 
                   icon={
                     showConfirmPassword ? (
@@ -230,9 +227,8 @@ const EditProfile:React.FC<EditeProps> = ({isCollapsed}) => {
                     )
                   }
                   onclick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  style={{ cursor: 'pointer' , color: "black" ,  width:"25px" , background:"none" , border:"none" }}
+                  style={{ cursor: 'pointer' , backgroundColor:"none", color: "black" ,  width:"25px" , background:"none" , border:"none",position:"absolute" , right:"5px", top:"60%", transform:"translateY(-50%)"}}
                 />
-                </div>
               </div>
               </div>
             </div>
