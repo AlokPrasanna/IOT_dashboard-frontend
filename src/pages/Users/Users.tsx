@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect } from 'react';
 import { PageTitle  } from '../../components/molecules';
 import "./users.scss";
 import { useTheme } from '../../context/Theme/ThemeContext';
@@ -64,7 +64,7 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
 
   const handleRowSelect = (rowData: Record<string, any>) => {
     setSelectedRow(rowData);
-    //console.log('Selected Row Data:', selectedRow?.fullName);
+    console.log('Selected Row Data:', selectedRow);
   };
 
   const handleEditeButton = () => {
@@ -74,6 +74,12 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
     }
     setShowEditPopup(true);
   }
+
+  useEffect(() => {
+    if (selectedRow !== null) {
+        console.log('Selected Row Data:', selectedRow);
+    }
+}, [selectedRow]);
 
   if (colors) {
     document.documentElement.style.setProperty('--btn-bg', colors.greenAccent[500]);
@@ -103,7 +109,7 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
 
   let data = [
     {
-        "fullName": "Christopher Griffith",
+        "fullName": '<img src="/user.jpg" alt="User" /> Christopher Griffith',
         "nic": "697-25-3860",
         "email": "reginaldmartinez@smith.info",
         "phoneNumber": "+1-078-755-7228x67651",
@@ -418,7 +424,7 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
   const handleCancelButton = () => {
     setAddUser(false);
     setShowEditPopup(false);
-    setSelectedRow(null);
+    //setSelectedRow(null);
   }
 
   const handleClearButton = () => {
