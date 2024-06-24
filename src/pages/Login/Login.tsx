@@ -5,24 +5,26 @@ import "./login.scss";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
+import { useBaseUrl } from '../../context/BaseUrl/BaseUrlContext';
 
 interface FormValues  {
-  email:string;
+  emailAddress:string;
   password:string;
 }
 
 const initialValues: FormValues = {
-  email:'',
+  emailAddress:'',
   password:''
 }
 
 const validationSchema = Yup.object({
-  email: Yup.string().email('Invalid email format').required("Email is required"),
+  emailAddress: Yup.string().email('Invalid email format').required("Email is required"),
   password: Yup.string().required('Password is required'),
 })
 
 const Login:React.FC = () => {
   const {colors , toggleTheme , theme} = useTheme();
+  const { baseUrl } = useBaseUrl();
   const navigate  = useNavigate();
 
   if(colors){
@@ -34,9 +36,30 @@ const Login:React.FC = () => {
   const formik = useFormik({
     initialValues,
     validationSchema,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       console.log(values);
-      navigate("/dashboard");
+      try {
+        const response = await fetch(`${baseUrl}users/login`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(values)
+        });
+
+        const data = await response.json();
+
+        if (data.status === true) {
+          console.log(data);
+          navigate("/dashboard");
+          //alert("Login Success");
+        } else {
+          alert(data.error.message);
+          console.error('Login failed:', data.error.message);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
     },
   });
 
@@ -83,16 +106,16 @@ const Login:React.FC = () => {
                   <label htmlFor="name">Email Address</label>
                   <input
                      type="text"
-                     id="email"
-                     name="email"
+                     id="emailAddress"
+                     name="emailAddress"
                      placeholder="Enter Email Address"
                      onBlur={formik.handleBlur}
                      onChange={formik.handleChange}
-                     value={formik.values.email}
+                     value={formik.values.emailAddress}
                      className="login-input"
                   />
-                  {formik.errors.email && (
-                    <div style={{color: colors.redAccent[500], fontSize: "12px", fontWeight: "normal"}}>{formik.errors.email}</div>
+                  {formik.touched.emailAddress && formik.errors.emailAddress && (
+                    <div style={{color: colors.redAccent[500], fontSize: "12px", fontWeight: "normal"}}>{formik.errors.emailAddress}</div>
                   )}
                 </div>
                 <div>
@@ -107,7 +130,7 @@ const Login:React.FC = () => {
                     value={formik.values.password}
                     className="login-input"
                   />
-                  {formik.errors.password && (
+                  {formik.touched.password && formik.errors.password && (
                     <div style={{color: colors.redAccent[500], fontSize: "12px", fontWeight: "normal"}}>{formik.errors.password}</div>
                   )}
                 </div>
