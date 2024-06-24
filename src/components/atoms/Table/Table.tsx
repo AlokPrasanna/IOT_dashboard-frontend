@@ -166,6 +166,14 @@ const Table: React.FC<TableDataProps> = ({ columns, data, onRowSelect }) => {
         }
     }
 
+    const firstPage = () => {
+        setCurrentPage(1);
+    }
+
+    const lastPage = () => {
+        setCurrentPage(totalPages);
+    }
+
     if (colors) {
         document.documentElement.style.setProperty('--bg-color', colors.primary[400]);
         document.documentElement.style.setProperty('--text-color', colors.grey[100]);
@@ -188,6 +196,11 @@ const Table: React.FC<TableDataProps> = ({ columns, data, onRowSelect }) => {
                 <SortingData data={currentData} sortBy={sortBy} sortOrder={sortOrder} onRowClick={handleRowClick} selectedRowIndex={selectedRowIndex} columns={columns} />
             </table>
             <div>
+                <button onClick={firstPage} disabled={currentPage === 1} className="pagination-btn" style={{marginRight:"4px"}}>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />
+                    </svg>
+                </button>
                 <button onClick={prevPage} disabled={currentPage === 1} className="pagination-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
                         <path fill-rule="evenodd" d="M7.72 12.53a.75.75 0 0 1 0-1.06l7.5-7.5a.75.75 0 1 1 1.06 1.06L9.31 12l6.97 6.97a.75.75 0 1 1-1.06 1.06l-7.5-7.5Z" clip-rule="evenodd" />
@@ -197,6 +210,11 @@ const Table: React.FC<TableDataProps> = ({ columns, data, onRowSelect }) => {
                 <button onClick={nextPage} disabled={currentPage === totalPages} className="pagination-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
                         <path fill-rule="evenodd" d="M16.28 11.47a.75.75 0 0 1 0 1.06l-7.5 7.5a.75.75 0 0 1-1.06-1.06L14.69 12 7.72 5.03a.75.75 0 0 1 1.06-1.06l7.5 7.5Z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+                <button onClick={lastPage} disabled={currentPage === totalPages} className="pagination-btn" style={{marginLeft:"4px"}}>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />
                     </svg>
                 </button>
             </div>
