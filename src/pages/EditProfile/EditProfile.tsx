@@ -55,12 +55,6 @@ const EditProfile:React.FC<EditeProps> = ({isCollapsed}) => {
     document.documentElement.style.setProperty('--bg-color', colors.primary[400]);
   }
 
-  if(isCollapsed){
-    document.documentElement.style.setProperty('--icon-transform', "730px");
-  }else{
-    document.documentElement.style.setProperty('--icon-transform', "645px");
-  }
-
   const formik = useFormik({
     initialValues,
     validationSchema,
