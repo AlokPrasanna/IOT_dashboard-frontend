@@ -1,9 +1,11 @@
 import React from 'react';
-import { PageTitle } from '../../components/molecules';
+import { PageTitle , BarChart , LineChart } from '../../components/molecules';
 import "./dashboard.scss"
 import { DashboardCard } from '../../components/molecules';
+import { useTheme } from '../../context/Theme/ThemeContext';
 
 const Dashboard:React.FC = () => {
+  const { colors } = useTheme();
   return (
     <div className='dashboard-content'>
       <PageTitle 
@@ -30,6 +32,34 @@ const Dashboard:React.FC = () => {
             title='Devices Count'
             count={200}
           />
+          <DashboardCard
+            icon={
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M8.25 19.5V21M12 3v1.5m0 15V21m3.75-18v1.5m0 15V21m-9-1.5h10.5a2.25 2.25 0 0 0 2.25-2.25V6.75a2.25 2.25 0 0 0-2.25-2.25H6.75A2.25 2.25 0 0 0 4.5 6.75v10.5a2.25 2.25 0 0 0 2.25 2.25Zm.75-12h9v9h-9v-9Z" />
+              </svg>
+            }
+            title='Devices Count'
+            count={200}
+          />
+          <DashboardCard
+            icon={
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M8.25 19.5V21M12 3v1.5m0 15V21m3.75-18v1.5m0 15V21m-9-1.5h10.5a2.25 2.25 0 0 0 2.25-2.25V6.75a2.25 2.25 0 0 0-2.25-2.25H6.75A2.25 2.25 0 0 0 4.5 6.75v10.5a2.25 2.25 0 0 0 2.25 2.25Zm.75-12h9v9h-9v-9Z" />
+              </svg>
+            }
+            title='Devices Count'
+            count={200}
+          />
+        </div> 
+        <div style={{height:"45vh" , width:"100%" , display:'flex' , alignItems:'center', padding:"20px" , gap:"20px"}}>
+          <div className='chart' style={{backgroundColor: colors.primary[400]}}>
+            <span className='chat-header' style={{color: colors.grey[100]}}>Bar Chart Name</span>
+            <BarChart isDashboard={true} />
+          </div>
+          <div className='chart' style={{backgroundColor: colors.primary[400]}}>
+            <span className='chat-header' style={{color: colors.grey[100]}}>Line Chart Name</span>
+            <LineChart isDashboard={true} />
+          </div>
         </div>
       </div>
     </div>

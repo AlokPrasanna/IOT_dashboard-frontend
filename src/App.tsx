@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { HeaderBar , SideBar , Footer } from './components/molecules';
 import { 
-  BarChart, 
+  BarChartPage, 
   Dashboard, 
   Devices, 
-  LineChart, 
-  PieChart, 
+  LineChartPage, 
+  PieChartPage, 
   Users,
   Login,
   EditProfile,
@@ -39,10 +39,10 @@ const App: React.FC = () => {
           <Route path='/edit-profile'  element={<EditProfile isCollapsed={isCollapsed} />}/>
           <Route path='/view-profile'  element={<ViewProfile />}/>
           <Route path='/dashboard'  element={<Dashboard />}/>
-          <Route path='/barchart'  element={<BarChart />}/>
+          <Route path='/barchart'  element={<BarChartPage />}/>
           <Route path='/devices'  element={<Devices />}/>
-          <Route path='/linechart'  element={<LineChart />}/>
-          <Route path='/piechart'  element={<PieChart />}/>
+          <Route path='/linechart'  element={<LineChartPage />}/>
+          <Route path='/piechart'  element={<PieChartPage />}/>
           <Route path='/users'  element={<Users isCollapsed={isCollapsed} />}/>
         </Routes>
         <Footer />

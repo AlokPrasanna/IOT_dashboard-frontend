@@ -1,16 +1,19 @@
 import React from 'react';
-import { PageTitle } from '../../components/molecules';
+import { PageTitle , PieChart } from '../../components/molecules';
 import "./pieChart.scss"
 
-const PieChart:React.FC = () => {
+const PieChartPage:React.FC = () => {
   return (
-    <div className='piechart-content'>
+    <div className='piechart-content' >
       <PageTitle 
         title='Pie Chart'
         subTitle='This is the Pie Chart Page'
       />
+      <div style={{height:"70vh" , width:"90%" , display:'flex' , justifyContent:'center' , alignItems:'center', padding:"20px" }}>
+        <PieChart />
+      </div>
     </div>
   )
 }
 
-export default PieChart
+export default PieChartPage

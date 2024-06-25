@@ -13,7 +13,7 @@ const HeaderBar: React.FC = () => {
     }
 
     const handelLogout = () => {
-        if(confirm("are you sure to log out?")){
+        if(confirm("Are you sure to log out?")){
             navigate("/");
         }
     }

@@ -23,13 +23,13 @@ const ViewProfile:React.FC = () => {
           style={{width:"250px"}}
         />
         <div className='profile-details'>
-          <p>Alok Prasanna</p>
-          <p>alokprasanna1104@gmail.com</p>
-          <p>199830910519</p>
-          <p>071981116</p>
+          <p>Jone Dio</p>
+          <p>jone@gmail.com</p>
+          <p>200200200200</p>
+          <p>0222222222</p>
           <p>Male</p>
-          <p>1998/11/04</p>
-          <p>501/1, Punchi Mandawala, Mandawala</p>
+          <p>1990/01/01</p>
+          <p>101 Maple St, Springfield, IL 62704</p>
         </div>
       </div>
     </div>

@@ -1,9 +1,9 @@
 // -------------------- Imports --------------------
-import BarChart from "./Barchart/BarChart";
+import BarChartPage from "./Barchart/BarChart";
 import Dashboard from "./Dashboard/Dashboard";
 import Devices from "./Devices/Devices";
-import LineChart from "./LineChart/LineChart";
-import PieChart from "./PieChart/PieChart";
+import LineChartPage from "./LineChart/LineChart";
+import PieChartPage from "./PieChart/PieChart";
 import Users from "./Users/Users";
 import Login from "./Login/Login";
 import EditProfile from "./EditProfile/EditProfile";
@@ -11,11 +11,11 @@ import ViewProfile from "./ViewProfile/ViewProfile";
 
 // -------------------- Exports --------------------
 export {
-    BarChart,
+    BarChartPage,
     Dashboard,
     Devices,
-    LineChart,
-    PieChart,
+    LineChartPage,
+    PieChartPage,
     Users,
     Login,
     EditProfile,

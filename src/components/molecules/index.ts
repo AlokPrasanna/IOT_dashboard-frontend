@@ -4,6 +4,9 @@ import SideBar from "./SideBar/SideBar";
 import PageTitle from "./PageTitle/PageTitle";
 import DashboardCard from "./DashboardCard/DashboardCard";
 import Footer from "./Footer/Footer";
+import BarChart from "./BarChart/BarChart";
+import LineChart from "./LineChart/LineChart";
+import PieChart from "./PieChart/PieChart";
 
 // -------------------- Exports --------------------
 export {
@@ -11,5 +14,8 @@ export {
     SideBar,
     PageTitle,
     DashboardCard,
-    Footer
+    Footer,
+    BarChart,
+    LineChart,
+    PieChart
 }

@@ -1,16 +1,19 @@
 import React from 'react';
-import { PageTitle } from '../../components/molecules';
+import { PageTitle , BarChart } from '../../components/molecules';
 import "./barchart.scss"
 
-const BarChart:React.FC = () => {
+const BarChartPage:React.FC = () => {
   return (
     <div className='barchart-content'>
       <PageTitle 
         title='Bar Chart'
         subTitle='This is the Bar Chart Page'
       />
+      <div style={{height:"70vh" , width:"90%" , display:'flex' , justifyContent:'center' , alignItems:'center', padding:"20px" }}>
+        <BarChart isDashboard={false} />
+      </div>
     </div>
   )
 }
 
-export default BarChart
+export default BarChartPage

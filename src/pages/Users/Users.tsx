@@ -5,12 +5,14 @@ import { useTheme } from '../../context/Theme/ThemeContext';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Icon , Table } from '../../components/atoms';
+import useFetch from '../../hooks/UseFetch';
+
 
 interface FormValues {
   fullName: string;
   nic: string;
   email: string;
-  phoneNumber: string;
+  contact: string;
   address: string;
   gender: string;
   birthday: string;
@@ -24,7 +26,7 @@ const initialValues: FormValues = {
   fullName: '',
   nic: '',
   email: '',
-  phoneNumber: '',
+  contact: '',
   address: '',
   gender: 'Male',
   birthday: '',
@@ -38,7 +40,7 @@ const validationSchema = Yup.object({
   fullName: Yup.string().required('Full Name is required'),
   nic: Yup.string().required('NIC is required'),
   email: Yup.string().email('Invalid email format').required('Email is required'),
-  phoneNumber: Yup.string().required('Contact Number is required'),
+  contact: Yup.string().required('Contact Number is required'),
   address: Yup.string().required('Address is required'),
   gender: Yup.string().required('Gender is required'),
   birthday: Yup.string().required('Birthday is required'),
@@ -53,14 +55,376 @@ interface UsersProps {
   isCollapsed: boolean
 }
 
+interface User {
+  _id: string;
+  fullName: string;
+  emailAddress: string;
+  imageUrl: string;
+  nic: string;
+  contact: string;
+  gender: string;
+  birthday: string;
+  userType: string;
+  sendEmailStatus: string;
+}
+
 const Users: React.FC<UsersProps> = ({isCollapsed}) => {
+  //const {data , loading , error} = useFetch({path:"users/all"});
+  const [usersData , setUsersData] = useState<any>([]);
   const [addUser, setAddUser] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
   const [selectedRow, setSelectedRow] = useState<Record<string, any> | null>(null);
   const [showEditPopup , setShowEditPopup] = useState<boolean>(false);
-
   const { colors } = useTheme();
+
+  // useEffect(() => {
+  //  if(data.status){
+  //   const transformData = data.users.map((d:User) => ({
+  //     id:d._id,
+  //     fullName:d.fullName,
+  //     emailAddress:d.emailAddress,
+  //     imgeUrl:d.imageUrl,
+  //     nic:d.nic,
+  //     contact:d.contact,
+  //     gender:d.gender,
+  //     birthday:d.birthday,
+  //     userType:d.userType,
+  //     sedEmailStatus:d.sendEmailStatus
+  //   }));
+  //   setUsersData(transformData);
+  //  }
+  // },[data])
+
+  //console.log(data);
+
+  const data = [
+    {
+      "id": "1",
+      "fullName": "John Doe",
+      "emailAddress": "john.doe@gmail.com",
+      "imgeUrl": "http://example.com/image1.jpg",
+      "nic": "200200200200",
+      "contact": "5005006001",
+      "gender": "Male",
+      "birthday": "1990/01/01",
+      "userType": "Admin",
+      "sedEmailStatus": "No",
+      "address": "123 Main St, Springfield, IL 62701"
+    },
+    {
+      "id": "2",
+      "fullName": "Jane Smith",
+      "emailAddress": "jane.smith@gmail.com",
+      "imgeUrl": "http://example.com/image2.jpg",
+      "nic": "200200200201",
+      "contact": "5005006002",
+      "gender": "Female",
+      "birthday": "1991/02/02",
+      "userType": "User",
+      "sedEmailStatus": "Yes",
+      "address": "456 Elm St, Springfield, IL 62702"
+    },
+    {
+      "id": "3",
+      "fullName": "Alice Johnson",
+      "emailAddress": "alice.johnson@gmail.com",
+      "imgeUrl": "http://example.com/image3.jpg",
+      "nic": "200200200202",
+      "contact": "5005006003",
+      "gender": "Female",
+      "birthday": "1992/03/03",
+      "userType": "User",
+      "sedEmailStatus": "No",
+      "address": "789 Oak St, Springfield, IL 62703"
+    },
+    {
+      "id": "4",
+      "fullName": "Bob Brown",
+      "emailAddress": "bob.brown@gmail.com",
+      "imgeUrl": "http://example.com/image4.jpg",
+      "nic": "200200200203",
+      "contact": "5005006004",
+      "gender": "Male",
+      "birthday": "1993/04/04",
+      "userType": "Admin",
+      "sedEmailStatus": "Yes",
+      "address": "101 Maple St, Springfield, IL 62704"
+    },
+    {
+      "id": "5",
+      "fullName": "Charlie Davis",
+      "emailAddress": "charlie.davis@gmail.com",
+      "imgeUrl": "http://example.com/image5.jpg",
+      "nic": "200200200204",
+      "contact": "5005006005",
+      "gender": "Male",
+      "birthday": "1994/05/05",
+      "userType": "User",
+      "sedEmailStatus": "No",
+      "address": "202 Pine St, Springfield, IL 62705"
+    },
+    {
+      "id": "6",
+      "fullName": "David Evans",
+      "emailAddress": "david.evans@gmail.com",
+      "imgeUrl": "http://example.com/image6.jpg",
+      "nic": "200200200205",
+      "contact": "5005006006",
+      "gender": "Male",
+      "birthday": "1995/06/06",
+      "userType": "User",
+      "sedEmailStatus": "Yes",
+      "address": "303 Birch St, Springfield, IL 62706"
+    },
+    {
+      "id": "7",
+      "fullName": "Eve Wilson",
+      "emailAddress": "eve.wilson@gmail.com",
+      "imgeUrl": "http://example.com/image7.jpg",
+      "nic": "200200200206",
+      "contact": "5005006007",
+      "gender": "Female",
+      "birthday": "1996/07/07",
+      "userType": "Admin",
+      "sedEmailStatus": "No",
+      "address": "404 Cedar St, Springfield, IL 62707"
+    },
+    {
+      "id": "8",
+      "fullName": "Frank Garcia",
+      "emailAddress": "frank.garcia@gmail.com",
+      "imgeUrl": "http://example.com/image8.jpg",
+      "nic": "200200200207",
+      "contact": "5005006008",
+      "gender": "Male",
+      "birthday": "1997/08/08",
+      "userType": "User",
+      "sedEmailStatus": "Yes",
+      "address": "505 Walnut St, Springfield, IL 62708"
+    },
+    {
+      "id": "9",
+      "fullName": "Grace Martin",
+      "emailAddress": "grace.martin@gmail.com",
+      "imgeUrl": "http://example.com/image9.jpg",
+      "nic": "200200200208",
+      "contact": "5005006009",
+      "gender": "Female",
+      "birthday": "1998/09/09",
+      "userType": "User",
+      "sedEmailStatus": "No",
+      "address": "606 Cherry St, Springfield, IL 62709"
+    },
+    {
+      "id": "10",
+      "fullName": "Henry Lee",
+      "emailAddress": "henry.lee@gmail.com",
+      "imgeUrl": "http://example.com/image10.jpg",
+      "nic": "200200200209",
+      "contact": "5005006010",
+      "gender": "Male",
+      "birthday": "1999/10/10",
+      "userType": "Admin",
+      "sedEmailStatus": "Yes",
+      "address": "707 Sycamore St, Springfield, IL 62710"
+    },
+    {
+      "id": "11",
+      "fullName": "Isabel Clark",
+      "emailAddress": "isabel.clark@gmail.com",
+      "imgeUrl": "http://example.com/image11.jpg",
+      "nic": "200200200210",
+      "contact": "5005006011",
+      "gender": "Female",
+      "birthday": "2000/11/11",
+      "userType": "User",
+      "sedEmailStatus": "No",
+      "address": "808 Ash St, Springfield, IL 62711"
+    },
+    {
+      "id": "12",
+      "fullName": "Jack King",
+      "emailAddress": "jack.king@gmail.com",
+      "imgeUrl": "http://example.com/image12.jpg",
+      "nic": "200200200211",
+      "contact": "5005006012",
+      "gender": "Male",
+      "birthday": "1989/12/12",
+      "userType": "Admin",
+      "sedEmailStatus": "Yes",
+      "address": "909 Elmwood St, Springfield, IL 62712"
+    },
+    {
+      "id": "13",
+      "fullName": "Karen Wright",
+      "emailAddress": "karen.wright@gmail.com",
+      "imgeUrl": "http://example.com/image13.jpg",
+      "nic": "200200200212",
+      "contact": "5005006013",
+      "gender": "Female",
+      "birthday": "1988/01/13",
+      "userType": "User",
+      "sedEmailStatus": "No",
+      "address": "1010 Evergreen St, Springfield, IL 62713"
+    },
+    {
+      "id": "14",
+      "fullName": "Leo Scott",
+      "emailAddress": "leo.scott@gmail.com",
+      "imgeUrl": "http://example.com/image14.jpg",
+      "nic": "200200200213",
+      "contact": "5005006014",
+      "gender": "Male",
+      "birthday": "1987/02/14",
+      "userType": "User",
+      "sedEmailStatus": "Yes",
+      "address": "1111 Holly St, Springfield, IL 62714"
+    },
+    {
+      "id": "15",
+      "fullName": "Mia Green",
+      "emailAddress": "mia.green@gmail.com",
+      "imgeUrl": "http://example.com/image15.jpg",
+      "nic": "200200200214",
+      "contact": "5005006015",
+      "gender": "Female",
+      "birthday": "1986/03/15",
+      "userType": "Admin",
+      "sedEmailStatus": "No",
+      "address": "1212 Poplar St, Springfield, IL 62715"
+    },
+    {
+      "id": "16",
+      "fullName": "Nick Baker",
+      "emailAddress": "nick.baker@gmail.com",
+      "imgeUrl": "http://example.com/image16.jpg",
+      "nic": "200200200215",
+      "contact": "5005006016",
+      "gender": "Male",
+      "birthday": "1985/04/16",
+      "userType": "User",
+      "sedEmailStatus": "Yes",
+      "address": "1313 Dogwood St, Springfield, IL 62716"
+    },
+    {
+      "id": "17",
+      "fullName": "Olivia Hill",
+      "emailAddress": "olivia.hill@gmail.com",
+      "imgeUrl": "http://example.com/image17.jpg",
+      "nic": "200200200216",
+      "contact": "5005006017",
+      "gender": "Female",
+      "birthday": "1984/05/17",
+      "userType": "User",
+      "sedEmailStatus": "No",
+      "address": "1414 Fir St, Springfield, IL 62717"
+    },
+    {
+      "id": "18",
+      "fullName": "Paul Harris",
+      "emailAddress": "paul.harris@gmail.com",
+      "imgeUrl": "http://example.com/image18.jpg",
+      "nic": "200200200217",
+      "contact": "5005006018",
+      "gender": "Male",
+      "birthday": "1983/06/18",
+      "userType": "Admin",
+      "sedEmailStatus": "Yes",
+      "address": "1515 Maple St, Springfield, IL 62718"
+    },
+    {
+      "id": "19",
+      "fullName": "Quincy Young",
+      "emailAddress": "quincy.young@gmail.com",
+      "imgeUrl": "http://example.com/image19.jpg",
+      "nic": "200200200218",
+      "contact": "5005006019",
+      "gender": "Male",
+      "birthday": "1982/07/19",
+      "userType": "User",
+      "sedEmailStatus": "No",
+      "address": "1616 Palm St, Springfield, IL 62719"
+    },
+    {
+      "id": "20",
+      "fullName": "Rachel Adams",
+      "emailAddress": "rachel.adams@gmail.com",
+      "imgeUrl": "http://example.com/image20.jpg",
+      "nic": "200200200219",
+      "contact": "5005006020",
+      "gender": "Female",
+      "birthday": "1981/08/20",
+      "userType": "User",
+      "sedEmailStatus": "Yes",
+      "address": "1717 Willow St, Springfield, IL 62720"
+    },
+    {
+      "id": "21",
+      "fullName": "Steve Mitchell",
+      "emailAddress": "steve.mitchell@gmail.com",
+      "imgeUrl": "http://example.com/image21.jpg",
+      "nic": "200200200220",
+      "contact": "5005006021",
+      "gender": "Male",
+      "birthday": "1980/09/21",
+      "userType": "Admin",
+      "sedEmailStatus": "No",
+      "address": "1818 Magnolia St, Springfield, IL 62721"
+    },
+    {
+      "id": "22",
+      "fullName": "Tina Phillips",
+      "emailAddress": "tina.phillips@gmail.com",
+      "imgeUrl": "http://example.com/image22.jpg",
+      "nic": "200200200221",
+      "contact": "5005006022",
+      "gender": "Female",
+      "birthday": "1979/10/22",
+      "userType": "User",
+      "sedEmailStatus": "Yes",
+      "address": "1919 Olive St, Springfield, IL 62722"
+    },
+    {
+      "id": "23",
+      "fullName": "Uma Stewart",
+      "emailAddress": "uma.stewart@gmail.com",
+      "imgeUrl": "http://example.com/image23.jpg",
+      "nic": "200200200222",
+      "contact": "5005006023",
+      "gender": "Female",
+      "birthday": "1978/11/23",
+      "userType": "User",
+      "sedEmailStatus": "No",
+      "address": "2020 Vine St, Springfield, IL 62723"
+    },
+    {
+      "id": "24",
+      "fullName": "Victor Ross",
+      "emailAddress": "victor.ross@gmail.com",
+      "imgeUrl": "http://example.com/image24.jpg",
+      "nic": "200200200223",
+      "contact": "5005006024",
+      "gender": "Male",
+      "birthday": "1977/12/24",
+      "userType": "Admin",
+      "sedEmailStatus": "Yes",
+      "address": "2121 Ivy St, Springfield, IL 62724"
+    },
+    {
+      "id": "25",
+      "fullName": "Wendy Allen",
+      "emailAddress": "wendy.allen@gmail.com",
+      "imgeUrl": "http://example.com/image25.jpg",
+      "nic": "200200200224",
+      "contact": "5005006025",
+      "gender": "Female",
+      "birthday": "1976/01/25",
+      "userType": "User",
+      "sedEmailStatus": "No",
+      "address": "2222 Oakwood St, Springfield, IL 62725"
+    }
+  ]
 
   const handleRowSelect = (rowData: Record<string, any>) => {
     setSelectedRow(rowData);
@@ -98,316 +462,14 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
   const columns = [
     { accessKey: "fullName", value: "Name" },
     { accessKey: "nic", value: "NIC No" },
-    { accessKey: "email", value: "Email" },
-    { accessKey: "phoneNumber", value: "Contact No." },
+    { accessKey: "emailAddress", value: "Email" },
+    { accessKey: "contact", value: "Contact No." },
     { accessKey: "address", value: "Address" },
     { accessKey: "gender", value: "Gender" },
     { accessKey: "birthday", value: "Birthday" },
     { accessKey: "userType", value: "User Type" },
-    { accessKey: "sendEmail", value: "Send Email Status" },
+    { accessKey: "sedEmailStatus", value: "Send Email Status" },
   ];
-
-  let data = [
-    {
-        "fullName": '<img src="/user.jpg" alt="User" /> Christopher Griffith',
-        "nic": "697-25-3860",
-        "email": "reginaldmartinez@smith.info",
-        "phoneNumber": "+1-078-755-7228x67651",
-        "address": "742 Shepherd Green Apt. 234\nNorth Teresa, ID 14298",
-        "gender": "Female",
-        "birthday": "2016-06-16",
-        "userType": "Admin",
-        "sendEmail": "No",
-        "password": "8I(6RFQcOd",
-        "confirmPassword": "+4HkNj_xh*"
-    },
-    {
-        "fullName": "Peter Rivera",
-        "nic": "818-53-6957",
-        "email": "aaronconway@gmail.com",
-        "phoneNumber": "(532)054-2317x29129",
-        "address": "52611 Raymond Springs Apt. 283\nNorth Amyton, WY 61171",
-        "gender": "Male",
-        "birthday": "1952-04-13",
-        "userType": "Admin",
-        "sendEmail": "Yes",
-        "password": "@7%iJGFCsp",
-        "confirmPassword": "MLG*6WZywW"
-    },
-    {
-        "fullName": "Troy Jones",
-        "nic": "857-58-9484",
-        "email": "shannonatkinson@hotmail.com",
-        "phoneNumber": "(286)960-3684x3297",
-        "address": "08278 White Avenue\nMeganmouth, TN 13729",
-        "gender": "Female",
-        "birthday": "1968-10-05",
-        "userType": "Member",
-        "sendEmail": "Yes",
-        "password": "#587EJtQ&c",
-        "confirmPassword": "@a(6KNt7a("
-    },
-    {
-        "fullName": "Erica Miller",
-        "nic": "556-13-4178",
-        "email": "mariahjones@gmail.com",
-        "phoneNumber": "145-114-8997",
-        "address": "USS Valdez\nFPO AE 64971",
-        "gender": "Male",
-        "birthday": "1999-01-06",
-        "userType": "Member",
-        "sendEmail": "No",
-        "password": "!jOiK+v^E3",
-        "confirmPassword": "n#1MBFxyx0"
-    },
-    {
-        "fullName": "Raymond Mullins",
-        "nic": "240-15-5447",
-        "email": "cynthia66@benson-mills.org",
-        "phoneNumber": "+1-110-982-5437x07235",
-        "address": "7647 Cox Estates\nHaysfort, OR 34629",
-        "gender": "Female",
-        "birthday": "1955-10-07",
-        "userType": "Member",
-        "sendEmail": "No",
-        "password": "*B+P^n8CVJ",
-        "confirmPassword": "G_9MO##hRQ"
-    },
-    {
-        "fullName": "Danielle Elliott",
-        "nic": "389-77-0881",
-        "email": "ebennett@gmail.com",
-        "phoneNumber": "(013)989-6435x2212",
-        "address": "4564 Kevin Station\nPort Benjaminton, AR 78069",
-        "gender": "Female",
-        "birthday": "1942-12-24",
-        "userType": "Member",
-        "sendEmail": "No",
-        "password": "*0i6Eclq*B",
-        "confirmPassword": "G4TzZ@jWq)"
-    },
-    {
-        "fullName": "Andrew Brown",
-        "nic": "325-02-5366",
-        "email": "dannysingleton@turner.com",
-        "phoneNumber": "+1-648-818-7134x566",
-        "address": "458 Hernandez Tunnel Apt. 140\nAmyfort, VA 25783",
-        "gender": "Female",
-        "birthday": "1972-02-26",
-        "userType": "Admin",
-        "sendEmail": "Yes",
-        "password": "TV)+F_4tD7",
-        "confirmPassword": "q=7KH7KQ)X"
-    },
-    {
-        "fullName": "Andrew Evans",
-        "nic": "162-95-3713",
-        "email": "rebeccawood@lane.com",
-        "phoneNumber": "048.087.2341x236",
-        "address": "52585 Stanley Place Apt. 826\nNorth Stephenfort, NJ 72115",
-        "gender": "Female",
-        "birthday": "2006-12-01",
-        "userType": "Member",
-        "sendEmail": "No",
-        "password": "rH$OeGM7k3",
-        "confirmPassword": "gk?D#1zE!@"
-    },
-    {
-        "fullName": "Paul Jensen",
-        "nic": "606-71-7174",
-        "email": "watsonchelsea@yahoo.com",
-        "phoneNumber": "(160)660-6737",
-        "address": "68327 Armstrong Shoal\nNorth Garyport, SD 79134",
-        "gender": "Female",
-        "birthday": "1941-06-25",
-        "userType": "Admin",
-        "sendEmail": "Yes",
-        "password": "T40*YGmGJ0",
-        "confirmPassword": "Yk$3X&LD^C"
-    },
-    {
-        "fullName": "Amanda Nguyen",
-        "nic": "425-92-6681",
-        "email": "shannonmeyer@walker-cameron.biz",
-        "phoneNumber": "769.117.1843x1808",
-        "address": "2503 Holland Fields Apt. 250\nWest Amandatown, NC 24937",
-        "gender": "Female",
-        "birthday": "1954-07-05",
-        "userType": "Member",
-        "sendEmail": "Yes",
-        "password": "r!3JZ4Jm+q",
-        "confirmPassword": "R3eBzDR=8V"
-    },
-    {
-        "fullName": "Tina Watson",
-        "nic": "196-62-0182",
-        "email": "gailcarlson@johnson.org",
-        "phoneNumber": "(200)317-4083",
-        "address": "204 Rebecca Square\nDebrafurt, KS 35968",
-        "gender": "Female",
-        "birthday": "1985-01-06",
-        "userType": "Admin",
-        "sendEmail": "Yes",
-        "password": "P#tF7K&VyZ",
-        "confirmPassword": "w*W3O$ZZ3r"
-    },
-    {
-        "fullName": "Jessica Perez",
-        "nic": "870-19-6892",
-        "email": "kellermanndiane@yahoo.com",
-        "phoneNumber": "148.518.0222",
-        "address": "USS Stewart\nFPO AE 45501",
-        "gender": "Female",
-        "birthday": "1927-09-01",
-        "userType": "Admin",
-        "sendEmail": "No",
-        "password": "Fk*6GvXvLg",
-        "confirmPassword": "b)B^7M#A#5"
-    },
-    {
-        "fullName": "Kevin Hale",
-        "nic": "051-85-2094",
-        "email": "jordanjohnson@ramsey.com",
-        "phoneNumber": "492.527.6115",
-        "address": "14208 Morales Garden Suite 283\nSandersborough, WI 82113",
-        "gender": "Male",
-        "birthday": "2013-12-21",
-        "userType": "Admin",
-        "sendEmail": "No",
-        "password": "##DiJe?T(N",
-        "confirmPassword": "H$UQ4d5x4Y"
-    },
-    {
-        "fullName": "Dr. Mary Ingram",
-        "nic": "254-72-9880",
-        "email": "pterry@watson-klein.com",
-        "phoneNumber": "001-784-843-6746x01594",
-        "address": "8880 Henry Mountain\nAmyview, MO 57316",
-        "gender": "Female",
-        "birthday": "1988-05-15",
-        "userType": "Admin",
-        "sendEmail": "No",
-        "password": "T43%XW@X5*",
-        "confirmPassword": "F@THfD1&LG"
-    },
-    {
-        "fullName": "Christopher Sullivan",
-        "nic": "492-45-8497",
-        "email": "pjones@hardy-dawson.com",
-        "phoneNumber": "101-703-3140",
-        "address": "306 Jones Branch Apt. 784\nMartinland, UT 91980",
-        "gender": "Female",
-        "birthday": "1937-09-25",
-        "userType": "Admin",
-        "sendEmail": "No",
-        "password": "BQ=HXBQ_5+",
-        "confirmPassword": "$D_yvMYtT+"
-    },
-    {
-        "fullName": "Kaylee Clark",
-        "nic": "741-05-5427",
-        "email": "kevin70@ford.org",
-        "phoneNumber": "001-982-762-9818",
-        "address": "141 Charles Tunnel Suite 339\nNew Lindsay, SC 33666",
-        "gender": "Female",
-        "birthday": "1972-01-30",
-        "userType": "Admin",
-        "sendEmail": "No",
-        "password": "FKF^OZpD(y",
-        "confirmPassword": "F8%1=AkU1)"
-    },
-    {
-        "fullName": "Christopher Griffith",
-        "nic": "883-24-8377",
-        "email": "mariasanchez@weaver-stark.com",
-        "phoneNumber": "(529)678-5186",
-        "address": "70536 Bowman Ridge Apt. 512\nJensenside, GA 15224",
-        "gender": "Female",
-        "birthday": "1995-08-08",
-        "userType": "Admin",
-        "sendEmail": "No",
-        "password": "D^wY^o#3tA",
-        "confirmPassword": "Aw5QytS8r%"
-    },
-    {
-        "fullName": "Mary Brown",
-        "nic": "602-95-2990",
-        "email": "ryan71@cruz-wright.net",
-        "phoneNumber": "001-772-326-1827",
-        "address": "2051 Walker Passage Apt. 059\nDixonberg, MD 51826",
-        "gender": "Female",
-        "birthday": "2004-01-25",
-        "userType": "Member",
-        "sendEmail": "No",
-        "password": "e_NKXz4#c%",
-        "confirmPassword": "lWsF8p1H2_"
-    },
-    {
-        "fullName": "David Kaiser",
-        "nic": "191-05-7368",
-        "email": "kaiser@villarreal-smith.com",
-        "phoneNumber": "915-838-3542x470",
-        "address": "USNV Thomas\nFPO AP 40670",
-        "gender": "Male",
-        "birthday": "1933-04-16",
-        "userType": "Member",
-        "sendEmail": "Yes",
-        "password": "uu1Q5EIs^&",
-        "confirmPassword": "O0%InSJG)r"
-    },
-    {
-        "fullName": "Holly Curry",
-        "nic": "093-68-6678",
-        "email": "cmartin@estrada-moon.net",
-        "phoneNumber": "993.738.1450x69240",
-        "address": "15219 Michelle Viaduct\nDavistown, DE 11728",
-        "gender": "Male",
-        "birthday": "1911-11-11",
-        "userType": "Member",
-        "sendEmail": "Yes",
-        "password": "(!(AVCasT3",
-        "confirmPassword": "$15h4GtAuk"
-    },
-    {
-        "fullName": "Joseph Smith",
-        "nic": "821-89-8894",
-        "email": "reedmichele@gmail.com",
-        "phoneNumber": "+1-918-340-1516x726",
-        "address": "82546 Shawn Rapid Apt. 147\nNew Amanda, AK 86862",
-        "gender": "Female",
-        "birthday": "1945-06-14",
-        "userType": "Admin",
-        "sendEmail": "No",
-        "password": "TE0#4Ogxtz",
-        "confirmPassword": "8Q0sW4nW_)"
-    },
-    {
-        "fullName": "Amy Manning",
-        "nic": "812-24-1471",
-        "email": "toddoconnor@gmail.com",
-        "phoneNumber": "260.905.4421",
-        "address": "51168 Tracy Ports Suite 979\nEvansstad, NV 12551",
-        "gender": "Male",
-        "birthday": "1996-05-25",
-        "userType": "Member",
-        "sendEmail": "No",
-        "password": "EJQO+0Gav1",
-        "confirmPassword": "#kE+huB^k2"
-    },
-    {
-        "fullName": "Susan Peterson",
-        "nic": "445-67-0139",
-        "email": "zacharyjames@yahoo.com",
-        "phoneNumber": "001-092-615-3649x89209",
-        "address": "3299 David Circles Suite 699\nNorth Andrea, OK 71640",
-        "gender": "Female",
-        "birthday": "2024-06-04",
-        "userType": "Admin",
-        "sendEmail": "No",
-        "password": "JZK*0XEmi)",
-        "confirmPassword": "3*2RBiAg$K"
-    }
-];
 
   const handleAddNewUserButton = () => {
     setAddUser(!addUser);
@@ -500,11 +562,11 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
                   placeholder="Contact Number"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.phoneNumber}
+                  value={formik.values.contact}
                   className="full-width"
                 />
-                {formik.touched.phoneNumber && formik.errors.phoneNumber && (
-                  <div style={{color: colors.redAccent[500], fontSize: "12px", fontWeight: "normal"}}>{formik.errors.phoneNumber}</div>
+                {formik.touched.contact && formik.errors.contact && (
+                  <div style={{color: colors.redAccent[500], fontSize: "12px", fontWeight: "normal"}}>{formik.errors.contact}</div>
                 )}
               </div>
               <div>
@@ -672,7 +734,9 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
         </div>
       ) : (
         <div>
-          <Table columns={columns} data={data} onRowSelect={handleRowSelect}/>
+          {data && (
+            <Table columns={columns} data={data} onRowSelect={handleRowSelect}/>
+          )}
         </div>
       )}
       {showEditPopup && (

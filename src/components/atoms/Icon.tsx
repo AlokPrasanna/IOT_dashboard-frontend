@@ -6,7 +6,7 @@ interface IconProps {
     onclick: () => void;
 }
 
-const Icon:React.FC<IconProps> = ({icon , onclick , style}) => {
+const Icon:React.FC<IconProps> = ({icon , onclick , style = {display:"flex" , alignItems:"center" , justifyContent:"center", position:"absolute"}}) => {
   return (
     <button style={style} onClick={onclick}>
       {icon}

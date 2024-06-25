@@ -46,7 +46,7 @@ const SideBar: React.FC<SideBarProps> = ({isCollapsed , toggleSidebar}) => {
                 />
                 </div>
                 <div>
-                    <p style={{color: colors.grey[100]}}>Alok Prasanna</p>
+                    <p style={{color: colors.grey[100]}}>Jone Dio</p>
                 </div>
             </div>
             <ul>
