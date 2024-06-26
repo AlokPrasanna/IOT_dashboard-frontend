@@ -50,7 +50,7 @@
 
 .table-search{
     width: 250px;
-    height: 30px;
+    height: 40px;
     outline: none;
     padding: 4px 5px;
     font-size: 12px;
@@ -103,4 +103,18 @@
 
 .selected-row {
     background-color: #ffe6006e;
+}
+
+.image-content{
+    width: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 15px;
+}
+
+.profile-image{
+    width: 50px;
+    margin-left: 8px;
+    border: 1px solid #0000;
 }

@@ -6,6 +6,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Icon , Table } from '../../components/atoms';
 import useFetch from '../../hooks/UseFetch';
+import ReactLoading from 'react-loading';
 
 
 interface FormValues {
@@ -55,21 +56,8 @@ interface UsersProps {
   isCollapsed: boolean
 }
 
-interface User {
-  _id: string;
-  fullName: string;
-  emailAddress: string;
-  imageUrl: string;
-  nic: string;
-  contact: string;
-  gender: string;
-  birthday: string;
-  userType: string;
-  sendEmailStatus: string;
-}
-
 const Users: React.FC<UsersProps> = ({isCollapsed}) => {
-  //const {data , loading , error} = useFetch({path:"users/all"});
+  const {data , loading , error} = useFetch({path:"users/all"});
   const [usersData , setUsersData] = useState<any>([]);
   const [addUser, setAddUser] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -77,354 +65,6 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
   const [selectedRow, setSelectedRow] = useState<Record<string, any> | null>(null);
   const [showEditPopup , setShowEditPopup] = useState<boolean>(false);
   const { colors } = useTheme();
-
-  // useEffect(() => {
-  //  if(data.status){
-  //   const transformData = data.users.map((d:User) => ({
-  //     id:d._id,
-  //     fullName:d.fullName,
-  //     emailAddress:d.emailAddress,
-  //     imgeUrl:d.imageUrl,
-  //     nic:d.nic,
-  //     contact:d.contact,
-  //     gender:d.gender,
-  //     birthday:d.birthday,
-  //     userType:d.userType,
-  //     sedEmailStatus:d.sendEmailStatus
-  //   }));
-  //   setUsersData(transformData);
-  //  }
-  // },[data])
-
-  //console.log(data);
-
-  const data = [
-    {
-      "id": "1",
-      "fullName": "John Doe",
-      "emailAddress": "john.doe@gmail.com",
-      "imgeUrl": "http://example.com/image1.jpg",
-      "nic": "200200200200",
-      "contact": "5005006001",
-      "gender": "Male",
-      "birthday": "1990/01/01",
-      "userType": "Admin",
-      "sedEmailStatus": "No",
-      "address": "123 Main St, Springfield, IL 62701"
-    },
-    {
-      "id": "2",
-      "fullName": "Jane Smith",
-      "emailAddress": "jane.smith@gmail.com",
-      "imgeUrl": "http://example.com/image2.jpg",
-      "nic": "200200200201",
-      "contact": "5005006002",
-      "gender": "Female",
-      "birthday": "1991/02/02",
-      "userType": "User",
-      "sedEmailStatus": "Yes",
-      "address": "456 Elm St, Springfield, IL 62702"
-    },
-    {
-      "id": "3",
-      "fullName": "Alice Johnson",
-      "emailAddress": "alice.johnson@gmail.com",
-      "imgeUrl": "http://example.com/image3.jpg",
-      "nic": "200200200202",
-      "contact": "5005006003",
-      "gender": "Female",
-      "birthday": "1992/03/03",
-      "userType": "User",
-      "sedEmailStatus": "No",
-      "address": "789 Oak St, Springfield, IL 62703"
-    },
-    {
-      "id": "4",
-      "fullName": "Bob Brown",
-      "emailAddress": "bob.brown@gmail.com",
-      "imgeUrl": "http://example.com/image4.jpg",
-      "nic": "200200200203",
-      "contact": "5005006004",
-      "gender": "Male",
-      "birthday": "1993/04/04",
-      "userType": "Admin",
-      "sedEmailStatus": "Yes",
-      "address": "101 Maple St, Springfield, IL 62704"
-    },
-    {
-      "id": "5",
-      "fullName": "Charlie Davis",
-      "emailAddress": "charlie.davis@gmail.com",
-      "imgeUrl": "http://example.com/image5.jpg",
-      "nic": "200200200204",
-      "contact": "5005006005",
-      "gender": "Male",
-      "birthday": "1994/05/05",
-      "userType": "User",
-      "sedEmailStatus": "No",
-      "address": "202 Pine St, Springfield, IL 62705"
-    },
-    {
-      "id": "6",
-      "fullName": "David Evans",
-      "emailAddress": "david.evans@gmail.com",
-      "imgeUrl": "http://example.com/image6.jpg",
-      "nic": "200200200205",
-      "contact": "5005006006",
-      "gender": "Male",
-      "birthday": "1995/06/06",
-      "userType": "User",
-      "sedEmailStatus": "Yes",
-      "address": "303 Birch St, Springfield, IL 62706"
-    },
-    {
-      "id": "7",
-      "fullName": "Eve Wilson",
-      "emailAddress": "eve.wilson@gmail.com",
-      "imgeUrl": "http://example.com/image7.jpg",
-      "nic": "200200200206",
-      "contact": "5005006007",
-      "gender": "Female",
-      "birthday": "1996/07/07",
-      "userType": "Admin",
-      "sedEmailStatus": "No",
-      "address": "404 Cedar St, Springfield, IL 62707"
-    },
-    {
-      "id": "8",
-      "fullName": "Frank Garcia",
-      "emailAddress": "frank.garcia@gmail.com",
-      "imgeUrl": "http://example.com/image8.jpg",
-      "nic": "200200200207",
-      "contact": "5005006008",
-      "gender": "Male",
-      "birthday": "1997/08/08",
-      "userType": "User",
-      "sedEmailStatus": "Yes",
-      "address": "505 Walnut St, Springfield, IL 62708"
-    },
-    {
-      "id": "9",
-      "fullName": "Grace Martin",
-      "emailAddress": "grace.martin@gmail.com",
-      "imgeUrl": "http://example.com/image9.jpg",
-      "nic": "200200200208",
-      "contact": "5005006009",
-      "gender": "Female",
-      "birthday": "1998/09/09",
-      "userType": "User",
-      "sedEmailStatus": "No",
-      "address": "606 Cherry St, Springfield, IL 62709"
-    },
-    {
-      "id": "10",
-      "fullName": "Henry Lee",
-      "emailAddress": "henry.lee@gmail.com",
-      "imgeUrl": "http://example.com/image10.jpg",
-      "nic": "200200200209",
-      "contact": "5005006010",
-      "gender": "Male",
-      "birthday": "1999/10/10",
-      "userType": "Admin",
-      "sedEmailStatus": "Yes",
-      "address": "707 Sycamore St, Springfield, IL 62710"
-    },
-    {
-      "id": "11",
-      "fullName": "Isabel Clark",
-      "emailAddress": "isabel.clark@gmail.com",
-      "imgeUrl": "http://example.com/image11.jpg",
-      "nic": "200200200210",
-      "contact": "5005006011",
-      "gender": "Female",
-      "birthday": "2000/11/11",
-      "userType": "User",
-      "sedEmailStatus": "No",
-      "address": "808 Ash St, Springfield, IL 62711"
-    },
-    {
-      "id": "12",
-      "fullName": "Jack King",
-      "emailAddress": "jack.king@gmail.com",
-      "imgeUrl": "http://example.com/image12.jpg",
-      "nic": "200200200211",
-      "contact": "5005006012",
-      "gender": "Male",
-      "birthday": "1989/12/12",
-      "userType": "Admin",
-      "sedEmailStatus": "Yes",
-      "address": "909 Elmwood St, Springfield, IL 62712"
-    },
-    {
-      "id": "13",
-      "fullName": "Karen Wright",
-      "emailAddress": "karen.wright@gmail.com",
-      "imgeUrl": "http://example.com/image13.jpg",
-      "nic": "200200200212",
-      "contact": "5005006013",
-      "gender": "Female",
-      "birthday": "1988/01/13",
-      "userType": "User",
-      "sedEmailStatus": "No",
-      "address": "1010 Evergreen St, Springfield, IL 62713"
-    },
-    {
-      "id": "14",
-      "fullName": "Leo Scott",
-      "emailAddress": "leo.scott@gmail.com",
-      "imgeUrl": "http://example.com/image14.jpg",
-      "nic": "200200200213",
-      "contact": "5005006014",
-      "gender": "Male",
-      "birthday": "1987/02/14",
-      "userType": "User",
-      "sedEmailStatus": "Yes",
-      "address": "1111 Holly St, Springfield, IL 62714"
-    },
-    {
-      "id": "15",
-      "fullName": "Mia Green",
-      "emailAddress": "mia.green@gmail.com",
-      "imgeUrl": "http://example.com/image15.jpg",
-      "nic": "200200200214",
-      "contact": "5005006015",
-      "gender": "Female",
-      "birthday": "1986/03/15",
-      "userType": "Admin",
-      "sedEmailStatus": "No",
-      "address": "1212 Poplar St, Springfield, IL 62715"
-    },
-    {
-      "id": "16",
-      "fullName": "Nick Baker",
-      "emailAddress": "nick.baker@gmail.com",
-      "imgeUrl": "http://example.com/image16.jpg",
-      "nic": "200200200215",
-      "contact": "5005006016",
-      "gender": "Male",
-      "birthday": "1985/04/16",
-      "userType": "User",
-      "sedEmailStatus": "Yes",
-      "address": "1313 Dogwood St, Springfield, IL 62716"
-    },
-    {
-      "id": "17",
-      "fullName": "Olivia Hill",
-      "emailAddress": "olivia.hill@gmail.com",
-      "imgeUrl": "http://example.com/image17.jpg",
-      "nic": "200200200216",
-      "contact": "5005006017",
-      "gender": "Female",
-      "birthday": "1984/05/17",
-      "userType": "User",
-      "sedEmailStatus": "No",
-      "address": "1414 Fir St, Springfield, IL 62717"
-    },
-    {
-      "id": "18",
-      "fullName": "Paul Harris",
-      "emailAddress": "paul.harris@gmail.com",
-      "imgeUrl": "http://example.com/image18.jpg",
-      "nic": "200200200217",
-      "contact": "5005006018",
-      "gender": "Male",
-      "birthday": "1983/06/18",
-      "userType": "Admin",
-      "sedEmailStatus": "Yes",
-      "address": "1515 Maple St, Springfield, IL 62718"
-    },
-    {
-      "id": "19",
-      "fullName": "Quincy Young",
-      "emailAddress": "quincy.young@gmail.com",
-      "imgeUrl": "http://example.com/image19.jpg",
-      "nic": "200200200218",
-      "contact": "5005006019",
-      "gender": "Male",
-      "birthday": "1982/07/19",
-      "userType": "User",
-      "sedEmailStatus": "No",
-      "address": "1616 Palm St, Springfield, IL 62719"
-    },
-    {
-      "id": "20",
-      "fullName": "Rachel Adams",
-      "emailAddress": "rachel.adams@gmail.com",
-      "imgeUrl": "http://example.com/image20.jpg",
-      "nic": "200200200219",
-      "contact": "5005006020",
-      "gender": "Female",
-      "birthday": "1981/08/20",
-      "userType": "User",
-      "sedEmailStatus": "Yes",
-      "address": "1717 Willow St, Springfield, IL 62720"
-    },
-    {
-      "id": "21",
-      "fullName": "Steve Mitchell",
-      "emailAddress": "steve.mitchell@gmail.com",
-      "imgeUrl": "http://example.com/image21.jpg",
-      "nic": "200200200220",
-      "contact": "5005006021",
-      "gender": "Male",
-      "birthday": "1980/09/21",
-      "userType": "Admin",
-      "sedEmailStatus": "No",
-      "address": "1818 Magnolia St, Springfield, IL 62721"
-    },
-    {
-      "id": "22",
-      "fullName": "Tina Phillips",
-      "emailAddress": "tina.phillips@gmail.com",
-      "imgeUrl": "http://example.com/image22.jpg",
-      "nic": "200200200221",
-      "contact": "5005006022",
-      "gender": "Female",
-      "birthday": "1979/10/22",
-      "userType": "User",
-      "sedEmailStatus": "Yes",
-      "address": "1919 Olive St, Springfield, IL 62722"
-    },
-    {
-      "id": "23",
-      "fullName": "Uma Stewart",
-      "emailAddress": "uma.stewart@gmail.com",
-      "imgeUrl": "http://example.com/image23.jpg",
-      "nic": "200200200222",
-      "contact": "5005006023",
-      "gender": "Female",
-      "birthday": "1978/11/23",
-      "userType": "User",
-      "sedEmailStatus": "No",
-      "address": "2020 Vine St, Springfield, IL 62723"
-    },
-    {
-      "id": "24",
-      "fullName": "Victor Ross",
-      "emailAddress": "victor.ross@gmail.com",
-      "imgeUrl": "http://example.com/image24.jpg",
-      "nic": "200200200223",
-      "contact": "5005006024",
-      "gender": "Male",
-      "birthday": "1977/12/24",
-      "userType": "Admin",
-      "sedEmailStatus": "Yes",
-      "address": "2121 Ivy St, Springfield, IL 62724"
-    },
-    {
-      "id": "25",
-      "fullName": "Wendy Allen",
-      "emailAddress": "wendy.allen@gmail.com",
-      "imgeUrl": "http://example.com/image25.jpg",
-      "nic": "200200200224",
-      "contact": "5005006025",
-      "gender": "Female",
-      "birthday": "1976/01/25",
-      "userType": "User",
-      "sedEmailStatus": "No",
-      "address": "2222 Oakwood St, Springfield, IL 62725"
-    }
-  ]
 
   const handleRowSelect = (rowData: Record<string, any>) => {
     setSelectedRow(rowData);
@@ -448,8 +88,8 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
   if (colors) {
     document.documentElement.style.setProperty('--btn-bg', colors.greenAccent[500]);
     document.documentElement.style.setProperty('--text', colors.grey[100]);
-    document.documentElement.style.setProperty('--btn-clear', colors.redAccent[400]);
-    document.documentElement.style.setProperty('--edit-btn', colors.blueAccent[400]);
+    document.documentElement.style.setProperty('--btn-clear', colors.redAccent[500]);
+    document.documentElement.style.setProperty('--edit-btn', colors.blueAccent[500]);
     document.documentElement.style.setProperty('--bg-color', colors.primary[400]);
   }
 
@@ -459,6 +99,7 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
     document.documentElement.style.setProperty('--icon-transform', "645px");
   }
 
+  console.log("error " , error);
   const columns = [
     { accessKey: "fullName", value: "Name" },
     { accessKey: "nic", value: "NIC No" },
@@ -468,7 +109,7 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
     { accessKey: "gender", value: "Gender" },
     { accessKey: "birthday", value: "Birthday" },
     { accessKey: "userType", value: "User Type" },
-    { accessKey: "sedEmailStatus", value: "Send Email Status" },
+    { accessKey: "sendEmailStatus", value: "Send Email Status" },
   ];
 
   const handleAddNewUserButton = () => {
@@ -505,7 +146,7 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
           title='Users'
           subTitle='This is the Users Page'
         />
-        {addUser === false ? (
+        {!loading && addUser === false ? (
           <div style={{ display:'flex' , gap:"10px"}}>
             <button type='button' className='users-add-button' id='edit-user-btn' onClick={handleEditeButton}>Edit User</button>
             <button type='button' className='users-add-button' id='delete-user-btn' onClick={handleAddNewUserButton}>Delete User</button>
@@ -517,7 +158,13 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
         )}
         
       </div>
-      {addUser === true ? (
+      {loading ? (
+        <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height:"100%" }}>
+          <span style={{ color: colors.grey[100], padding: '10px' }}>Loading...</span>
+          <ReactLoading type="spin" color={colors.blueAccent[400]} height={50} width={50} />
+      </div>
+      ) :(
+        addUser === true ? (
         <div className="form-container">
           <div className="form-header">
             <h2>Create a New User Profile</h2>
@@ -557,8 +204,8 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
               <div>
                 <input
                   type="text"
-                  id="phoneNumber"
-                  name="phoneNumber"
+                  id="contact"
+                  name="contact"
                   placeholder="Contact Number"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
@@ -734,11 +381,11 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
         </div>
       ) : (
         <div>
-          {data && (
-            <Table columns={columns} data={data} onRowSelect={handleRowSelect}/>
-          )}
+          {data !== null && error === null ? (
+            <Table columns={columns} data={data.users} onRowSelect={handleRowSelect}/>
+          ): <p>{error}</p>}
         </div>
-      )}
+      ))}
       {showEditPopup && (
         <div className='edit-user-popup'>
           <div className="popup-header">
@@ -762,24 +409,24 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
               <div>
                 <input
                   type="email"
-                  id="email"
-                  name="email"
+                  id="emailAddress"
+                  name="emailAddress"
                   placeholder="Email Address"
                   onBlur={formik.handleBlur}
-                  onChange={(e) => setSelectedRow((prev) => ({ ...prev, email: e.target.value }))}
-                  value={selectedRow?.email}
+                  onChange={(e) => setSelectedRow((prev) => ({ ...prev, emailAddress: e.target.value }))}
+                  value={selectedRow?.emailAddress}
                   className="full-width"
                 />
               </div>
               <div>
                 <input
                   type="text"
-                  id="phoneNumber"
-                  name="phoneNumber"
+                  id="contact"
+                  name="contact"
                   placeholder="Contact Number"
                   onBlur={formik.handleBlur}
-                  onChange={(e) => setSelectedRow((prev) => ({ ...prev, phoneNumber: e.target.value }))}
-                  value={selectedRow?.phoneNumber}
+                  onChange={(e) => setSelectedRow((prev) => ({ ...prev, contact: e.target.value }))}
+                  value={selectedRow?.contact}
                   className="full-width"
                 />
               </div>
@@ -852,8 +499,8 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
                   id="sendEmail"
                   name="sendEmail"
                   onBlur={formik.handleBlur}
-                  onChange={(e) => setSelectedRow((prev) => ({ ...prev, sendEmail: e.target.value }))}
-                  value={selectedRow?.sendEmail}
+                  onChange={(e) => setSelectedRow((prev) => ({ ...prev, sendEmailStatus: e.target.value }))}
+                  value={selectedRow?.sendEmailStatus}
                   className="full-width"
                 >
                   <option value="No">No</option>

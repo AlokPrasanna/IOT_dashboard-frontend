@@ -94,10 +94,14 @@ const SortingData: React.FC<{
                 >
                     {columns.map((column, colIndex) => {
                         const cellContent = row[column.accessKey];
+                        console.log(cellContent);
                         return (
                             <td className='table-cell table-td' key={colIndex}>
                                 {column.accessKey === 'fullName' ? (
-                                    <span className='' style={{display:"flex", alignItems:"center" , width:`${column.accessKey === "fullName"?"220px":"auto"}`}} dangerouslySetInnerHTML={{ __html: cellContent.replace(/<img/g, '<img class="table-img"') }} />
+                                    <div className='image-content'>
+                                        <img className='profile-image' src={row.imageUrl || '../../../../unknown-user.png'} alt='Profile-Image' />
+                                        <span>{cellContent}</span>
+                                    </div>
                                 ) : (
                                     cellContent
                                 )}
@@ -131,6 +135,8 @@ const Table: React.FC<TableDataProps> = ({ columns, data, onRowSelect }) => {
             setSortOrder('asc');
         }
     }
+
+    console.log("data " , data)
 
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(event.target.value);

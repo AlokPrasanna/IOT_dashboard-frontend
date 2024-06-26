@@ -43,35 +43,31 @@ const Login: React.FC = () => {
     validationSchema,
     onSubmit: async (values) => {
       setLoading(true);
-      try {
-        // API call to login endpoint
-        const response = await axios.post(`${baseUrl}users/login`, values);
-        const data = response.data;
 
-        if (response.status) {
+      axios.post(`${baseUrl}users/login`, values)
+      .then(res => {
+        if (res.data.status) {
           // Successful login
-          setLoading(false);
+          console.log("Login successful");
           navigate('/dashboard');
+        } 
+      })
+      .catch(err => {
+        if (axios.isAxiosError(err) && err.response) {
+          // Extract error message from response
+          const serverError = err.response.data;
+          alert(serverError.error.message || 'An error occurred while logging in.');
+          console.error('Server error:', serverError);
         } else {
-          // Failed login
-          setLoading(false);
-          setTimeout(() => {
-            alert(data.error.message);
-          },500)
-           // Display error message from API response
-          console.error('Login failed:', data.error.message);
-          return;
+          // Handle unexpected errors
+          alert('An unexpected error occurred.');
+          console.error('Unexpected error:', err);
         }
-      } catch (error) {
+      })
+      .finally(() => {
         setLoading(false);
-        // Error handling for API call
-        setTimeout(() => {
-          alert('An error occurred while logging in.');
-        },500)
-        console.error('Error:', error);
-        return;
-      }
-    },
+      });    
+   },
   });
 
   return (

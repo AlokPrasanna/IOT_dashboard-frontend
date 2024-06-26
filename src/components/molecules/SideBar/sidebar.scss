@@ -16,7 +16,6 @@
 
     &.collaps {
         width: 80px;
-
         .logo {
             display: flex;
             flex-direction: column;
@@ -60,6 +59,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            margin-top: 20px;
             span {
                 font-size: 18px;
                 font-weight: 700;
@@ -100,7 +100,7 @@
 }
 
 .sidebar ul li svg {
-    width: 40px;
+    width: 35px;
   }
 
 .hover-icon{
