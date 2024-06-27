@@ -2,10 +2,11 @@ import React from 'react';
 import { useTheme } from '../../../context/Theme/ThemeContext';
 import {Icon} from '../../atoms';
 import "./headerBar.scss";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate , useLocation  } from 'react-router-dom';
 
 const HeaderBar: React.FC = () => {
-    const { theme,  toggleTheme } = useTheme();
+    const { theme,  toggleTheme  , colors} = useTheme();
+    const location = useLocation();
     const navigate = useNavigate();
 
     const handelChangePages = (url:string) => () => {
@@ -28,7 +29,7 @@ const HeaderBar: React.FC = () => {
                         </svg> 
                     }
                     onclick={toggleTheme}
-                    style={{ cursor: 'pointer' , color:'white', width:"20px" , background:"none" , border:"none"}}
+                    style={{ cursor: 'pointer' , color:'white', width:"25px" , background:"none" , border:"none"}}
                 />
             ) : (
                 <Icon
@@ -38,7 +39,7 @@ const HeaderBar: React.FC = () => {
                         </svg>
                     }
                     onclick={toggleTheme}
-                    style={{ cursor: 'pointer',  color:'black', width:"20px" , background:"none" , border:"none" }}
+                    style={{ cursor: 'pointer',  color:'black', width:"25px" , background:"none" , border:"none" }}
                 />
             )}
             <Icon
@@ -50,7 +51,14 @@ const HeaderBar: React.FC = () => {
 
                 }
                 onclick={handelChangePages("/edit-profile")}
-                style={{ cursor: 'pointer' , color:theme === "dark" ? "white" : "black" , width:"20px" , background:"none" , border:"none" }}
+                style={{ 
+                        cursor: 'pointer', 
+                        color:theme === "dark" ? "white" : "black", 
+                        width:"25px", 
+                        background:"none", 
+                        border:"none",
+                        ...(location.pathname === "/edit-profile" && { color: colors.blueAccent[400] }) 
+                    }}
             />
             <Icon
                 icon={
@@ -60,7 +68,14 @@ const HeaderBar: React.FC = () => {
 
                 }
                 onclick={handelChangePages("/view-profile")}
-                style={{ cursor: 'pointer' , color:theme === "dark" ? "white" : "black" ,  width:"20px" , background:"none" , border:"none" }}
+                style={{ 
+                    cursor: 'pointer', 
+                    color:theme === "dark" ? "white" : "black", 
+                    width:"25px", 
+                    background:"none", 
+                    border:"none",
+                    ...(location.pathname === "/view-profile" && { color: colors.blueAccent[400] })
+                }}
             />
             <Icon
                 icon={
@@ -69,7 +84,13 @@ const HeaderBar: React.FC = () => {
                     </svg>
                 }
                 onclick={handelLogout}
-                style={{ cursor: 'pointer' , color:theme === "dark" ? "white" : "black" ,  width:"20px" , background:"none" , border:"none" }}
+                style={{ 
+                    cursor: 'pointer', 
+                    color:theme === "dark" ? "white" : "black", 
+                    width:"25px", 
+                    background:"none", 
+                    border:"none"
+                 }}
             />
         </div>
         </div>
