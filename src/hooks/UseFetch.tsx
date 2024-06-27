@@ -4,9 +4,10 @@ import axios from 'axios';
 
 interface UseFetchProps {
     path: string;
+    trigger?: boolean;
 }
 
-const useFetch = ({ path }: UseFetchProps) => {
+const useFetch = ({ path , trigger }: UseFetchProps) => {
     const { baseUrl } = useBaseUrl();
     const [data, setData] = useState<any>(null);
     const [loading, setLoading] = useState<boolean>(true);
@@ -30,7 +31,7 @@ const useFetch = ({ path }: UseFetchProps) => {
 
     useEffect(() => {
         fetchData();
-    }, [baseUrl, path]);
+    }, [baseUrl, path , trigger]);
 
     console.log("useFetch return value - data:", data, "loading:", loading, "error:", error);
     return { data, loading, error };

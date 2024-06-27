@@ -61,7 +61,8 @@ interface UsersProps {
 }
 
 const Users: React.FC<UsersProps> = ({isCollapsed}) => {
-  const {data , loading , error} = useFetch({path:"users/all"});
+  const [fetchTrigger, setFetchTrigger] = useState<boolean>(false);
+  const {data , loading , error} = useFetch({path:"users/all", trigger:fetchTrigger});
   const [addUser, setAddUser] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
@@ -76,14 +77,6 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
   };
 
   console.log(data);
-
-  const handleEditeButton = () => {
-    if(selectedRow === null){
-      alert("Please select row before click 'Edite User' button");
-      return;
-    }
-    setShowEditPopup(true);
-  }
 
   useEffect(() => {
     if (selectedRow !== null) {
@@ -167,6 +160,7 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
         .then( res => {
           console.log(res);
           alert("User created successfully!");
+          setFetchTrigger(!fetchTrigger);
         })
         .catch(error => {
           console.log(error);
@@ -190,6 +184,37 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
     setShowEditPopup(false);
   }
 
+  const handleEditeButton = () => {
+    if(selectedRow === null){
+      alert("Please select row before click 'Edite User' button");
+      return;
+    }
+    setShowEditPopup(true);
+  }
+
+  const handelDeleteUserButton = async() => {
+    if(selectedRow === null){
+      alert("Please select row before click 'Delete User' button");
+      return;
+    }
+
+    confirm('Are you sure to delete selected user?');
+
+    const url = `${baseUrl}users/delete/${selectedRow._id}`;
+    await axios
+      .delete(url)
+      .then( res => {
+        console.log(res);
+        alert("User delete successfully!");
+        setFetchTrigger(!fetchTrigger);
+        setSelectedRow(null);
+      })
+      .catch(error => {
+        console.log(error);
+        alert(error.response.data.error.message);
+      })
+  }
+
   return (
     <div className='users-content'>
       <div className='users-header'>
@@ -200,7 +225,7 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
         {!loading && addUser === false ? (
           <div style={{ display:'flex' , gap:"10px"}}>
             <button type='button' className='users-add-button' id='edit-user-btn' onClick={handleEditeButton}>Edit User</button>
-            <button type='button' className='users-add-button' id='delete-user-btn' onClick={handleAddNewUserButton}>Delete User</button>
+            <button type='button' className='users-add-button' id='delete-user-btn' onClick={handelDeleteUserButton}>Delete User</button>
             <button type='button' className='users-add-button' onClick={handleAddNewUserButton}>Add New User</button>
           </div>
         ): (
