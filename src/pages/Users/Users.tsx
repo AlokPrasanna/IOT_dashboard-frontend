@@ -4,9 +4,11 @@ import "./users.scss";
 import { useTheme } from '../../context/Theme/ThemeContext';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { Icon , Table } from '../../components/atoms';
+import { Table } from '../../components/atoms';
 import useFetch from '../../hooks/UseFetch';
 import ReactLoading from 'react-loading';
+import axios from 'axios';
+import { useBaseUrl } from '../../context/BaseUrl/BaseUrlContext';
 
 
 interface FormValues {
@@ -17,6 +19,7 @@ interface FormValues {
   address: string;
   gender: string;
   birthday: string;
+  imageUrl:string;
   userType: string;
   sendEmail: string;
   password: string;
@@ -31,6 +34,7 @@ const initialValues: FormValues = {
   address: '',
   gender: 'Male',
   birthday: '',
+  imageUrl:'',
   userType: 'Member',
   sendEmail: 'No',
   password: '',
@@ -58,18 +62,20 @@ interface UsersProps {
 
 const Users: React.FC<UsersProps> = ({isCollapsed}) => {
   const {data , loading , error} = useFetch({path:"users/all"});
-  const [usersData , setUsersData] = useState<any>([]);
   const [addUser, setAddUser] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
   const [selectedRow, setSelectedRow] = useState<Record<string, any> | null>(null);
   const [showEditPopup , setShowEditPopup] = useState<boolean>(false);
+  const {baseUrl} = useBaseUrl();
   const { colors } = useTheme();
 
   const handleRowSelect = (rowData: Record<string, any>) => {
     setSelectedRow(rowData);
     console.log('Selected Row Data:', selectedRow);
   };
+
+  console.log(data);
 
   const handleEditeButton = () => {
     if(selectedRow === null){
@@ -109,7 +115,7 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
     { accessKey: "gender", value: "Gender" },
     { accessKey: "birthday", value: "Birthday" },
     { accessKey: "userType", value: "User Type" },
-    { accessKey: "sendEmailStatus", value: "Send Email Status" },
+    { accessKey: "sendEmailStatus", value: "Send Email" },
   ];
 
   const handleAddNewUserButton = () => {
@@ -119,8 +125,53 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
   const formik = useFormik({
     initialValues,
     validationSchema,
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: async(values) => {
+
+      confirm("Are you sure to continue?");
+
+      const currentDate = new Date();
+
+      // Current Date
+      const year = currentDate.getFullYear();
+      const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+      const day = String(currentDate.getDate()).padStart(2, '0');
+      const formattedDate = `${year}-${month}-${day}`;
+  
+      // Current Time
+      const hours = String(currentDate.getHours()).padStart(2, '0');
+      const minutes = String(currentDate.getMinutes()).padStart(2, '0');
+      const seconds = String(currentDate.getSeconds()).padStart(2, '0');
+      const formattedTime = `${hours}:${minutes}:${seconds}`;
+
+      const data = {
+        fullName:values.fullName,
+        emailAddress:values.email,
+        address:values.address,
+        imageUrl:values.imageUrl,
+        contact:values.contact,
+        nic:values.nic,
+        gender:values.gender,
+        birthday:values.birthday,
+        userType:values.userType,
+        sendEmailStatus:values.sendEmail,
+        password:values.password,
+        dateCreated:formattedDate,
+        timeCreated:formattedTime,
+        dateUpdated:formattedDate,
+        timeUpdated:formattedTime
+      }
+      const url = `${baseUrl}users/create-new-user`;
+      console.log(url);
+      await axios
+        .post(url, data)
+        .then( res => {
+          console.log(res);
+          alert("User created successfully!");
+        })
+        .catch(error => {
+          console.log(error);
+          alert(error.response.data.error.message);
+        })
     },
   });
 
@@ -305,10 +356,15 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
                   value={formik.values.password}
                   className="full-width"
                 />
-             
-                <Icon 
-                  icon={
-                    showPassword ? (
+
+                <button 
+                  className='showPassword-icon' 
+                  onClick={(e) => {
+                      e.preventDefault();
+                      setShowPassword(!showPassword);
+                    }} 
+                  style={{top:`${formik.touched.password ? "33%" : "50%"}`}}>
+                  {showPassword ? (
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
@@ -317,11 +373,8 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.242 4.242L9.88 9.88" />
                       </svg>
-                    )
-                  }
-                  onclick={() => setShowPassword(!showPassword)}
-                  style={{ cursor: 'pointer' , color: "black" , backgroundColor:"none",  width:"25px" , background:"none" , border:"none",position:"absolute" , right:"5px", top:"60%", transform:"translateY(-50%)"}}
-                />
+                    )}
+                </button>
                 {formik.touched.password && formik.errors.password && (
                   <div style={{color: colors.redAccent[500], fontSize: "12px", fontWeight: "normal"}}>{formik.errors.password}</div>
                 )}
@@ -337,9 +390,14 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
                   value={formik.values.confirmPassword}
                   className="full-width"
                 />
-                <Icon 
-                  icon={
-                    showConfirmPassword ? (
+                <button 
+                  className='showPassword-icon' 
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setShowConfirmPassword(!showConfirmPassword);
+                  }} 
+                  style={{top:`${formik.touched.password ? "33%" : "50%"}`}}>
+                  {showConfirmPassword ? (
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
@@ -348,11 +406,8 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.242 4.242L9.88 9.88" />
                       </svg>
-                    )
-                  }
-                  onclick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  style={{ cursor: 'pointer' , backgroundColor:"none", color: "black" ,  width:"25px" , background:"none" , border:"none",position:"absolute" , right:"5px", top:"60%", transform:"translateY(-50%)"} }
-                />
+                    )}
+                </button>
                 {formik.touched.confirmPassword && formik.errors.confirmPassword && (
                   <div style={{color: colors.redAccent[500], fontSize: "12px", fontWeight: "normal"}}>{formik.errors.confirmPassword}</div>
                 )}
