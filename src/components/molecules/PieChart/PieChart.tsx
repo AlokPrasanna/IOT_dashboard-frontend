@@ -89,7 +89,7 @@ const PieChart:React.FC = () => {
             itemDirection: 'left-to-right',
             itemOpacity: 1,
             symbolSize: 18,
-            symbolShape: 'circle',
+            symbolShape: 'square',
             effects: [
                 {
                     on: 'hover',

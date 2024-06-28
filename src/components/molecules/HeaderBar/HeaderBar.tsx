@@ -15,6 +15,7 @@ const HeaderBar: React.FC = () => {
 
     const handelLogout = () => {
         if(confirm("Are you sure to log out?")){
+            localStorage.setItem('userId' , '');
             navigate("/");
         }
     }

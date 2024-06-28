@@ -3,6 +3,7 @@ import { useTheme } from '../../../context/Theme/ThemeContext';
 import { Icon  , Image} from '../../atoms';
 import "./sidebar.scss";
 import { useNavigate , useLocation } from 'react-router-dom';
+import useFetch from '../../../hooks/UseFetch';
 
 interface SideBarProps {
     isCollapsed: boolean;
@@ -13,6 +14,10 @@ const SideBar: React.FC<SideBarProps> = ({isCollapsed , toggleSidebar}) => {
     const navigate = useNavigate();
     const location = useLocation();
     const { colors, theme } = useTheme();
+    const userId = localStorage.getItem('userId');
+    const {data , error , loading } = useFetch({path:`users/one/${userId}`}); 
+
+    console.log(data)
     
     if(colors){
         document.documentElement.style.setProperty('--hover-color', colors.blueAccent[400]);
@@ -42,13 +47,13 @@ const SideBar: React.FC<SideBarProps> = ({isCollapsed , toggleSidebar}) => {
             <div className="user">
                 <div className='user-image'>
                 <Image 
-                    src='./user.jpg'
+                    src={data?.user?.imageUrl ? data?.user?.imageUrl : "../../../unknown-user.png" ?? ""}
                     alt='user'
                     style={{cursor:'pointer' , width:"50px", borderRadius:"100%", border:`1px solid ${colors.grey[100]}`, display:'flex' , justifyContent:'center' , alignItems:'center'}}
                 />
                 </div>
                 <div>
-                    <p style={{color: colors.grey[100]}}>Jone Dio</p>
+                    <p style={{color: colors.grey[100]}}>{data?.user?.fullName ?? "Loading..."}</p>
                 </div>
             </div>
             <ul>
