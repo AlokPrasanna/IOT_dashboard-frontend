@@ -28,6 +28,7 @@
 
   .form-grid  input , select{
     height: 35px;
+    padding-left: 5px;
   }
 
   .pasword {
@@ -76,8 +77,48 @@
 
   .auth-content input {
     height: 35px;
+    padding-left: 5px;
   }
 
   .pasword {
     position: relative;
+  }
+
+  .add-image{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+
+  .add-image-content{
+    width: 49%;
+    background-color: #ffffff;
+    height: 35px;
+    border: 1px solid #767676;
+    padding: 6px 8px;
+  }
+
+  .image-buttons{
+    display: flex;
+    gap: 20px;
+  }
+
+  .image-button{
+    padding: 5px 8px;
+    border: none;
+    border-radius: 4px;
+    color: var(--text);
+  }
+
+  .delete-button{
+    background-color: var(--btn-clear);
+  }
+
+  .save-button{
+    background-color: var(--edit-btn);
+  }
+
+  .image-button:hover{
+    background-color: #808080;
+    transition: background-color 0.3s ease-in-out;
   }

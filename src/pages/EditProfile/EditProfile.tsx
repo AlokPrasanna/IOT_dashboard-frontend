@@ -1,49 +1,29 @@
-import React, {useState} from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { PageTitle } from '../../components/molecules';
-import "./editProfile.scss";
+import './editProfile.scss';
 import { useTheme } from '../../context/Theme/ThemeContext';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Icon } from '../../components/atoms';
-
-interface FormValues {
-  fullName: string;
-  nic: string;
-  email: string;
-  phoneNumber: string;
-  address: string;
-  gender: string;
-  birthday: string;
-  password: string;
-  confirmPassword: string;
-}
-
-const initialValues: FormValues = {
-  fullName: '',
-  nic: '',
-  email: '',
-  phoneNumber: '',
-  address: '',
-  gender: 'Male',
-  birthday: '',
-  password: '',
-  confirmPassword: '',
-};
+import useFetch from '../../hooks/UseFetch';
+import ReactLoading from 'react-loading';
 
 const validationSchema = Yup.object({
-  email: Yup.string().email('Invalid email format'),
-  confirmPassword: Yup.string()
-    .oneOf([Yup.ref('password')], 'Passwords must match'),
+  emailAddress: Yup.string().email('Invalid email format'),
+  confirmPassword: Yup.string().oneOf([Yup.ref('password')], 'Passwords must match'),
 });
 
-
 interface EditeProps {
-  isCollapsed: boolean
+  isCollapsed: boolean;
 }
 
-const EditProfile:React.FC<EditeProps> = ({isCollapsed}) => {
+const EditProfile: React.FC<EditeProps> = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
+  const userId = localStorage.getItem('userId');
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const { data, loading, error } = useFetch({ path: `users/one/${userId}` });
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const { colors } = useTheme();
 
@@ -56,24 +36,86 @@ const EditProfile:React.FC<EditeProps> = ({isCollapsed}) => {
   }
 
   const formik = useFormik({
-    initialValues,
+    initialValues: {
+      fullName: '',
+      nic: '',
+      emailAddress: '',
+      contact: '',
+      address: '',
+      gender: '',
+      birthday: '',
+      password: '',
+      confirmPassword: '',
+    },
     validationSchema,
     onSubmit: (values) => {
       console.log(values);
     },
   });
 
+  useEffect(() => {
+    if (data?.user) {
+      formik.setValues({
+        fullName: data.user.fullName || '',
+        nic: data.user.nic || '',
+        emailAddress: data.user.emailAddress || '',
+        contact: data.user.contact || '',
+        address: data.user.address || '',
+        gender: data.user.gender || '',
+        birthday: data.user.birthday || '',
+        password: '',
+        confirmPassword: '',
+      });
+    }
+  }, [data]);
+
   const handleClearButton = () => {
     formik.resetForm();
-  }
+  };
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setImageFile(e.target.files[0]);
+    }
+  };
+
+  const handleRemoveImage = () => {
+    setImageFile(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
   return (
     <div className='edit-profile-content'>
        <PageTitle 
         title='Edite Profile Details'
         subTitle=''
       />
+      {loading ? (
+        <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height:'50vh'}}>
+          <span style={{ color: colors.grey[100], padding: '10px' }}>Loading...</span>
+          <ReactLoading type="spin" color={colors.blueAccent[400]} height={50} width={50} />
+        </div>
+      ) : (
       <div className='edit-form'>
       <form onSubmit={formik.handleSubmit}>
+      <div className='add-image'>
+        <span className='personal-header'>{data?.user?.imageUrl === "" || undefined ? "Add Image" : "Change Image"}</span>
+        <div style={{display:"flex" , gap:"30px" , alignItems:"center"}}>
+          <input
+            type='file'
+            className='add-image-content placeholder'
+            onChange={handleImageChange}
+            ref={fileInputRef}
+          />
+          {imageFile && (
+                <div className='image-buttons'>
+                  <button className='image-button delete-button' type='button' onClick={handleRemoveImage}>Remove Image</button>
+                  <button className='image-button save-button' type='button'>Save Image</button>
+                </div>
+              )}
+        </div>
+      </div>
       <span className='personal-header'>Personal Details</span>
             <div className="form-grid">
               <div>
@@ -96,12 +138,12 @@ const EditProfile:React.FC<EditeProps> = ({isCollapsed}) => {
                   placeholder="Email Address"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.email}
+                  value={formik.values.emailAddress}
                   className="edit-input placeholder"
                 />
-                {formik.touched.email && formik.errors.email && (
-                  <div style={{color: colors.redAccent[500], fontSize: "12px", fontWeight: "normal"}}>{formik.errors.email}</div>
-                )}
+                {/* {formik.touched.emailAddress && formik.errors.emailAddress && (
+                  <div style={{color: colors.redAccent[500], fontSize: "12px", fontWeight: "normal"}}>{formik.errors.emailAddress}</div>
+                )} */}
               </div>
               <div>
                 <input
@@ -111,7 +153,7 @@ const EditProfile:React.FC<EditeProps> = ({isCollapsed}) => {
                   placeholder="Contact Number"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.phoneNumber}
+                  value={formik.values.contact}
                   className="edit-input placeholder"
                 />
               </div>
@@ -228,10 +270,11 @@ const EditProfile:React.FC<EditeProps> = ({isCollapsed}) => {
             </div>
             <div className="submit-button">
               <button type="button" id='clear-btn' onClick={handleClearButton}>Clear</button>
-              <button type="submit">Edit Details</button>
+              <button type="submit">Save Changes</button>
             </div>
           </form>
       </div>
+      )}
     </div>
   )
 }
