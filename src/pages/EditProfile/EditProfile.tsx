@@ -44,12 +44,22 @@ const EditProfile: React.FC<EditeProps> = () => {
       address: '',
       gender: '',
       birthday: '',
-      password: '',
-      confirmPassword: '',
+      currentPassword: '',
+      newPassword: '',
     },
     validationSchema,
     onSubmit: (values) => {
-      console.log(values);
+      const data = {
+        fullName:values.fullName,
+        emailAddress:values.emailAddress,
+        imageUrl:'',
+        nic:values.nic,
+        contact:values.contact,
+        address:values.address,
+        birthday:values.birthday,
+        gender:values.gender,
+
+      }
     },
   });
 
@@ -63,8 +73,8 @@ const EditProfile: React.FC<EditeProps> = () => {
         address: data.user.address || '',
         gender: data.user.gender || '',
         birthday: data.user.birthday || '',
-        password: '',
-        confirmPassword: '',
+        currentPassword: '',
+        newPassword: '',
       });
     }
   }, [data]);
@@ -97,6 +107,7 @@ const EditProfile: React.FC<EditeProps> = () => {
           <ReactLoading type="spin" color={colors.blueAccent[400]} height={50} width={50} />
         </div>
       ) : (
+        <div>
       <div className='edit-form'>
       <form onSubmit={formik.handleSubmit}>
       <div className='add-image'>
@@ -117,7 +128,7 @@ const EditProfile: React.FC<EditeProps> = () => {
         </div>
       </div>
       <span className='personal-header'>Personal Details</span>
-            <div className="form-grid">
+            <div className="form-grid-edit">
               <div>
                 <input
                   type="text"
@@ -215,10 +226,10 @@ const EditProfile: React.FC<EditeProps> = () => {
                   type={showPassword ? "text" : "password"}
                   id="edit-password"
                   name="password"
-                  placeholder="Password"
+                  placeholder="Current Password"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.password}
+                  value={formik.values.currentPassword}
                   className="edit-input placeholder"
                 />
                 <Icon 
@@ -235,7 +246,7 @@ const EditProfile: React.FC<EditeProps> = () => {
                     )
                   }
                   onclick={() => setShowPassword(!showPassword)}
-                  style={{ cursor: 'pointer' , backgroundColor:"none", color: "black" ,  width:"25px" , background:"none" , border:"none",position:"absolute" , right:"5px", top:"60%", transform:"translateY(-50%)"}}
+                  style={{ cursor: 'pointer' , backgroundColor:"none", color: "black" ,  width:"25px" , background:"none" , border:"none",position:"absolute" , right:"5px", top:"37%", transform:"translateY(-50%)"}}
                 />
               </div>
               <div className='edit-password' style={{position:"relative"}}>
@@ -243,10 +254,10 @@ const EditProfile: React.FC<EditeProps> = () => {
                   type={showConfirmPassword ? "text" : "password"}
                   id="edit-confirmPassword"
                   name="confirmPassword"
-                  placeholder="Re Enter Password"
+                  placeholder="New Password"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.confirmPassword}
+                  value={formik.values.newPassword}
                   className="edit-input placeholder"
                 />
                 <Icon 
@@ -263,16 +274,45 @@ const EditProfile: React.FC<EditeProps> = () => {
                     )
                   }
                   onclick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  style={{ cursor: 'pointer' , backgroundColor:"none", color: "black" ,  width:"25px" , background:"none" , border:"none",position:"absolute" , right:"5px", top:"60%", transform:"translateY(-50%)"}}
+                  style={{ cursor: 'pointer' , backgroundColor:"none", color: "black" ,  width:"25px" , background:"none" , border:"none",position:"absolute" , right:"5px", top:"37%", transform:"translateY(-50%)"}}
+                />
+              </div>
+              <div className='edit-password' style={{position:"relative"}}>
+                <input
+                  type={showConfirmPassword ? "text" : "password"}
+                  id="edit-confirmPassword"
+                  name="confirmPassword"
+                  placeholder="Re Enter New Password"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  value={formik.values.newPassword}
+                  className="edit-input placeholder"
+                />
+                <Icon 
+                  icon={
+                    showConfirmPassword ? (
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                      </svg>
+                    ) : (
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.242 4.242L9.88 9.88" />
+                      </svg>
+                    )
+                  }
+                  onclick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  style={{ cursor: 'pointer' , backgroundColor:"none", color: "black" ,  width:"25px" , background:"none" , border:"none",position:"absolute" , right:"5px", top:"37%", transform:"translateY(-50%)"}}
                 />
               </div>
               </div>
             </div>
-            <div className="submit-button">
-              <button type="button" id='clear-btn' onClick={handleClearButton}>Clear</button>
-              <button type="submit">Save Changes</button>
-            </div>
           </form>
+      </div>
+        <div className="submit-button-edit">
+        <button type="button" className='save-btn' id='clear-btn' onClick={handleClearButton}>Clear</button>
+        <button type="submit" className='save-btn'>Save Changes</button>
+      </div>
       </div>
       )}
     </div>
