@@ -10,7 +10,7 @@ import ReactLoading from 'react-loading';
 
 const validationSchema = Yup.object({
   emailAddress: Yup.string().email('Invalid email format'),
-  confirmPassword: Yup.string().oneOf([Yup.ref('password')], 'Passwords must match'),
+  confirmPassword: Yup.string().oneOf([Yup.ref('newPassword')], 'Passwords must match with New Password'),
 });
 
 interface EditeProps {
@@ -20,6 +20,7 @@ interface EditeProps {
 const EditProfile: React.FC<EditeProps> = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
+  const [showNewPassword, setShowNewPassword] = useState<boolean>(false);
   const userId = localStorage.getItem('userId');
   const [imageFile, setImageFile] = useState<File | null>(null);
   const { data, loading, error } = useFetch({ path: `users/one/${userId}` });
@@ -46,9 +47,16 @@ const EditProfile: React.FC<EditeProps> = () => {
       birthday: '',
       currentPassword: '',
       newPassword: '',
+      confirmPassword:''
     },
     validationSchema,
     onSubmit: (values) => {
+      if (values.newPassword && !values.currentPassword) {
+        formik.setErrors({
+          currentPassword: 'Current password is required.'
+        });
+      }
+      console.log(values);
       const data = {
         fullName:values.fullName,
         emailAddress:values.emailAddress,
@@ -64,7 +72,7 @@ const EditProfile: React.FC<EditeProps> = () => {
   });
 
   useEffect(() => {
-    if (data?.user) {
+    if (data && data.user) {
       formik.setValues({
         fullName: data.user.fullName || '',
         nic: data.user.nic || '',
@@ -75,9 +83,10 @@ const EditProfile: React.FC<EditeProps> = () => {
         birthday: data.user.birthday || '',
         currentPassword: '',
         newPassword: '',
+        confirmPassword:''
       });
     }
-  }, [data]);
+  }, []);
 
   const handleClearButton = () => {
     formik.resetForm();
@@ -106,13 +115,15 @@ const EditProfile: React.FC<EditeProps> = () => {
           <span style={{ color: colors.grey[100], padding: '10px' }}>Loading...</span>
           <ReactLoading type="spin" color={colors.blueAccent[400]} height={50} width={50} />
         </div>
-      ) : (
+      ) : !loading && error !== null ?(
+        <span>{error}</span>
+      ):(
         <div>
       <div className='edit-form'>
       <form onSubmit={formik.handleSubmit}>
       <div className='add-image'>
         <span className='personal-header'>{data?.user?.imageUrl === "" || undefined ? "Add Image" : "Change Image"}</span>
-        <div style={{display:"flex" , gap:"30px" , alignItems:"center"}}>
+        <div>
           <input
             type='file'
             className='add-image-content placeholder'
@@ -121,7 +132,7 @@ const EditProfile: React.FC<EditeProps> = () => {
           />
           {imageFile && (
                 <div className='image-buttons'>
-                  <button className='image-button delete-button' type='button' onClick={handleRemoveImage}>Remove Image</button>
+                  <button className='delete-button' type='button' onClick={handleRemoveImage}>Remove Image</button>
                   <button className='image-button save-button' type='button'>Save Image</button>
                 </div>
               )}
@@ -129,7 +140,7 @@ const EditProfile: React.FC<EditeProps> = () => {
       </div>
       <span className='personal-header'>Personal Details</span>
             <div className="form-grid-edit">
-              <div>
+              <div className='edit-input-content'>
                 <input
                   type="text"
                   id="fullName"
@@ -141,26 +152,26 @@ const EditProfile: React.FC<EditeProps> = () => {
                   className="edit-input placeholder"
                 />
               </div>
-              <div>
+              <div className='edit-input-content'>
                 <input
                   type="email"
-                  id="email"
-                  name="email"
+                  id="emailAddress"
+                  name="emailAddress"
                   placeholder="Email Address"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
                   value={formik.values.emailAddress}
                   className="edit-input placeholder"
                 />
-                {/* {formik.touched.emailAddress && formik.errors.emailAddress && (
+                {formik.touched.emailAddress && formik.errors.emailAddress && (
                   <div style={{color: colors.redAccent[500], fontSize: "12px", fontWeight: "normal"}}>{formik.errors.emailAddress}</div>
-                )} */}
+                )}
               </div>
-              <div>
+              <div className='edit-input-content'>
                 <input
                   type="text"
-                  id="phoneNumber"
-                  name="phoneNumber"
+                  id="contact"
+                  name="contact"
                   placeholder="Contact Number"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
@@ -168,7 +179,7 @@ const EditProfile: React.FC<EditeProps> = () => {
                   className="edit-input placeholder"
                 />
               </div>
-              <div>
+              <div className='edit-input-content'>
                 <input
                   type="text"
                   id="nic"
@@ -180,7 +191,7 @@ const EditProfile: React.FC<EditeProps> = () => {
                   className="edit-input placeholder"
                 />
               </div>
-              <div>
+              <div className='edit-input-content'>
                 <input
                   type="text"
                   id="address"
@@ -192,7 +203,7 @@ const EditProfile: React.FC<EditeProps> = () => {
                   className="edit-input placeholder"
                 />
               </div>
-              <div>
+              <div className='edit-input-content'>
                 <input
                   type="date"
                   id="birthday"
@@ -203,7 +214,7 @@ const EditProfile: React.FC<EditeProps> = () => {
                   className="edit-input placeholder"
                 />
               </div>
-              <div>
+              <div className='edit-input-content'>
                 <select
                   id="gender"
                   name="gender"
@@ -221,11 +232,11 @@ const EditProfile: React.FC<EditeProps> = () => {
             <div className='auth'>
               <span className='auth-header'>Authentication Details</span>
               <div className='auth-content'>
-              <div className='edit-password' style={{position:"relative"}}>
+              <div className='edit-password edit-input-content' style={{position:"relative"}}>
                 <input
                   type={showPassword ? "text" : "password"}
                   id="edit-password"
-                  name="password"
+                  name="currentPassword"
                   placeholder="Current Password"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
@@ -246,14 +257,17 @@ const EditProfile: React.FC<EditeProps> = () => {
                     )
                   }
                   onclick={() => setShowPassword(!showPassword)}
-                  style={{ cursor: 'pointer' , backgroundColor:"none", color: "black" ,  width:"25px" , background:"none" , border:"none",position:"absolute" , right:"5px", top:"37%", transform:"translateY(-50%)"}}
+                  style={{ cursor: 'pointer' , backgroundColor:"none", color: "black" ,  width:"25px" , background:"none" , border:"none",position:"absolute" , right:"5px", top:"55%", transform:"translateY(-50%)"}}
                 />
+                {formik.touched.currentPassword && formik.errors.currentPassword && (
+                  <div style={{color: colors.redAccent[500], fontSize: "12px", fontWeight: "normal"}}>{formik.errors.currentPassword}</div>
+                )}
               </div>
-              <div className='edit-password' style={{position:"relative"}}>
+              <div className='edit-password edit-input-content' style={{position:"relative"}}>
                 <input
-                  type={showConfirmPassword ? "text" : "password"}
+                  type={showNewPassword ? "text" : "password"}
                   id="edit-confirmPassword"
-                  name="confirmPassword"
+                  name="newPassword"
                   placeholder="New Password"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
@@ -262,7 +276,7 @@ const EditProfile: React.FC<EditeProps> = () => {
                 />
                 <Icon 
                   icon={
-                    showConfirmPassword ? (
+                    showNewPassword ? (
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
@@ -273,11 +287,11 @@ const EditProfile: React.FC<EditeProps> = () => {
                       </svg>
                     )
                   }
-                  onclick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  style={{ cursor: 'pointer' , backgroundColor:"none", color: "black" ,  width:"25px" , background:"none" , border:"none",position:"absolute" , right:"5px", top:"37%", transform:"translateY(-50%)"}}
+                  onclick={() => setShowNewPassword(!showNewPassword)}
+                  style={{ cursor: 'pointer' , backgroundColor:"none", color: "black" ,  width:"25px" , background:"none" , border:"none",position:"absolute" , right:"5px", top:"55%", transform:"translateY(-50%)"}}
                 />
               </div>
-              <div className='edit-password' style={{position:"relative"}}>
+              <div className='edit-password edit-input-content' style={{position:"relative"}}>
                 <input
                   type={showConfirmPassword ? "text" : "password"}
                   id="edit-confirmPassword"
@@ -285,7 +299,7 @@ const EditProfile: React.FC<EditeProps> = () => {
                   placeholder="Re Enter New Password"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.newPassword}
+                  value={formik.values.confirmPassword}
                   className="edit-input placeholder"
                 />
                 <Icon 
@@ -302,8 +316,11 @@ const EditProfile: React.FC<EditeProps> = () => {
                     )
                   }
                   onclick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  style={{ cursor: 'pointer' , backgroundColor:"none", color: "black" ,  width:"25px" , background:"none" , border:"none",position:"absolute" , right:"5px", top:"37%", transform:"translateY(-50%)"}}
+                  style={{ cursor: 'pointer' , backgroundColor:"none", color: "black" ,  width:"25px" , background:"none" , border:"none",position:"absolute" , right:"5px", top:"55%", transform:"translateY(-50%)"}}
                 />
+                {formik.touched.confirmPassword && formik.errors.confirmPassword && (
+                  <div style={{color: colors.redAccent[500], fontSize: "12px", fontWeight: "normal"}}>{formik.errors.confirmPassword}</div>
+                )}
               </div>
               </div>
             </div>
@@ -311,7 +328,7 @@ const EditProfile: React.FC<EditeProps> = () => {
       </div>
         <div className="submit-button-edit">
         <button type="button" className='save-btn' id='clear-btn' onClick={handleClearButton}>Clear</button>
-        <button type="submit" className='save-btn'>Save Changes</button>
+        <button type='button' onClick={formik.submitForm} className='save-btn'>Save Changes</button>
       </div>
       </div>
       )}

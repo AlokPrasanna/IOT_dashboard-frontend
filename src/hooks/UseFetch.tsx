@@ -31,7 +31,7 @@ const useFetch = ({ path , trigger }: UseFetchProps) => {
 
     useEffect(() => {
         fetchData();
-    }, [baseUrl, path , trigger]);
+    }, [path , trigger]);
 
     console.log("useFetch return value - data:", data, "loading:", loading, "error:", error);
     return { data, loading, error };
