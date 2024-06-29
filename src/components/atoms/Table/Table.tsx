@@ -12,6 +12,7 @@ interface TableDataProps {
     columns: Column[];
     data: Record<string, any>[];
     onRowSelect: (rowData: Record<string, any>) => void;
+    onActionButtonClick?: (rowData: Record<string, any>) => void;
 }
 
 const Headers: React.FC<{ columns: Column[], onSort: (accessKey: string) => void, sortBy: string, sortOrder: 'asc' | 'desc' }> = ({ columns, onSort, sortBy, sortOrder }) => {
@@ -66,7 +67,8 @@ const SortingData: React.FC<{
     onRowClick: (rowData: Record<string, any>, rowIndex: number) => void,
     selectedRowIndex: number | null,
     columns: Column[]
-}> = ({ data, sortBy, sortOrder, onRowClick, selectedRowIndex, columns }) => {
+    onActionButtonClick?: (rowData: Record<string, any>) => void
+}> = ({ data, sortBy, sortOrder, onRowClick, selectedRowIndex, columns , onActionButtonClick }) => {
     const sortedData = [...data];
 
     sortedData.sort((a, b) => {
@@ -88,7 +90,7 @@ const SortingData: React.FC<{
         <tbody>
             {sortedData.length > 0 ? sortedData.map((row, rowIndex) => (
                 <tr
-                    className={`table-tr ${selectedRowIndex === rowIndex ? 'selected-row' : ''}`}
+                    className={` table-tr ${selectedRowIndex === rowIndex ? 'selected-row' : ''}`}
                     key={rowIndex}
                     onClick={() => onRowClick(row, rowIndex)}
                 >
@@ -96,12 +98,21 @@ const SortingData: React.FC<{
                         const cellContent = row[column.accessKey];
                         console.log(cellContent);
                         return (
-                            <td className='table-cell table-td' key={colIndex}>
+                            <td className={`table-cell table-td ${column.accessKey === 'action' ? 'action-button-column' : ''}`} key={colIndex}>
                                 {column.accessKey === 'fullName' ? (
                                     <div className='image-content'>
                                         <img className='profile-image' src={row.imageUrl || '../../../../unknown-user.png'} alt='Profile-Image' />
                                         <span>{cellContent}</span>
                                     </div>
+                                ) : column.accessKey === 'action' && onActionButtonClick ? (
+                                    <button 
+                                        className="action-button"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            onActionButtonClick(row);
+                                        }}
+                                    >{row.currentState === 'Active' ? 'Inactive' : 'Active'}
+                                    </button>
                                 ) : (
                                     cellContent
                                 )}
@@ -118,7 +129,7 @@ const SortingData: React.FC<{
     );
 }
 
-const Table: React.FC<TableDataProps> = ({ columns, data, onRowSelect }) => {
+const Table: React.FC<TableDataProps> = ({ columns, data, onRowSelect , onActionButtonClick }) => {
     const { colors } = useTheme();
     const [sortBy, setSortBy] = useState<string>('');
     const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
@@ -184,6 +195,8 @@ const Table: React.FC<TableDataProps> = ({ columns, data, onRowSelect }) => {
         document.documentElement.style.setProperty('--bg-color', colors.primary[400]);
         document.documentElement.style.setProperty('--text-color', colors.grey[100]);
         document.documentElement.style.setProperty('--border-b-color', colors.redAccent[400]);
+        document.documentElement.style.setProperty('--button-color', colors.greenAccent[400]);
+        document.documentElement.style.setProperty('--hover-color', colors.blueAccent[400]);
     }
 
     return (
@@ -199,7 +212,7 @@ const Table: React.FC<TableDataProps> = ({ columns, data, onRowSelect }) => {
             </div>
             <table className='table'>
                 <Headers columns={columns} onSort={handleSort} sortBy={sortBy} sortOrder={sortOrder} />
-                <SortingData data={currentData} sortBy={sortBy} sortOrder={sortOrder} onRowClick={handleRowClick} selectedRowIndex={selectedRowIndex} columns={columns} />
+                <SortingData data={currentData} sortBy={sortBy} sortOrder={sortOrder} onRowClick={handleRowClick} selectedRowIndex={selectedRowIndex} columns={columns} onActionButtonClick={onActionButtonClick}/>
             </table>
             <div>
                 <button onClick={firstPage} disabled={currentPage === 1} className="pagination-btn" style={{marginRight:"4px"}}>
