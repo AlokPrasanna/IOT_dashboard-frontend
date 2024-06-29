@@ -39,8 +39,12 @@
 }
 
 .form-container {
-    margin: 20px;
+  margin-top: 20px;
+    padding: 20px;
     max-height: 75vh;
+    background-color: var(--bg-color);
+    border: none;
+    border-radius: 4px;
   }
   
   .form-header {
