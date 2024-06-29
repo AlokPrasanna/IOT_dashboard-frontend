@@ -7,15 +7,22 @@ interface DashboardCardProps {
   icon:ReactNode;
   title:string;
   count:number;
+  isCollapsed:boolean
 }
 
-const DashboardCard:React.FC<DashboardCardProps> = ({icon , title , count}) => {
+const DashboardCard:React.FC<DashboardCardProps> = ({icon , title , count , isCollapsed=false}) => {
   const {colors , theme} = useTheme();
 
   if(colors){
     document.documentElement.style.setProperty("--bg-color" , colors.primary[400]);
     document.documentElement.style.setProperty("--text-color" , colors.grey[100]);
     document.documentElement.style.setProperty("--count-color" , colors.greenAccent[400]);
+  }
+
+  if(isCollapsed){
+    document.documentElement.style.setProperty("--width" ,"23.1%")
+  }else{
+    document.documentElement.style.setProperty("--width" ,"23%")
   }
 
   const handleClick = () => {};

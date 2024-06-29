@@ -4,7 +4,11 @@ import "./dashboard.scss"
 import { DashboardCard } from '../../components/molecules';
 import { useTheme } from '../../context/Theme/ThemeContext';
 
-const Dashboard:React.FC = () => {
+interface DashboardProps {
+  isCollapsed:boolean
+}
+
+const Dashboard:React.FC<DashboardProps> = ({isCollapsed}) => {
   const { colors } = useTheme();
   return (
     <div className='dashboard-content'>
@@ -12,7 +16,7 @@ const Dashboard:React.FC = () => {
         title='Dashboard'
         subTitle='This is the IOT Dashboard Page'
       />
-      <div>
+      <div className='dashboard-data'>
         <div className='dashboard-titles'>
           <DashboardCard 
             icon={
@@ -22,6 +26,7 @@ const Dashboard:React.FC = () => {
             }
             title='Users Count'
             count={25}
+            isCollapsed={isCollapsed}
           />
           <DashboardCard
             icon={
@@ -31,6 +36,7 @@ const Dashboard:React.FC = () => {
             }
             title='Devices Count'
             count={200}
+            isCollapsed={isCollapsed}
           />
           <DashboardCard
             icon={
@@ -40,6 +46,7 @@ const Dashboard:React.FC = () => {
             }
             title='Devices Count'
             count={200}
+            isCollapsed={isCollapsed}
           />
           <DashboardCard
             icon={
@@ -49,9 +56,10 @@ const Dashboard:React.FC = () => {
             }
             title='Devices Count'
             count={200}
+            isCollapsed={isCollapsed}
           />
         </div> 
-        <div style={{height:"45vh" , width:"100%" , display:'flex' , alignItems:'center', padding:"20px" , gap:"20px"}}>
+        <div style={{height:"45vh" , width:"100%" , display:'flex' , alignItems:'center', justifyContent:"start" , gap:"20px"}}>
           <div className='chart' style={{backgroundColor: colors.primary[400]}}>
             <span className='chat-header' style={{color: colors.grey[100]}}>Bar Chart Name</span>
             <BarChart isDashboard={true} />

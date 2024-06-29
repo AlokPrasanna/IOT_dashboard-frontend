@@ -5,11 +5,12 @@
     justify-content: center;
     gap: 5px;
     background-color: var(--bg-color);
-    width: 320px;
+    width: var(--width);
     height: 150px;
     padding: 5px 12px;
     border-radius: 4px;
     color: var(--text-color);
+    transition: width 0.3s ease-in-out;
 }
 
 .dashboard-card-dis{
