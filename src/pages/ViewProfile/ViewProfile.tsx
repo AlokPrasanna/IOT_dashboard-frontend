@@ -13,6 +13,7 @@ const ViewProfile:React.FC = () => {
  
   if(colors){
     document.documentElement.style.setProperty("--text-color" , colors.grey[100]);
+    document.documentElement.style.setProperty("--bg-color" , colors.primary[400]);
   }
   return (
     <div className='view-profile-content'>
@@ -42,6 +43,7 @@ const ViewProfile:React.FC = () => {
             <p>{data.user.birthday}</p>
             <p>{data.user.address}</p>
           </div>
+          <div className='empty'></div>
         </div>
       )}
     </div>
