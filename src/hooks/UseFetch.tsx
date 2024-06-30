@@ -21,7 +21,7 @@ const useFetch = ({ path , trigger }: UseFetchProps) => {
             setData(res.data);
         })
         .catch(err => {
-            setError(err.response);
+            setError(err.response && err.response.data.error.message);
         })
         .finally(() => {
             setLoading(false);

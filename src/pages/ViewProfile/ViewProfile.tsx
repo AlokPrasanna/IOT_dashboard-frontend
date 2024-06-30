@@ -27,7 +27,9 @@ const ViewProfile:React.FC = () => {
           <span style={{ color: colors.grey[100], padding: '10px' }}>Loading...</span>
           <ReactLoading type="spin" color={colors.blueAccent[400]} height={50} width={50} />
         </div>
-      ):( 
+      ): !loading && error !== null ? (
+        <span className='error-msg'>{error}</span>
+      ): !loading && error === null &&( 
         <div className='view-profile-details'>
           <Image 
             src={data.user.imageUrl ? data.user.imageUrl : "../../unknown-user.png"}

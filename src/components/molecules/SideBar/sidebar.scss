@@ -9,7 +9,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    height: 100vh;
+    height: 100%;
     width: 250px;
     padding: 0.4rem 0.8rem;
     transition: width 0.3s ease-in-out;
@@ -110,4 +110,54 @@
 .hover-icon:hover {
     color: var(--hover-color);
     transition: color 0.3s ease-in-out;
+}
+
+.menu{
+    display: none;
+    position: fixed;
+}
+
+.menu button{
+    width: 50px;
+    padding: 5px 8px;
+    cursor: pointer;
+    border: none;
+    background: none;
+}
+.menu ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out;
+    max-height: 0;
+    opacity: 0;
+}
+
+.menu ul.open {
+    max-height: 500px;
+    opacity: 1;
+}
+
+.menu ul li {
+    padding: 15px;
+    border-bottom: 1px solid gray;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.menu ul li svg {
+    width: 30px;
+}
+
+@media screen and (max-width:625px) {
+    .sidebar{
+        display: none;
+    }
+    .menu{
+        display: block;
+        width: 100%;
+    }
 }

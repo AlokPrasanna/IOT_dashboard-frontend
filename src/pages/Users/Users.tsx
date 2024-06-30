@@ -76,7 +76,7 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
     console.log('Selected Row Data:', selectedRow);
   };
 
-  console.log(data);
+  console.log(error);
 
   useEffect(() => {
     if (selectedRow !== null) {
@@ -239,7 +239,9 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
           <span style={{ color: colors.grey[100], padding: '10px' }}>Loading...</span>
           <ReactLoading type="spin" color={colors.blueAccent[400]} height={50} width={50} />
       </div>
-      ) :(
+      ) : !loading && error !== null ? (
+        <span className='error-msg'>{error}</span>
+      ):(
         addUser === true ? (
         <div className="form-container">
           <div className="form-header">

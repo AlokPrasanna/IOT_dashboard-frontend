@@ -163,3 +163,9 @@
     right: 5px;
     transform: translateY(-50%);
   }
+
+  .error-msg{
+    color: var(--text);
+    position: absolute;
+    top: 40%;
+  }

@@ -59,7 +59,7 @@ const Dashboard:React.FC<DashboardProps> = ({isCollapsed}) => {
             isCollapsed={isCollapsed}
           />
         </div> 
-        <div style={{height:"45vh" , width:"100%" , display:'flex' , alignItems:'center', justifyContent:"start" , gap:"20px"}}>
+        <div className='chart-content'>
           <div className='chart' style={{backgroundColor: colors.primary[400]}}>
             <span className='chat-header' style={{color: colors.grey[100]}}>Bar Chart Name</span>
             <BarChart isDashboard={true} />

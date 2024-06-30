@@ -32,7 +32,7 @@ const DashboardCard:React.FC<DashboardCardProps> = ({icon , title , count , isCo
         <Icon 
           icon={icon}
           onclick={handleClick}
-          style={{ color:theme === "dark" ? "white" : "black" ,  width:"47px" , background:"none" , border:"none"  }}
+          style={{ color:theme === "dark" ? "white" : "black" ,  width:"var(--icon-width)" , background:"none" , border:"none"  }}
         />
         <p>{title}</p>
       </div>
