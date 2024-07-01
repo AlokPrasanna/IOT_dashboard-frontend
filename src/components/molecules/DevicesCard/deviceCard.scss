@@ -1,0 +1,98 @@
+.device-card{
+    position: relative;
+    width: 70%;
+    margin: 10px 20px;
+    background-color: var(--bg-color);
+    padding: 10px 20px;
+    border:none;
+    border-radius: 4px;
+}
+
+.device-card-content{
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+}
+
+.device-card-content img {
+    width: 90px;
+    height: 90px;
+    padding: 5px;
+    border: 2px solid gray;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.device-card-content img:hover{
+    transform: scale(1.08);
+    transition: transform 0.3s ease-in-out; 
+}
+
+.device-card-body{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin-left: 5%;
+    font-size: 12px;
+    color: var(--text-color);
+    width: 100%;
+}
+
+.device-card-body span{
+    padding: 2px 1px;
+    border-bottom: 1px solid gray;
+    cursor: pointer;
+}
+
+.device-card-checkbox{
+    position: absolute;
+    top: 82%;
+    right: 5px;
+    cursor: pointer;
+    height: 17px;
+    width: 17px;
+}
+
+.device-card-body span:hover {
+    border-bottom: 2px solid #fcfcfc;
+    transition: font-weight 0.3s ease-in-out ;
+}
+
+.device-card-actions{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 5%;
+    width: 40%;
+}
+
+.device-card-actions button{
+    margin-bottom: 8px;
+    padding: 3px 5px;
+    border: none;
+    border-radius: 4px;
+    color: var(--text-color);
+    cursor: pointer;
+}
+
+#view{
+    background-color: var(--view-color);
+}
+#edit{
+    background-color: var(--edit-color);
+}
+#remove{
+    background-color: var(--remove-color);
+}
+
+.device-card-actions button:hover{
+    transform: scale(1.08);
+    transition: transform 0.3s ease-in-out; 
+}
+
+@media (max-width:1200px) {
+    .device-card{
+        width: 90%;
+    }
+}
+

@@ -7,6 +7,7 @@ import Footer from "./Footer/Footer";
 import BarChart from "./BarChart/BarChart";
 import LineChart from "./LineChart/LineChart";
 import PieChart from "./PieChart/PieChart";
+import DeviceCard from "./DevicesCard/DeviceCard";
 
 // -------------------- Exports --------------------
 export {
@@ -17,5 +18,6 @@ export {
     Footer,
     BarChart,
     LineChart,
-    PieChart
+    PieChart,
+    DeviceCard
 }
