@@ -124,35 +124,37 @@ const DevicesManager:React.FC = () => {
                     <button className='image-button save-button' type='button'>Save Image</button>
                   </div>
                 )}
-                <span>Device Name</span>
-              <input
-                  type="text"
-                  id="deviceName"
-                  name="deviceName"
-                  placeholder="Device Name"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  value={formik.values.deviceName}
-                  className="device-input placeholder"
-                />
                 <div className='selection'>
-                  <span>Choose Group</span>
-                  <select>
-                    <option>None</option>
-                    <option>Group A</option>
-                    <option>Group B</option>
-                    <option>Group C</option>
-                  </select>
-                </div>
-                <div className='selection'>
-                  <span>Choose Owner</span>
-                  <select>
-                    <option>None</option>
-                    <option>Group A</option>
-                    <option>Group B</option>
-                    <option>Group C</option>
-                  </select>
-                </div>
+                  <span>Device Name</span>
+                  <input
+                      type="text"
+                      id="deviceName"
+                      name="deviceName"
+                      placeholder="Device Name"
+                      onBlur={formik.handleBlur}
+                      onChange={formik.handleChange}
+                      value={formik.values.deviceName}
+                      className="device-input placeholder"
+                    />
+                  </div>
+                  <div className='selection'>
+                    <span>Choose Group</span>
+                    <select>
+                      <option>None</option>
+                      <option>Group A</option>
+                      <option>Group B</option>
+                      <option>Group C</option>
+                    </select>
+                  </div>
+                  <div className='selection'>
+                    <span>Choose Owner</span>
+                    <select>
+                      <option>None</option>
+                      <option>Group A</option>
+                      <option>Group B</option>
+                      <option>Group C</option>
+                    </select>
+                  </div>
             </form>
           </div>
           <div className='device-btn action-buttons'>
