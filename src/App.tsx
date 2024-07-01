@@ -10,7 +10,8 @@ import {
   Users,
   Login,
   EditProfile,
-  ViewProfile 
+  ViewProfile,
+  DeviceView
 } from './pages';
 import './App.css';
 import { useTheme } from './context/Theme/ThemeContext';
@@ -43,6 +44,7 @@ const App: React.FC = () => {
           <Route path='/barchart'  element={<BarChartPage />}/>
           <Route path='/devices'  element={<Devices />}/>
           <Route path='/devices-manager'  element={<DevicesManager />}/>
+          <Route path='/device-view'  element={<DeviceView />}/>
           <Route path='/linechart'  element={<LineChartPage />}/>
           <Route path='/piechart'  element={<PieChartPage />}/>
           <Route path='/users'  element={<Users isCollapsed={isCollapsed} />}/>
