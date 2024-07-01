@@ -49,7 +49,8 @@ const Login: React.FC = () => {
         if (res.data.status) {
           // Successful login
           console.log("Login successful");
-          localStorage.setItem('userId' , res.data.id)
+          localStorage.setItem('userId' , res.data.id);
+          localStorage.setItem('userType' , res.data.userType);
           navigate('/dashboard');
         } 
       })
