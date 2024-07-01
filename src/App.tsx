@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { HeaderBar , SideBar , Footer } from './components/molecules';
 import { 
   BarChartPage, 
-  Dashboard, 
+  Dashboard,
+  Devices, 
   DevicesManager, 
   LineChartPage, 
   PieChartPage, 
@@ -40,6 +41,7 @@ const App: React.FC = () => {
           <Route path='/view-profile'  element={<ViewProfile />}/>
           <Route path='/dashboard'  element={<Dashboard isCollapsed={isCollapsed} />}/>
           <Route path='/barchart'  element={<BarChartPage />}/>
+          <Route path='/devices'  element={<Devices />}/>
           <Route path='/devices-manager'  element={<DevicesManager />}/>
           <Route path='/linechart'  element={<LineChartPage />}/>
           <Route path='/piechart'  element={<PieChartPage />}/>
