@@ -364,9 +364,9 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
                   value={formik.values.userType}
                   className="full-width"
                 >
-                  <option value="Member">Member</option>
-                  <option value="Admin">Admin</option>
-                  <option value="SuperAdmin">Super Admin</option>
+                  <option value="Member">Customer</option>
+                  <option value="Admin">Moderator</option>
+                  <option value="SuperAdmin">Admin</option>
                 </select>
                 {formik.touched.userType && formik.errors.userType && (
                   <div style={{color: colors.redAccent[500], fontSize: "12px", fontWeight: "normal"}}>{formik.errors.userType}</div>
