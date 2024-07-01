@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import { PageTitle } from '../../components/molecules';
-import "./devices.scss"
+import "./devicesManager.scss"
 import { Table } from '../../components/atoms';
 
-const Devices:React.FC = () => {
+const DevicesManager:React.FC = () => {
   const [addDevice, setAddDevice] = useState<boolean>(true);
   const [selectedRow, setSelectedRow] = useState<Record<string, any> | null>(null);
 
@@ -66,8 +66,8 @@ const Devices:React.FC = () => {
     <div className='devices-content'>
       <div className="device-header">
         <PageTitle 
-          title='Devices'
-          subTitle='This is the Devices Page'
+          title='Devices Manager'
+          subTitle='This is the Devices Managerment Page'
         />
         {addDevice === false ? (
           <div style={{ display:'flex' , gap:"10px"}}>
@@ -84,4 +84,4 @@ const Devices:React.FC = () => {
   )
 }
 
-export default Devices
+export default DevicesManager;
