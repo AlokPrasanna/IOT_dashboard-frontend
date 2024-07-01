@@ -25,7 +25,8 @@ const data = [{
     active: false,
     on: false,
     group: 'Group A'
-  }
+  },
+  
 ];  
 
   const toggleDevice = (id: string) => {

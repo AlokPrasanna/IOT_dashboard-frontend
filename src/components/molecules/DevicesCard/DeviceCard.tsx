@@ -46,29 +46,6 @@ const DeviceCard:React.FC<DeviceCardProps> = ({device , toggleDevice , editDevic
             <button id='remove' onClick={() => removeDevice(device.id)}>Remove</button> 
         </div>
      </div>
-    {/* <div className="device-header">
-      <h3>{device.name}</h3>
-      <span>ID: {device.id}</span>
-    </div>
-    <div className="device-body">
-      <div className="device-status">
-        <span className={`status-indicator ${device.active ? 'active' : 'inactive'}`} />
-        <label>Active State</label>
-      </div>
-      <div className="device-switch">
-        <label>On/Off State</label>
-        <input type="checkbox" checked={device.on} onChange={() => toggleDevice(device.id)} />
-      </div>
-      <div className="device-group">
-        <label>Group:</label>
-        <span>{device.group}</span>
-      </div>
-    </div>
-    <div className="device-actions">
-    <button onClick={() => editDevice(device.id)}>View</button>
-      <button onClick={() => editDevice(device.id)}>Edit</button>
-      <button onClick={() => removeDevice(device.id)}>Remove</button>
-    </div> */}
   </div>
   )
 }
