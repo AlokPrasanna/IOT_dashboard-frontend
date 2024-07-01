@@ -29,6 +29,7 @@ const DevicesManager:React.FC = () => {
   const [addDevice, setAddDevice] = useState<boolean>(false);
   const [selectedRow, setSelectedRow] = useState<Record<string, any> | null>(null);
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const [showEditPopup , setShowEditPopup] = useState<boolean>(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const {colors} = useTheme();
 
@@ -84,8 +85,13 @@ const DevicesManager:React.FC = () => {
     }
   };
 
+  const HandelEditPopup = () => {
+    setShowEditPopup(true);
+  }
+
   const HandelCanselButton = () => {
     setAddDevice(false);
+    setShowEditPopup(false);
   }
   
   return (
@@ -97,13 +103,13 @@ const DevicesManager:React.FC = () => {
         />
         {addDevice === false ? (
           <div className='action-buttons'>
-          <button type='button' className='device-edit' id='edit-user-btn'>Edit Device</button>
+          <button type='button' className='device-edit' id='edit-user-btn' onClick={HandelEditPopup}>Edit Device</button>
           <button type='button' className='device-delete' id='delete-user-btn'>Delete Device</button>
           <button type='button' className='device-add' onClick={HandleAddDevicesButton}>Add New Device</button>
         </div>
         ):""}
       </div>
-      {addDevice === false ? (
+      {addDevice === false && showEditPopup === false ? (
         <Table columns={columns} data={data} onRowSelect={handleRowSelect} onActionButtonClick={handleActionButtonClick}/>
       ): ""}
       {addDevice === true && (
@@ -161,6 +167,72 @@ const DevicesManager:React.FC = () => {
             <button className='clear-btn'>Clear</button>
             <button className='cansel-btn' onClick={HandelCanselButton} >Cansel</button>
             <button className='create-btn'>Create New Device</button>
+          </div>
+        </div>
+      )}
+      {showEditPopup && (
+        <div className='device-edit-popup'>
+          <div className='create-device-body'>
+            <span>Edit Device Details</span>
+            <form>
+              <span>Change Image</span>
+              <input
+                type='file'
+                className='add-image-content-device placeholder'
+                onChange={handleImageChange}
+                ref={fileInputRef}
+              />
+              {imageFile && (
+                  <div className='image-buttons'>
+                    <button className='delete-button' type='button' onClick={handleRemoveImage}>Remove Image</button>
+                    <button className='image-button save-button' type='button'>Save Image</button>
+                  </div>
+                )}
+                <div className='selection'>
+                  <span>Change Device Name</span>
+                  <input
+                      type="text"
+                      id="deviceName"
+                      name="deviceName"
+                      placeholder="Device Name"
+                      onBlur={formik.handleBlur}
+                      onChange={formik.handleChange}
+                      value={formik.values.deviceName}
+                      className="device-input placeholder"
+                    />
+                  </div>
+                  <div className='selection'>
+                    <span>Change Group</span>
+                    <select>
+                      <option>None</option>
+                      <option>Group A</option>
+                      <option>Group B</option>
+                      <option>Group C</option>
+                    </select>
+                  </div>
+                  <div className='selection'>
+                    <span>Change Owner</span>
+                    <select>
+                      <option>None</option>
+                      <option>Group A</option>
+                      <option>Group B</option>
+                      <option>Group C</option>
+                    </select>
+                  </div>
+                  <div className='selection'>
+                    <span>Change ON / OFF State</span>
+                    <select>
+                      <option>None</option>
+                      <option>ON</option>
+                      <option>OFF</option>
+                    </select>
+                  </div>
+            </form>
+          </div>
+          <div className='device-btn action-buttons'>
+            <button className='clear-btn'>Clear</button>
+            <button className='cansel-btn' onClick={HandelCanselButton} >Cansel</button>
+            <button className='create-btn'>Save Changes</button>
           </div>
         </div>
       )}

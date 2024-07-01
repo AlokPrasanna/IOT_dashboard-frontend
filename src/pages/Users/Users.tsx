@@ -364,9 +364,9 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
                   value={formik.values.userType}
                   className="full-width"
                 >
-                  <option value="Member">Customer</option>
-                  <option value="Admin">Moderator</option>
-                  <option value="SuperAdmin">Admin</option>
+                  <option value="Customer">Customer</option>
+                  <option value="Moderator">Moderator</option>
+                  <option value="Admin">Admin</option>
                 </select>
                 {formik.touched.userType && formik.errors.userType && (
                   <div style={{color: colors.redAccent[500], fontSize: "12px", fontWeight: "normal"}}>{formik.errors.userType}</div>
@@ -454,15 +454,15 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
                 </select>
               </div>
             </div>
-            <div className="submit-button">
+          </form>
+          <div className="submit-button">
               <button type="button" id='cansel-btn' onClick={handleCancelButton}>Cancel</button>
               <button type="button" id='clear-btn' onClick={handleClearButton}>Clear</button>
               <button type="submit">Create New User</button>
             </div>
-          </form>
         </div>
       ) : (
-        <div>
+        <div className='user-table'>
           {data !== null && error === null ? (
             <Table columns={columns} data={data.users} onRowSelect={handleRowSelect}/>
           ): <p>{error}</p>}
