@@ -16,9 +16,10 @@ interface DeviceCardProps {
     toggleDevice: (id: string) => void;
     editDevice: (id: string) => void;
     removeDevice: (id: string) => void;
+    viewDevice: (id: string) => void;
 }
 
-const DeviceCard:React.FC<DeviceCardProps> = ({device , toggleDevice , editDevice , removeDevice}) => {
+const DeviceCard:React.FC<DeviceCardProps> = ({device , toggleDevice , editDevice , removeDevice , viewDevice}) => {
     const {colors} = useTheme();
 
     if(colors){
@@ -41,7 +42,7 @@ const DeviceCard:React.FC<DeviceCardProps> = ({device , toggleDevice , editDevic
             <input type="checkbox" className='device-card-checkbox' checked={device.on} onChange={() => toggleDevice(device.id)} />
         </div>
         <div className='device-card-actions'>
-            <button id='view' onClick={() => editDevice(device.id)}>View</button>
+            <button id='view' onClick={() => viewDevice(device.id)}>View</button>
             <button id='edit' onClick={() => editDevice(device.id)}>Edit</button>
             <button id='remove' onClick={() => removeDevice(device.id)}>Remove</button> 
         </div>

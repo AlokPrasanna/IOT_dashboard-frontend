@@ -120,52 +120,52 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
     validationSchema,
     onSubmit: async(values) => {
 
-      confirm("Are you sure to continue?");
+      if(window.confirm("Are you sure to continue?")){
+        const currentDate = new Date();
 
-      const currentDate = new Date();
+        // Current Date
+        const year = currentDate.getFullYear();
+        const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+        const day = String(currentDate.getDate()).padStart(2, '0');
+        const formattedDate = `${year}-${month}-${day}`;
+    
+        // Current Time
+        const hours = String(currentDate.getHours()).padStart(2, '0');
+        const minutes = String(currentDate.getMinutes()).padStart(2, '0');
+        const seconds = String(currentDate.getSeconds()).padStart(2, '0');
+        const formattedTime = `${hours}:${minutes}:${seconds}`;
 
-      // Current Date
-      const year = currentDate.getFullYear();
-      const month = String(currentDate.getMonth() + 1).padStart(2, '0');
-      const day = String(currentDate.getDate()).padStart(2, '0');
-      const formattedDate = `${year}-${month}-${day}`;
-  
-      // Current Time
-      const hours = String(currentDate.getHours()).padStart(2, '0');
-      const minutes = String(currentDate.getMinutes()).padStart(2, '0');
-      const seconds = String(currentDate.getSeconds()).padStart(2, '0');
-      const formattedTime = `${hours}:${minutes}:${seconds}`;
-
-      const data = {
-        fullName:values.fullName,
-        emailAddress:values.email,
-        address:values.address,
-        imageUrl:values.imageUrl,
-        contact:values.contact,
-        nic:values.nic,
-        gender:values.gender,
-        birthday:values.birthday,
-        userType:values.userType,
-        sendEmailStatus:values.sendEmail,
-        password:values.password,
-        dateCreated:formattedDate,
-        timeCreated:formattedTime,
-        dateUpdated:formattedDate,
-        timeUpdated:formattedTime
-      }
-      const url = `${baseUrl}users/create-new-user`;
-      console.log(url);
-      await axios
-        .post(url, data)
-        .then( res => {
-          console.log(res);
-          alert("User created successfully!");
-          setFetchTrigger(!fetchTrigger);
-        })
-        .catch(error => {
-          console.log(error);
-          alert(error.response.data.error.message);
-        })
+        const data = {
+          fullName:values.fullName,
+          emailAddress:values.email,
+          address:values.address,
+          imageUrl:values.imageUrl,
+          contact:values.contact,
+          nic:values.nic,
+          gender:values.gender,
+          birthday:values.birthday,
+          userType:values.userType,
+          sendEmailStatus:values.sendEmail,
+          password:values.password,
+          dateCreated:formattedDate,
+          timeCreated:formattedTime,
+          dateUpdated:formattedDate,
+          timeUpdated:formattedTime
+        }
+        const url = `${baseUrl}users/create-new-user`;
+        console.log(url);
+        await axios
+          .post(url, data)
+          .then( res => {
+            console.log(res);
+            alert("User created successfully!");
+            setFetchTrigger(!fetchTrigger);
+          })
+          .catch(error => {
+            console.log(error);
+            alert(error.response.data.error.message);
+          })
+      };
     },
   });
 
@@ -198,21 +198,22 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
       return;
     }
 
-    confirm('Are you sure to delete selected user?');
+    if(window.confirm('Are you sure to delete selected user?')){
+      const url = `${baseUrl}users/delete/${selectedRow._id}`;
+      await axios
+        .delete(url)
+        .then( res => {
+          console.log(res);
+          alert("User delete successfully!");
+          setFetchTrigger(!fetchTrigger);
+          setSelectedRow(null);
+        })
+        .catch(error => {
+          console.log(error);
+          alert(error.response.data.error.message);
+        })
+    }
 
-    const url = `${baseUrl}users/delete/${selectedRow._id}`;
-    await axios
-      .delete(url)
-      .then( res => {
-        console.log(res);
-        alert("User delete successfully!");
-        setFetchTrigger(!fetchTrigger);
-        setSelectedRow(null);
-      })
-      .catch(error => {
-        console.log(error);
-        alert(error.response.data.error.message);
-      })
   }
 
   return (
@@ -454,12 +455,12 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
                 </select>
               </div>
             </div>
-          </form>
-          <div className="submit-button">
+            <div className="submit-button">
               <button type="button" id='cansel-btn' onClick={handleCancelButton}>Cancel</button>
               <button type="button" id='clear-btn' onClick={handleClearButton}>Clear</button>
-              <button type="submit">Create New User</button>
+              <button type="button" onClick={formik.submitForm}>Create New User</button>
             </div>
+          </form>
         </div>
       ) : (
         <div className='user-table'>

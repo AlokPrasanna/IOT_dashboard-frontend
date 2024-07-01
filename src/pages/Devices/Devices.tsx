@@ -29,6 +29,7 @@ const data = [{
   
 ];  
 
+const Devices:React.FC = () => {
   const toggleDevice = (id: string) => {
     console.log(`Toggle device with id: ${id}`);
   };
@@ -39,10 +40,12 @@ const data = [{
   
   const removeDevice = (id: string) => {
     console.log(`Remove device with id: ${id}`);
-  };  
+  }; 
 
-const Devices:React.FC = () => {
-  
+  const viewDevice = (id: string) => {
+    console.log(`View device with id: ${id}`);
+    window.open(`/device-view`);
+  };
   return (
     <div className='devices-content'>
       <PageTitle
@@ -56,6 +59,7 @@ const Devices:React.FC = () => {
             toggleDevice={toggleDevice}
             editDevice={editDevice}
             removeDevice={removeDevice}
+            viewDevice={viewDevice}
           />
         ))}
       </div>

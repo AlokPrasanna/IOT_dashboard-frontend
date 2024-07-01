@@ -1,0 +1,51 @@
+.device-view-content{
+    position: relative;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 80vh;
+}
+
+.device-view-body{
+    background-color: var(--bg-color);
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    max-width: 1000px;
+    border: none;
+    border-radius: 4px;
+    margin: 20px;
+    padding: 20px 25px;
+}
+
+.device-view-body img {
+    width: 350px;
+    height: 350px;
+    padding: 15px;
+    border: 2px solid var(--text-color);
+    cursor: pointer;
+}
+
+.device-view-body img:hover {
+    border-color: gray;
+    transition: border-color 0.3s ease-in-out ;
+}
+
+.device-view-data{
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    margin-left: 5%;
+    color: var(--text-color);
+    font-size: 16px;
+}
+
+.device-view-data span {
+    padding: 5px 8px;
+    border-bottom: 2px solid var(--text-color);
+    cursor: pointer;
+}
+
+.device-view-data span:hover{
+  border-bottom: 2px solid gray;
+}

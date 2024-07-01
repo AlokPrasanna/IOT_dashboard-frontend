@@ -7,6 +7,8 @@ import * as Yup from 'yup';
 import { Icon } from '../../components/atoms';
 import useFetch from '../../hooks/UseFetch';
 import ReactLoading from 'react-loading';
+import { useBaseUrl } from '../../context/BaseUrl/BaseUrlContext';
+import axios from 'axios';
 
 const validationSchema = Yup.object({
   emailAddress: Yup.string().email('Invalid email format'),
@@ -25,6 +27,7 @@ const EditProfile: React.FC<EditeProps> = () => {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const { data, loading, error } = useFetch({ path: `users/one/${userId}` });
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const {baseUrl} = useBaseUrl();
 
   const { colors } = useTheme();
 
@@ -47,26 +50,58 @@ const EditProfile: React.FC<EditeProps> = () => {
       birthday: '',
       currentPassword: '',
       newPassword: '',
-      confirmPassword:''
+      confirmPassword:'',
+      dateCreated:'',
+      timeCreated:''
     },
     validationSchema,
-    onSubmit: (values) => {
+    onSubmit: async(values) => {
       if (values.newPassword && !values.currentPassword) {
         formik.setErrors({
           currentPassword: 'Current password is required.'
         });
       }
-      console.log(values);
-      const data = {
-        fullName:values.fullName,
-        emailAddress:values.emailAddress,
-        imageUrl:'',
-        nic:values.nic,
-        contact:values.contact,
-        address:values.address,
-        birthday:values.birthday,
-        gender:values.gender,
+      if(window.confirm("Are you sure to save changes?")){
+        const currentDate = new Date();
 
+        // Current Date
+        const year = currentDate.getFullYear();
+        const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+        const day = String(currentDate.getDate()).padStart(2, '0');
+        const formattedDate = `${year}-${month}-${day}`;
+    
+        // Current Time
+        const hours = String(currentDate.getHours()).padStart(2, '0');
+        const minutes = String(currentDate.getMinutes()).padStart(2, '0');
+        const seconds = String(currentDate.getSeconds()).padStart(2, '0');
+        const formattedTime = `${hours}:${minutes}:${seconds}`;
+
+        const data = {
+          fullName:values.fullName,
+          emailAddress:values.emailAddress,
+          imageUrl:'',
+          nic:values.nic,
+          contact:values.contact,
+          address:values.address,
+          birthday:values.birthday,
+          gender:values.gender,
+          dateCreated:values.dateCreated,
+          timeCreated:values.timeCreated,
+          dateUpdated:formattedDate,
+          timeUpdated:formattedTime
+        }
+        const url = `${baseUrl}users/update/${userId}`
+ console.log(url);
+        await axios
+          .put(url , data)
+          .then( res => {
+            console.log(res);
+            alert("User details successfully!");
+          })
+          .catch(error => {
+            console.log(error);
+            alert(error.response.data.error.message);
+          })
       }
     },
   });
@@ -81,12 +116,14 @@ const EditProfile: React.FC<EditeProps> = () => {
         address: data.user.address || '',
         gender: data.user.gender || '',
         birthday: data.user.birthday || '',
+        dateCreated: data.user.dateCreated,
+        timeCreated: data.user.timeCreated,
         currentPassword: '',
         newPassword: '',
         confirmPassword:''
       });
     }
-  }, []);
+  }, [data]);
 
   const handleClearButton = () => {
     formik.resetForm();
