@@ -3,6 +3,7 @@ import "./deviceCard.scss"
 import { useTheme } from '../../../context/Theme/ThemeContext';
 
 interface Device {
+    _id:string;
     id: string;
     name: string;
     imageUrl:string;
@@ -46,9 +47,9 @@ const DeviceCard:React.FC<DeviceCardProps> = ({device , toggleDevice , editDevic
             <input type="checkbox" className='device-card-checkbox' checked={device.onState} onChange={() => toggleDevice(device.id)} />
         </div>
         <div className='device-card-actions'>
-            <button id='view' onClick={() => viewDevice(device.id)}>View</button>
-            <button id='edit' onClick={() => editDevice(device.id)}>Edit</button>
-            <button id='remove' onClick={() => removeDevice(device.id)}>Remove</button> 
+            <button id='view' onClick={() => viewDevice(device._id)}>View</button>
+            <button id='edit' onClick={() => editDevice(device._id)}>Edit</button>
+            <button id='remove' onClick={() => removeDevice(device._id)}>Remove</button> 
         </div>
      </div>
   </div>

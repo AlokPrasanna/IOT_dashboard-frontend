@@ -35,7 +35,7 @@ const Devices:React.FC = () => {
 
   const viewDevice = (id: string) => {
     console.log(`View device with id: ${id}`);
-    window.open(`/device-view`);
+    window.open(`/device-view/${id}`);
   };
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
