@@ -36,12 +36,10 @@ const DevicesManager:React.FC = () => {
   const [showEditPopup , setShowEditPopup] = useState<boolean>(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const {colors} = useTheme();
-
-  const {data , loading , error} = useFetch({path:"devices/all"});
+  const [fetchTrigger, setFetchTrigger] = useState<boolean>(false);
+  const {data , loading , error} = useFetch({path:"devices/all" , trigger:fetchTrigger});
 
   const {baseUrl} = useBaseUrl();
-
-  console.log(data);
 
   if (colors) {
     document.documentElement.style.setProperty('--btn-bg', colors.greenAccent[500]);
@@ -57,8 +55,9 @@ const DevicesManager:React.FC = () => {
   };
 
   const handleActionButtonClick = (rowData: Record<string, any>) => {
-    console.log('Action Button Clicked for:', rowData);
-    // Add your logic for handling the action button click here
+    if(window.confirm("Are you sure to change Active State?")){
+      HandleActiceState(rowData);
+    }
   };
   const columns = [
     { accessKey: "id", value: "Device ID" },
@@ -119,6 +118,7 @@ const DevicesManager:React.FC = () => {
         .then( res => {
           console.log(res);
           alert("Devices created successfully!");
+          setFetchTrigger(!fetchTrigger);
         })
         .catch(error => {
           console.log(error);
@@ -150,7 +150,95 @@ const DevicesManager:React.FC = () => {
   }
 
   const HandelEditPopup = () => {
+    if(selectedRow === null){
+      alert("Select row before click Edit Device button");
+      return;
+    }
     setShowEditPopup(true);
+  }
+
+  const HandleSaveChangesButton = async() => {
+    if(window.confirm("Are you sure to save changes?")){
+      const currentDate = new Date();
+
+      // Current Date
+      const year = currentDate.getFullYear();
+      const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+      const day = String(currentDate.getDate()).padStart(2, '0');
+      const formattedDate = `${year}-${month}-${day}`;
+  
+      // Current Time
+      const hours = String(currentDate.getHours()).padStart(2, '0');
+      const minutes = String(currentDate.getMinutes()).padStart(2, '0');
+      const seconds = String(currentDate.getSeconds()).padStart(2, '0');
+      const formattedTime = `${hours}:${minutes}:${seconds}`;
+
+      const data = {
+        id:selectedRow?.id,
+        name:selectedRow?.name,
+        imageUrl:'',
+        group:selectedRow?.group,
+        owner:selectedRow?.owner,
+        onState: selectedRow?.onState === "true" ? true : false,
+        dateCreated:selectedRow?.dateCreated,
+        timeCreated:selectedRow?.timeCreated,
+        dateUpdated:formattedDate,
+        timeUpdated:formattedTime
+      }
+
+      console.log("Request data ",data)
+
+      const url = `${baseUrl}devices/update/${selectedRow?._id}`;
+
+      await axios
+          .put(url , data)
+          .then( res => {
+            console.log(res);
+            alert("Device details Updated successfully!");
+            setFetchTrigger(!fetchTrigger);
+          })
+          .catch(error => {
+            console.log(error);
+            alert(error.response.data.error.message);
+          })
+    }
+  }
+
+  const HandleActiceState = async(rowData: Record<string, any>) => {
+    console.log(rowData);
+    const currentDate = new Date();
+
+      // Current Date
+      const year = currentDate.getFullYear();
+      const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+      const day = String(currentDate.getDate()).padStart(2, '0');
+      const formattedDate = `${year}-${month}-${day}`;
+  
+      // Current Time
+      const hours = String(currentDate.getHours()).padStart(2, '0');
+      const minutes = String(currentDate.getMinutes()).padStart(2, '0');
+      const seconds = String(currentDate.getSeconds()).padStart(2, '0');
+      const formattedTime = `${hours}:${minutes}:${seconds}`;
+
+      const data = {
+        activeState: rowData.activeState === true ? false : true,
+        dateUpdated:formattedDate,
+        timeUpdated:formattedTime
+      }
+
+      const url = `${baseUrl}devices/update/${rowData?._id}`;
+
+      await axios
+          .put(url , data)
+          .then( res => {
+            console.log(res);
+            alert("Device details Updated successfully!");
+            setFetchTrigger(!fetchTrigger);
+          })
+          .catch(error => {
+            console.log(error);
+            alert(error.response.data.error.message);
+          })
   }
 
   const HandelCanselButton = () => {
@@ -289,44 +377,61 @@ const DevicesManager:React.FC = () => {
                   <span>Change Device Name</span>
                   <input
                       type="text"
-                      id="deviceName"
-                      name="deviceName"
+                      id="name"
+                      name="name"
                       placeholder="Device Name"
                       onBlur={formik.handleBlur}
-                      onChange={formik.handleChange}
-                      value={formik.values.deviceName}
+                      onChange={(e) => setSelectedRow((prev) => ({ ...prev, name: e.target.value }))}
+                      value={selectedRow?.name}
                       className="device-input placeholder"
                     />
                   </div>
                   <div className='selection'>
                     <span>Change Group</span>
-                    <select>
-                      <option>None</option>
-                      <option>Group A</option>
-                      <option>Group B</option>
-                      <option>Group C</option>
+                    <select
+                      id="group"
+                      name="group"
+                      onBlur={formik.handleBlur}
+                      onChange={(e) => setSelectedRow((prev) => ({ ...prev, group: e.target.value }))}
+                      value={selectedRow?.group}
+                    >
+                      <option value="">None</option>
+                      <option value="A">Group A</option>
+                      <option value="B">Group B</option>
+                      <option value="C">Group C</option>
                     </select>
                   </div>
                   <div className='selection'>
                     <span>Change Owner</span>
-                    <select>
-                      <option>None</option>
-                      <option>Group A</option>
-                      <option>Group B</option>
-                      <option>Group C</option>
+                    <select
+                      id="owner"
+                      name="owner"
+                      onBlur={formik.handleBlur}
+                      onChange={(e) => setSelectedRow((prev) => ({ ...prev, owner: e.target.value }))}
+                      value={selectedRow?.owner}
+                    >
+                      <option value="">None</option>
+                      <option value="Owner A">Owner A</option>
+                      <option value="Owner B">Owner B</option>
+                      <option value="Owner C">Owner C</option>
                     </select>
                   </div>
                   <div className='selection'>
                     <span>Change ON / OFF State</span>
-                    <select>
-                      <option>None</option>
-                      <option>ON</option>
-                      <option>OFF</option>
+                    <select
+                      id="onState"
+                      name="onState"
+                      onBlur={formik.handleBlur}
+                      onChange={(e) => setSelectedRow((prev) => ({ ...prev, onState: e.target.value }))}
+                      value={selectedRow?.onState.toString() || 'false'}
+                    >
+                      <option value="true">ON</option>
+                      <option value="false">OFF</option>
                     </select>
                   </div>
                   <div className='edit-device-btn action-buttons'>
-                    <button className='cansel-btn' onClick={HandelCanselButton} >Cansel</button>
-                    <button className='create-btn'>Save Changes</button>
+                    <button type='button' className='cansel-btn' onClick={HandelCanselButton} >Cansel</button>
+                    <button type='button' className='create-btn' onClick={HandleSaveChangesButton}>Save Changes</button>
                   </div>
             </form>
           </div>

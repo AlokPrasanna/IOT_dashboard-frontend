@@ -96,7 +96,7 @@ const EditProfile: React.FC<EditeProps> = () => {
           .put(url , data)
           .then( res => {
             console.log(res);
-            alert("User details successfully!");
+            alert("User details updated successfully!");
           })
           .catch(error => {
             console.log(error);
