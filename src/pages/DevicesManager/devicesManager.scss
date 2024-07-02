@@ -49,6 +49,10 @@
     border-radius: 4px;
 }
 
+.device-form-header{
+    color: var(--text-color);
+}
+
 .create-device-body span{
     color: var(--text-color);
     font-weight: 600;
@@ -61,11 +65,30 @@
     font-weight: 600;
 }
 
+.device-edit-popup{
+    background-color: var(--bg-color);
+    padding: 20px 15px;
+    position: absolute;
+    width: 50%;
+    height: 85V;
+    top: 50%;
+    left: 25%;
+    transform: translateY(-50%);
+    border: 1px solid #767676;
+    border-radius: 4px;
+}
+
+.edit-device-body span{
+    color: var(--text-color);
+    font-size: 13px;
+}
+
 .add-image-content-device{
     width: 100%;
     background-color: #ffffff;
     height: 35px;
     padding: 7px 5px;
+    border: 1px solid #767676;
 }
 
 .selection{
@@ -90,4 +113,21 @@
 
 .device-btn{
     margin-left: 20px;
+}
+
+.edit-device-btn{
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+
+.device-edit-popup .edit-device-body form div {
+    margin-top: 7px;
+}
+
+.edit-popup-header{
+    color: var(--text-color);
+    font-size: 17px;
+    text-align: center;
 }

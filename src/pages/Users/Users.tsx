@@ -225,9 +225,9 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
         />
         {!loading && addUser === false ? (
           <div style={{ display:'flex' , gap:"10px"}}>
-            <button type='button' className='users-add-button' id='edit-user-btn' onClick={handleEditeButton}>Edit User</button>
-            <button type='button' className='users-add-button' id='delete-user-btn' onClick={handelDeleteUserButton}>Delete User</button>
-            <button type='button' className='users-add-button' onClick={handleAddNewUserButton}>Add New User</button>
+            <button type='button' className='users-add-button' disabled={addUser || showEditPopup} id='edit-user-btn' onClick={handleEditeButton}>Edit User</button>
+            <button type='button' className='users-add-button' disabled={addUser || showEditPopup} id='delete-user-btn' onClick={handelDeleteUserButton}>Delete User</button>
+            <button type='button' className='users-add-button' disabled={addUser || showEditPopup} onClick={handleAddNewUserButton}>Add New User</button>
           </div>
         ): (
           // <button type='button' className='users-add-button' onClick={handleAddNewUserButton}>Add New User</button>
@@ -469,7 +469,7 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
           ): <p>{error}</p>}
         </div>
       ))}
-      {showEditPopup && (
+      {showEditPopup && !addUser && (
         <div className='edit-user-popup'>
           <div className="popup-header">
             <h3>Edit User Details</h3>

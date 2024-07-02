@@ -103,19 +103,21 @@ const DevicesManager:React.FC = () => {
         />
         {addDevice === false ? (
           <div className='action-buttons'>
-          <button type='button' className='device-edit' id='edit-user-btn' onClick={HandelEditPopup}>Edit Device</button>
-          <button type='button' className='device-delete' id='delete-user-btn'>Delete Device</button>
-          <button type='button' className='device-add' onClick={HandleAddDevicesButton}>Add New Device</button>
+          <button type='button' className='device-edit' disabled={addDevice || showEditPopup} id='edit-user-btn' onClick={HandelEditPopup}>Edit Device</button>
+          <button type='button' className='device-delete' disabled={addDevice || showEditPopup} id='delete-user-btn'>Delete Device</button>
+          <button type='button' className='device-add' disabled={addDevice || showEditPopup} onClick={HandleAddDevicesButton}>Add New Device</button>
         </div>
         ):""}
       </div>
-      {addDevice === false && showEditPopup === false ? (
+      {addDevice === false ? (
         <Table columns={columns} data={data} onRowSelect={handleRowSelect} onActionButtonClick={handleActionButtonClick}/>
       ): ""}
       {addDevice === true && (
         <div >
           <div className='create-device-body'>
-            <span>Create New Device</span>
+            <div className="device-form-header">
+              <h2>Create New Device</h2>
+            </div>
             <form>
               <span>Add Image</span>
               <input
@@ -146,19 +148,19 @@ const DevicesManager:React.FC = () => {
                   <div className='selection'>
                     <span>Choose Group</span>
                     <select>
-                      <option>None</option>
-                      <option>Group A</option>
-                      <option>Group B</option>
-                      <option>Group C</option>
+                      <option value="">None</option>
+                      <option value="A">Group A</option>
+                      <option value="B">Group B</option>
+                      <option value="C">Group C</option>
                     </select>
                   </div>
                   <div className='selection'>
                     <span>Choose Owner</span>
                     <select>
-                      <option>None</option>
-                      <option>Group A</option>
-                      <option>Group B</option>
-                      <option>Group C</option>
+                      <option value="">None</option>
+                      <option value="Owner A">Owner A</option>
+                      <option value="Owner B">Owner B</option>
+                      <option value="Owner C">Owner C</option>
                     </select>
                   </div>
             </form>
@@ -170,24 +172,28 @@ const DevicesManager:React.FC = () => {
           </div>
         </div>
       )}
-      {showEditPopup && (
+      {showEditPopup && !addDevice && (
         <div className='device-edit-popup'>
-          <div className='create-device-body'>
-            <span>Edit Device Details</span>
+          <div className='edit-device-body'>
+            <div className="edit-popup-header">
+              <h3>Edit Device Details</h3>
+            </div>
             <form>
-              <span>Change Image</span>
-              <input
-                type='file'
-                className='add-image-content-device placeholder'
-                onChange={handleImageChange}
-                ref={fileInputRef}
-              />
-              {imageFile && (
-                  <div className='image-buttons'>
-                    <button className='delete-button' type='button' onClick={handleRemoveImage}>Remove Image</button>
-                    <button className='image-button save-button' type='button'>Save Image</button>
-                  </div>
-                )}
+              <div>
+                <span>Change Image</span>
+                <input
+                  type='file'
+                  className='add-image-content-device placeholder'
+                  onChange={handleImageChange}
+                  ref={fileInputRef}
+                />
+                {imageFile && (
+                    <div className='image-buttons'>
+                      <button className='delete-button' type='button' onClick={handleRemoveImage}>Remove Image</button>
+                      <button className='image-button save-button' type='button'>Save Image</button>
+                    </div>
+                  )}
+                </div>
                 <div className='selection'>
                   <span>Change Device Name</span>
                   <input
@@ -227,12 +233,11 @@ const DevicesManager:React.FC = () => {
                       <option>OFF</option>
                     </select>
                   </div>
+                  <div className='edit-device-btn action-buttons'>
+                    <button className='cansel-btn' onClick={HandelCanselButton} >Cansel</button>
+                    <button className='create-btn'>Save Changes</button>
+                  </div>
             </form>
-          </div>
-          <div className='device-btn action-buttons'>
-            <button className='clear-btn'>Clear</button>
-            <button className='cansel-btn' onClick={HandelCanselButton} >Cansel</button>
-            <button className='create-btn'>Save Changes</button>
           </div>
         </div>
       )}
