@@ -241,6 +241,28 @@ const DevicesManager:React.FC = () => {
           })
   }
 
+  const HandleDeleteDeviceButton = async() => {
+    if(selectedRow === null){
+      alert("Select row before click Delete Device button");
+      return;
+    }else{
+      if(window.confirm("Are you sure to delete this device?")){
+        const url = `${baseUrl}devices/delete/${selectedRow?._id}`;
+        await axios
+          .delete(url)
+          .then( res => {
+            console.log(res);
+            alert("Device deleted successfully!");
+            setFetchTrigger(!fetchTrigger);
+          })
+          .catch(error => {
+            console.log(error);
+            alert(error.response.data.error.message);
+          })
+      }
+    }
+  }
+
   const HandelCanselButton = () => {
     setAddDevice(false);
     setShowEditPopup(false);
@@ -256,7 +278,7 @@ const DevicesManager:React.FC = () => {
         {addDevice === false && !loading && error === null ? (
           <div className='action-buttons'>
           <button type='button' className='device-edit' disabled={addDevice || showEditPopup} id='edit-user-btn' onClick={HandelEditPopup}>Edit Device</button>
-          <button type='button' className='device-delete' disabled={addDevice || showEditPopup} id='delete-user-btn'>Delete Device</button>
+          <button type='button' className='device-delete' disabled={addDevice || showEditPopup} id='delete-user-btn' onClick={HandleDeleteDeviceButton}>Delete Device</button>
           <button type='button' className='device-add' disabled={addDevice || showEditPopup} onClick={HandleAddDevicesButton}>Add New Device</button>
         </div>
         ):""}
