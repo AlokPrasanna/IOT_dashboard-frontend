@@ -4,14 +4,13 @@ import { PageTitle , DeviceCard } from '../../components/molecules';
 import { useTheme } from '../../context/Theme/ThemeContext';
 import useFetch from '../../hooks/UseFetch';
 import ReactLoading from 'react-loading'; 
+import { useNavigate } from 'react-router-dom';
 
 const Devices:React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<String>('');
   const {data , loading , error} = useFetch({path:"devices/all"})
-
   const {colors} = useTheme();
-
-  console.log("Device Page ",data)
+  const navigate = useNavigate();
 
   if (colors) {
     document.documentElement.style.setProperty('--bg-color', colors.primary[400]);
@@ -35,7 +34,7 @@ const Devices:React.FC = () => {
 
   const viewDevice = (id: string) => {
     console.log(`View device with id: ${id}`);
-    window.open(`/device-view/${id}`);
+    navigate(`/device-view/${id}`);
   };
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {

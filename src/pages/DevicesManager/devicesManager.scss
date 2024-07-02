@@ -19,6 +19,7 @@
 .action-buttons button{
     border: none;
     padding: 5px 8px;
+    width: 100px;
     color: var(--text-color);
     border-radius: 4px;
     cursor: pointer;
@@ -115,6 +116,19 @@
     margin-left: 20px;
 }
 
+.device-btn button{
+    border: none;
+    padding: 5px 8px;
+    border-radius: 4px;
+    color: var(--text-color);
+    margin-right: 20px;
+}
+
+.device-btn button:hover{
+    background-color: #808080;
+    transition: background-color 0.3s ease-in-out; 
+}
+
 .edit-device-btn{
     margin-top: 20px;
     display: flex;
@@ -134,4 +148,13 @@
 
 .device-table{
     width: 70%;
+}
+
+#view-btn{
+    background-color: orange;
+}
+
+#view-btn:hover{
+    background-color: #808080;
+    transition: background-color 0.3s ease-in-out; 
 }

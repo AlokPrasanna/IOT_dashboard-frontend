@@ -8,6 +8,7 @@ import { useBaseUrl } from '../../context/BaseUrl/BaseUrlContext';
 import axios from 'axios';
 import useFetch from '../../hooks/UseFetch';
 import ReactLoading from 'react-loading';
+import { useNavigate } from 'react-router-dom';
 
 interface FormValues {
   deviceId:string;
@@ -36,6 +37,7 @@ const DevicesManager:React.FC = () => {
   const [showEditPopup , setShowEditPopup] = useState<boolean>(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const {colors} = useTheme();
+  const navigate = useNavigate();
   const [fetchTrigger, setFetchTrigger] = useState<boolean>(false);
   const {data , loading , error} = useFetch({path:"devices/all" , trigger:fetchTrigger});
 
@@ -149,9 +151,18 @@ const DevicesManager:React.FC = () => {
     formik.resetForm();
   }
 
+  const HandleViewButton = () => {
+    if(selectedRow === null){
+      alert("Select row before click View button");
+      return;
+    }else{
+      navigate(`/device-view/${selectedRow._id}`)
+    }
+  }
+
   const HandelEditPopup = () => {
     if(selectedRow === null){
-      alert("Select row before click Edit Device button");
+      alert("Select row before click Edit button");
       return;
     }
     setShowEditPopup(true);
@@ -243,7 +254,7 @@ const DevicesManager:React.FC = () => {
 
   const HandleDeleteDeviceButton = async() => {
     if(selectedRow === null){
-      alert("Select row before click Delete Device button");
+      alert("Select row before click Delete button");
       return;
     }else{
       if(window.confirm("Are you sure to delete this device?")){
@@ -277,9 +288,10 @@ const DevicesManager:React.FC = () => {
         />
         {addDevice === false && !loading && error === null ? (
           <div className='action-buttons'>
-          <button type='button' className='device-edit' disabled={addDevice || showEditPopup} id='edit-user-btn' onClick={HandelEditPopup}>Edit Device</button>
-          <button type='button' className='device-delete' disabled={addDevice || showEditPopup} id='delete-user-btn' onClick={HandleDeleteDeviceButton}>Delete Device</button>
-          <button type='button' className='device-add' disabled={addDevice || showEditPopup} onClick={HandleAddDevicesButton}>Add New Device</button>
+            <button type='button' className='device-add' disabled={addDevice || showEditPopup} id='view-btn' onClick={HandleViewButton}>View</button>
+            <button type='button' className='device-edit' disabled={addDevice || showEditPopup} id='edit-user-btn' onClick={HandelEditPopup}>Edit</button>
+            <button type='button' className='device-delete' disabled={addDevice || showEditPopup} id='delete-user-btn' onClick={HandleDeleteDeviceButton}>Delete</button>
+            <button type='button' className='device-add' disabled={addDevice || showEditPopup} onClick={HandleAddDevicesButton}>Add New</button>
         </div>
         ):""}
       </div>
@@ -356,7 +368,7 @@ const DevicesManager:React.FC = () => {
                     </div>
               </form>
             </div>
-            <div className='device-btn action-buttons'>
+            <div className='device-btn'>
               <button type='button' className='clear-btn' onClick={HandleClearButton}>Clear</button>
               <button type='button' className='cansel-btn' onClick={HandelCanselButton} >Cansel</button>
               <button type='button' className='create-btn' onClick={formik.submitForm}>Create New Device</button>
@@ -451,7 +463,7 @@ const DevicesManager:React.FC = () => {
                       <option value="false">OFF</option>
                     </select>
                   </div>
-                  <div className='edit-device-btn action-buttons'>
+                  <div className='edit-device-btn device-btn'>
                     <button type='button' className='cansel-btn' onClick={HandelCanselButton} >Cansel</button>
                     <button type='button' className='create-btn' onClick={HandleSaveChangesButton}>Save Changes</button>
                   </div>
