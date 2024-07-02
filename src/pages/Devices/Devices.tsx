@@ -32,6 +32,9 @@ const data = [{
 
 const Devices:React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<String>('');
+  const [filterActive, setFilterActive] = useState<'all' | 'active' | 'inactive'>('all');
+  const [filterOn, setFilterOn] = useState<'all' | 'on' | 'off'>('all');
+
   const {colors} = useTheme();
 
   if (colors) {
@@ -63,12 +66,24 @@ const Devices:React.FC = () => {
     setSearchTerm(e.target.value);
   };
 
-  const filteredDevices = data.filter((device) => 
-    device.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    device.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    device.group.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredDevices = data.filter((device) => {
+    const lowerCaseSearchTerm = searchTerm.toLowerCase();
+    
+    const matchesActive = lowerCaseSearchTerm.startsWith('ac' || 'act') && device.active;
+    const matchesInactive = lowerCaseSearchTerm.startsWith('in'||'ina'|| 'inac'||'inact') && !device.active;
+    const matchesOn = lowerCaseSearchTerm.startsWith('on') && device.on;
+    const matchesOff = lowerCaseSearchTerm.startsWith('of') && !device.on;
 
+    return (
+      device.id.toLowerCase().includes(lowerCaseSearchTerm) ||
+      device.name.toLowerCase().includes(lowerCaseSearchTerm) ||
+      device.group.toLowerCase().includes(lowerCaseSearchTerm) ||
+      matchesActive ||
+      matchesInactive ||
+      matchesOn ||
+      matchesOff
+    );
+  });
   return (
     <div className='devices-content'>
       <div className='devices-header'>
@@ -83,7 +98,7 @@ const Devices:React.FC = () => {
         />
       </div>
       <div className='devices-body'>
-      {filteredDevices.length > 0 && filteredDevices.map((device) => ( 
+      {filteredDevices.length > 0 ? filteredDevices.map((device) => ( 
           <DeviceCard 
             key={device.id}
             device={device}
@@ -92,7 +107,9 @@ const Devices:React.FC = () => {
             removeDevice={removeDevice}
             viewDevice={viewDevice}
           />
-        ))}
+        )):(
+          <span className='not-devices-msg'>Not Devices Found!</span>
+        )}
       </div>
     </div>
   )

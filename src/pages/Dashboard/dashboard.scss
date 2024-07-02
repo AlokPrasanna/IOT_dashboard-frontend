@@ -65,11 +65,14 @@
   }
   
   @media (min-width: 1024px) {
+    .dashboard-content{
+      overflow: hidden;
+    }
     .dashboard-titles {
       justify-content: space-between;
     }
   
     .chart {
-      width: 98.5%;
+      width: 98.8%;
     }
   }
