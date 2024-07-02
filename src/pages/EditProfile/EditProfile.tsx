@@ -91,7 +91,6 @@ const EditProfile: React.FC<EditeProps> = () => {
           timeUpdated:formattedTime
         }
         const url = `${baseUrl}users/update/${userId}`
- console.log(url);
         await axios
           .put(url , data)
           .then( res => {
@@ -293,7 +292,10 @@ const EditProfile: React.FC<EditeProps> = () => {
                       </svg>
                     )
                   }
-                  onclick={() => setShowPassword(!showPassword)}
+                  onclick={(event) => {
+                    event.preventDefault();
+                    setShowPassword(!showPassword);
+                  }}
                   style={{ cursor: 'pointer' , backgroundColor:"none", color: "black" ,  width:"25px" , background:"none" , border:"none",position:"absolute" , right:"5px", top:"55%", transform:"translateY(-50%)"}}
                 />
                 {formik.touched.currentPassword && formik.errors.currentPassword && (
@@ -324,7 +326,10 @@ const EditProfile: React.FC<EditeProps> = () => {
                       </svg>
                     )
                   }
-                  onclick={() => setShowNewPassword(!showNewPassword)}
+                  onclick={(event) => {
+                    event.preventDefault();
+                    setShowNewPassword(!showNewPassword)
+                  }}
                   style={{ cursor: 'pointer' , backgroundColor:"none", color: "black" ,  width:"25px" , background:"none" , border:"none",position:"absolute" , right:"5px", top:"55%", transform:"translateY(-50%)"}}
                 />
               </div>
@@ -352,7 +357,10 @@ const EditProfile: React.FC<EditeProps> = () => {
                       </svg>
                     )
                   }
-                  onclick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  onclick={(event) => {
+                    event.preventDefault();
+                    setShowConfirmPassword(!showConfirmPassword)
+                  }}
                   style={{ cursor: 'pointer' , backgroundColor:"none", color: "black" ,  width:"25px" , background:"none" , border:"none",position:"absolute" , right:"5px", top:"55%", transform:"translateY(-50%)"}}
                 />
                 {formik.touched.confirmPassword && formik.errors.confirmPassword && (
