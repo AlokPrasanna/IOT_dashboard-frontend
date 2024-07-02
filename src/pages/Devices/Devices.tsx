@@ -32,8 +32,6 @@ const data = [{
 
 const Devices:React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<String>('');
-  const [filterActive, setFilterActive] = useState<'all' | 'active' | 'inactive'>('all');
-  const [filterOn, setFilterOn] = useState<'all' | 'on' | 'off'>('all');
 
   const {colors} = useTheme();
 
