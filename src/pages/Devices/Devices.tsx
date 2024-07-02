@@ -2,38 +2,16 @@ import React, {useState} from 'react';
 import './devices.scss'
 import { PageTitle , DeviceCard } from '../../components/molecules';
 import { useTheme } from '../../context/Theme/ThemeContext';
-
-const data = [{
-    id: '1',
-    name: 'Device One',
-    image: '../../../unknown-device.png',
-    active: true,
-    on: true,
-    group: 'Group A'
-  },
-  {
-    id: '2',
-    name: 'Device Two',
-    image: '../../../unknown-device.png',
-    active: true,
-    on: false,
-    group: 'Group B'
-  },
-  {
-    id: '3',
-    name: 'Device Three',
-    image: '../../../unknown-device.png',
-    active: false,
-    on: false,
-    group: 'Group C'
-  },
-  
-];  
+import useFetch from '../../hooks/UseFetch';
+import ReactLoading from 'react-loading'; 
 
 const Devices:React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<String>('');
+  const {data , loading , error} = useFetch({path:"devices/all"})
 
   const {colors} = useTheme();
+
+  console.log("Device Page ",data)
 
   if (colors) {
     document.documentElement.style.setProperty('--bg-color', colors.primary[400]);
@@ -64,13 +42,13 @@ const Devices:React.FC = () => {
     setSearchTerm(e.target.value);
   };
 
-  const filteredDevices = data.filter((device) => {
+  const filteredDevices = data?.devices.filter((device:any) => {
     const lowerCaseSearchTerm = searchTerm.toLowerCase();
     
-    const matchesActive = lowerCaseSearchTerm.startsWith('ac' || 'act') && device.active;
-    const matchesInactive = lowerCaseSearchTerm.startsWith('in'||'ina'|| 'inac'||'inact') && !device.active;
-    const matchesOn = lowerCaseSearchTerm.startsWith('on') && device.on;
-    const matchesOff = lowerCaseSearchTerm.startsWith('of') && !device.on;
+    const matchesActive = lowerCaseSearchTerm.startsWith('ac' || 'act') && device.activeState;
+    const matchesInactive = lowerCaseSearchTerm.startsWith('in'||'ina'|| 'inac'||'inact') && !device.activeState;
+    const matchesOn = lowerCaseSearchTerm.startsWith('on') && device.onState;
+    const matchesOff = lowerCaseSearchTerm.startsWith('of') && !device.onState;
 
     return (
       device.id.toLowerCase().includes(lowerCaseSearchTerm) ||
@@ -95,8 +73,16 @@ const Devices:React.FC = () => {
           onChange={handleSearchChange}
         />
       </div>
+      {loading ? (
+        <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height:"50vh" }}>
+          <span style={{ color: colors.grey[100], padding: '10px' }}>Loading...</span>
+          <ReactLoading type="spin" color={colors.blueAccent[400]} height={50} width={50} />
+        </div>
+      ) : !loading && error !== null ? (
+          <span className='error-msg'>{error}</span>
+      ) : !loading && error === null && data !== null &&(
       <div className='devices-body'>
-      {filteredDevices.length > 0 ? filteredDevices.map((device) => ( 
+      {filteredDevices.length > 0 ? filteredDevices.map((device:any) => ( 
           <DeviceCard 
             key={device.id}
             device={device}
@@ -109,6 +95,7 @@ const Devices:React.FC = () => {
           <span className='not-devices-msg'>Not Devices Found!</span>
         )}
       </div>
+      )}
     </div>
   )
 }

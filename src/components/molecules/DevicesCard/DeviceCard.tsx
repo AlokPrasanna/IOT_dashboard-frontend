@@ -5,10 +5,11 @@ import { useTheme } from '../../../context/Theme/ThemeContext';
 interface Device {
     id: string;
     name: string;
-    image:string;
-    active: boolean;
-    on: boolean;
+    imageUrl:string;
+    activeState: boolean;
+    onState: boolean;
     group: string;
+    owner:string;
 }
 
 interface DeviceCardProps {
@@ -22,6 +23,8 @@ interface DeviceCardProps {
 const DeviceCard:React.FC<DeviceCardProps> = ({device , toggleDevice , editDevice , removeDevice , viewDevice}) => {
     const {colors} = useTheme();
 
+    console.log(device);
+
     if(colors){
         document.documentElement.style.setProperty("--bg-color" , colors.primary[400]);
         document.documentElement.style.setProperty("--text-color" , colors.grey[100]);
@@ -32,14 +35,15 @@ const DeviceCard:React.FC<DeviceCardProps> = ({device , toggleDevice , editDevic
   return (
     <div className="device-card">
      <div className='device-card-content'>
-        <img src={device.image} />
+        <img src={device.imageUrl !== '' ? device.imageUrl : "../../../unknown-device.png"} />
         <div className='device-card-body'>
             <span>ID: {device.id}</span>
             <span>Name: {device.name}</span>
             <span>Group: {device.group}</span>
-            <span>Actice State: {device.active ? "Active" : "Inactive"}</span>
-            <span>ON/OFF State: {device.on ? "ON" : "OFF"}</span>
-            <input type="checkbox" className='device-card-checkbox' checked={device.on} onChange={() => toggleDevice(device.id)} />
+            <span>Owner: {device.owner}</span>
+            <span>Actice State: {device.activeState ? "Active" : "Inactive"}</span>
+            <span>ON/OFF State: {device.onState ? "ON" : "OFF"}</span>
+            <input type="checkbox" className='device-card-checkbox' checked={device.onState} onChange={() => toggleDevice(device.id)} />
         </div>
         <div className='device-card-actions'>
             <button id='view' onClick={() => viewDevice(device.id)}>View</button>
