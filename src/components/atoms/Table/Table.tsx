@@ -98,22 +98,24 @@ const SortingData: React.FC<{
                         const cellContent = row[column.accessKey];
                         console.log(cellContent);
                         return (
-                            <td className={`table-cell table-td ${column.accessKey === 'action' ? 'action-button-column' : ''}`} key={colIndex}>
+                            <td className={`table-cell table-td ${column.accessKey === 'activeState' ? 'action-button-column' : ''} ${['emailAddress', 'address', 'nic'].includes(column.accessKey) ? 'left-align' : 'center-align'}`} key={colIndex}>
                                 {column.accessKey === 'fullName' ? (
                                     <div className='image-content'>
                                         <img className='profile-image' src={row.imageUrl || '../../../../unknown-user.png'} alt='Profile-Image' />
                                         <span>{cellContent}</span>
                                     </div>
-                                ) : column.accessKey === 'action' && onActionButtonClick ? (
+                                ) : column.accessKey === 'activeState' && onActionButtonClick ? (
                                     <button 
                                         className="action-button"
                                         onClick={(e) => {
                                             e.stopPropagation();
                                             onActionButtonClick(row);
                                         }}
-                                    >{row.currentState === 'Active' ? 'Inactive' : 'Active'}
+                                    >{row.activeState === false ? 'Inactive' : 'Active'}
                                     </button>
-                                ) : (
+                                ) : column.accessKey === 'onState' ? (
+                                    <span>{row.onState === true ? "ON" : "OFF"}</span>
+                                ): (
                                     cellContent
                                 )}
                             </td>

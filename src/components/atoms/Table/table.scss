@@ -37,7 +37,17 @@
 .table-td{
     padding: 5px 5px;
     font-size: 12px;
-    text-align: left;
+    &.left-align {
+        text-align: left;
+    }
+
+    &.center-align {
+    text-align: center;
+    }
+
+    &.action-button-column {
+    text-align: center;
+    }
 }
 
 .table-img {

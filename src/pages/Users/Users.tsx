@@ -153,7 +153,7 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
           timeUpdated:formattedTime
         }
         const url = `${baseUrl}users/create-new-user`;
-        console.log(url);
+        //console.log(url);
         await axios
           .post(url, data)
           .then( res => {
@@ -236,10 +236,10 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
         
       </div>
       {loading ? (
-        <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height:"100%" }}>
+        <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height:"50vh" }}>
           <span style={{ color: colors.grey[100], padding: '10px' }}>Loading...</span>
           <ReactLoading type="spin" color={colors.blueAccent[400]} height={50} width={50} />
-      </div>
+        </div>
       ) : !loading && error !== null ? (
         <span className='error-msg'>{error}</span>
       ):(
