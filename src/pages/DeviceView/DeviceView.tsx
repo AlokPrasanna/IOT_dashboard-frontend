@@ -9,7 +9,7 @@ import ReactLoading from 'react-loading';
 const DeviceView:React.FC = () => {
   const {colors} = useTheme();
   const {deviceId} = useParams();
-  const {data , loading , error} = useFetch({path:`devices/one/${deviceId}`})
+  const { loading , error} = useFetch({path:`devices/one/${deviceId}`})
 
   if(colors){
     document.documentElement.style.setProperty('--btn-bg', colors.greenAccent[500]);
@@ -35,12 +35,12 @@ const DeviceView:React.FC = () => {
         <div className='device-view-body'>
           <img src='../../../unknown-device.png' alt='Device-Image' />
           <div className='device-view-data'>
-            <span>ID:&nbsp; {data.device.id}</span>
-            <span>Name:&nbsp; {data.device.name}</span>
-            <span>Group:&nbsp; {data.device.group}</span>
-            <span>Owner:&nbsp; {data.device.owner}</span>
-            <span>Active State:&nbsp; {data.device.activeState === true ? "Active" : "Inactive"}</span>
-            <span>ON/OFF State:&nbsp; {data.device.onState === true ? "ON" : "OFF"}</span>
+            <span>ID:&nbsp; 1625088900</span>
+            <span>Name:&nbsp; Device C</span>
+            <span>Group:&nbsp; A</span>
+            <span>Owner:&nbsp; Jone Doe</span>
+            <span>Active State:&nbsp; Inactive</span>
+            <span>ON/OFF State:&nbsp; OFF</span>
           </div>
         </div>
       )}
