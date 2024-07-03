@@ -8,7 +8,7 @@ interface BaseUrlContextType {
 const BaseUrlContext = createContext<BaseUrlContextType | undefined>(undefined);
 
 export const BaseUrlProvider: React.FC<{children:ReactNode}> = ({children}) => {
-    const [baseUrl , setBaseUrl] = useState<string>("https://iotdashboardbackend-production.up.railway.app/");
+    const [baseUrl , setBaseUrl] = useState<string>("https://iotdashboardbackend-production.up.railway.app/api/");
 
     return (
         <BaseUrlContext.Provider value={{baseUrl , setBaseUrl}}>
