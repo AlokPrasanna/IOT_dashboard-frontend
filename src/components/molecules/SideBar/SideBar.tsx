@@ -15,7 +15,7 @@ const SideBar: React.FC<SideBarProps> = ({isCollapsed , toggleSidebar}) => {
     const location = useLocation();
     const { colors, theme } = useTheme();
     const userId = localStorage.getItem('userId');
-    const {data , error , loading } = useFetch({path:`users/one/${userId}`});
+    const {data} = useFetch({path:`users/one/${userId}`});
     const [isMenuOpen, setIsMenuOpen] = useState(false); 
 
     const userType = localStorage.getItem('userType');
