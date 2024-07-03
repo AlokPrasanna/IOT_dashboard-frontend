@@ -10,6 +10,7 @@ import Login from "./Login/Login";
 import EditProfile from "./EditProfile/EditProfile";
 import ViewProfile from "./ViewProfile/ViewProfile";
 import DeviceView from "./DeviceView/DeviceView";
+import UserView from "./UserView/UserView";
 
 // -------------------- Exports --------------------
 export {
@@ -23,5 +24,6 @@ export {
     Login,
     EditProfile,
     ViewProfile,
-    DeviceView
+    DeviceView,
+    UserView
 }

@@ -9,6 +9,7 @@ import useFetch from '../../hooks/UseFetch';
 import ReactLoading from 'react-loading';
 import axios from 'axios';
 import { useBaseUrl } from '../../context/BaseUrl/BaseUrlContext';
+import { useNavigate } from 'react-router-dom';
 
 
 interface FormValues {
@@ -68,6 +69,7 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
   const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
   const [selectedRow, setSelectedRow] = useState<Record<string, any> | null>(null);
   const [showEditPopup , setShowEditPopup] = useState<boolean>(false);
+  const navigate  = useNavigate();
   const {baseUrl} = useBaseUrl();
   const { colors } = useTheme();
 
@@ -184,9 +186,18 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
     setShowEditPopup(false);
   }
 
+  const HandleUserViewButton = () => {
+    if(selectedRow === null){
+      alert("Please select row before click View button");
+      return;
+    }else{
+      navigate(`/user-view/${selectedRow._id}`)
+    }
+  }
+
   const handleEditeButton = () => {
     if(selectedRow === null){
-      alert("Please select row before click 'Edite User' button");
+      alert("Please select row before click Edit button");
       return;
     }
     setShowEditPopup(true);
@@ -194,7 +205,7 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
 
   const handelDeleteUserButton = async() => {
     if(selectedRow === null){
-      alert("Please select row before click 'Delete User' button");
+      alert("Please select row before click Delete button");
       return;
     }
 
@@ -225,6 +236,7 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
         />
         {!loading && addUser === false ? (
           <div style={{ display:'flex' , gap:"10px"}}>
+            <button type='button' className='users-add-button' disabled={addUser || showEditPopup} id='view-btn' onClick={HandleUserViewButton}>View</button>
             <button type='button' className='users-add-button' disabled={addUser || showEditPopup} id='edit-user-btn' onClick={handleEditeButton}>Edit</button>
             <button type='button' className='users-add-button' disabled={addUser || showEditPopup} id='delete-user-btn' onClick={handelDeleteUserButton}>Delete</button>
             <button type='button' className='users-add-button' disabled={addUser || showEditPopup} onClick={handleAddNewUserButton}>Add New</button>

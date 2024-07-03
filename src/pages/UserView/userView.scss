@@ -1,24 +1,25 @@
-.device-view-content{
-    position: relative;
+.user-view-profile{
     margin: 20px;
     display: flex;
     flex-direction: column;
-    height: 80vh;
+    height: 75vh;
 }
 
-.device-view-body{
-    background-color: var(--bg-color);
+.user-view-profile-body{
+    margin: 20px;
+    padding: 20px 25px;
     display: flex;
     align-items: center;
     justify-content: start;
     max-width: 1000px;
+    gap: 20px;
+    background-color: var(--bg-color);
     border: none;
     border-radius: 4px;
-    margin: 20px;
-    padding: 20px 25px;
+    color: var(--text-color);
 }
 
-.device-view-body img {
+.user-view-profile-body img {
     width: 350px;
     height: 350px;
     padding: 15px;
@@ -26,12 +27,12 @@
     cursor: pointer;
 }
 
-.device-view-body img:hover {
+.user-view-profile-body img:hover {
     border-color: gray;
     transition: border-color 0.3s ease-in-out ;
 }
 
-.device-view-data{
+.user-view-profile-data{
     display: flex;
     flex: 1;
     flex-direction: column;
@@ -40,13 +41,13 @@
     font-size: 16px;
 }
 
-.device-view-data span {
+.user-view-profile-data span{
     padding: 5px 8px;
     border-bottom: 2px solid var(--text-color);
-    cursor: pointer;
+    cursor: pointer; 
 }
 
-.device-view-data span:hover{
-  border-bottom: 2px solid gray;
-  transition: border-bottom 0.3s ease-in-out;
+.user-view-profile-data span:hover {
+    border-bottom: 2px solid gray;
+    transition: border-bottom 0.3s ease-in-out;
 }
