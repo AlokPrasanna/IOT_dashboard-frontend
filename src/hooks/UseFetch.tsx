@@ -10,7 +10,7 @@ interface UseFetchProps {
 const useFetch = ({ path , trigger }: UseFetchProps) => {
     const { baseUrl } = useBaseUrl();
     const [data, setData] = useState<any>(null);
-    const [loading, setLoading] = useState<boolean>(true);
+    const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
 
     const fetchData = () => {
@@ -21,7 +21,9 @@ const useFetch = ({ path , trigger }: UseFetchProps) => {
             setData(res.data);
         })
         .catch(err => {
-            setError(err.response && err.response.data.error.message);
+            //setError(err.response && err.response.data.error.message);
+            console.log(err);
+            setError(null);
         })
         .finally(() => {
             setLoading(false);

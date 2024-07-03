@@ -55,13 +55,13 @@ const SideBar: React.FC<SideBarProps> = ({isCollapsed , toggleSidebar}) => {
             <div className="user">
                 <div className='user-image'>
                 <Image 
-                    src={data?.user?.imageUrl ? data?.user?.imageUrl : "../../../unknown-user.png" ?? ""}
+                    src={"../../../unknown-user.png" ?? ""}
                     alt='user'
                     style={{cursor:'pointer' , width:"50px", borderRadius:"100%", border:`1px solid ${colors.grey[100]}`, display:'flex' , justifyContent:'center' , alignItems:'center'}}
                 />
                 </div>
                 <div>
-                    <p style={{color: colors.grey[100]}}>{data?.user?.fullName ?? "Loading..."}</p>
+                    <p style={{color: colors.grey[100]}}>John Doe</p>
                 </div>
             </div>
             <ul>

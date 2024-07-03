@@ -9,7 +9,7 @@ import ReactLoading from 'react-loading';
 const ViewProfile:React.FC = () => {
   const {colors} = useTheme();
   const userId = localStorage.getItem('userId');
-  const {data , error , loading } = useFetch({path:`users/one/${userId}`}); 
+  const { error , loading } = useFetch({path:`users/one/${userId}`}); 
  
   if(colors){
     document.documentElement.style.setProperty("--text-color" , colors.grey[100]);
@@ -32,18 +32,18 @@ const ViewProfile:React.FC = () => {
       ): !loading && error === null &&( 
         <div className='view-profile-details'>
           <Image 
-            src={data.user.imageUrl ? data.user.imageUrl : "../../unknown-user.png"}
+            src={"../../unknown-user.png"}
             alt='profile-image'
             style={{width:"250px"}}
           />
           <div className='profile-details'>
-            <p>{data.user.fullName}</p>
-            <p>{data.user.emailAddress}</p>
-            <p>{data.user.nic}</p>
-            <p>{data.user.contact}</p>
-            <p>{data.user.gender}</p>
-            <p>{data.user.birthday}</p>
-            <p>{data.user.address}</p>
+            <p>John Doe</p>
+            <p>john.doe@example.com</p>
+            <p>123456789V</p>
+            <p>+1234567890</p>
+            <p>Male</p>
+            <p>1990-01-01</p>
+            <p>1234 Elm Street, Springfield, USA</p>
           </div>
           <div className='empty'></div>
         </div>

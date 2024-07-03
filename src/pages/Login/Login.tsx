@@ -5,9 +5,9 @@ import './login.scss';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
-import { useBaseUrl } from '../../context/BaseUrl/BaseUrlContext';
+//import { useBaseUrl } from '../../context/BaseUrl/BaseUrlContext';
 import ReactLoading from 'react-loading';
-import axios from 'axios';
+//import axios from 'axios';
 
 interface FormValues {
   emailAddress: string;
@@ -27,7 +27,7 @@ const validationSchema = Yup.object({
 const Login: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const { colors, toggleTheme, theme } = useTheme();
-  const { baseUrl } = useBaseUrl();
+  //const { baseUrl } = useBaseUrl();
   const navigate = useNavigate();
 
   // Update styles based on theme
@@ -42,33 +42,34 @@ const Login: React.FC = () => {
     initialValues,
     validationSchema,
     onSubmit: async (values) => {
-      setLoading(true);
-
-      axios.post(`${baseUrl}users/login`, values)
-      .then(res => {
-        if (res.data.status) {
-          // Successful login
-          console.log("Login successful");
-          localStorage.setItem('userId' , res.data.id);
-          localStorage.setItem('userType' , res.data.userType);
-          navigate('/dashboard');
-        } 
-      })
-      .catch(err => {
-        if (axios.isAxiosError(err) && err.response) {
-          // Extract error message from response
-          const serverError = err.response.data;
-          alert(serverError.error.message || 'An error occurred while logging in.');
-          console.error('Server error:', serverError);
-        } else {
-          // Handle unexpected errors
-          alert('An unexpected error occurred.');
-          console.error('Unexpected error:', err);
-        }
-      })
-      .finally(() => {
-        setLoading(false);
-      });    
+      console.log(values);
+      setLoading(false);
+      navigate('/dashboard')
+      // axios.post(`${baseUrl}users/login`, values)
+      // .then(res => {
+      //   if (res.data.status) {
+      //     // Successful login
+      //     console.log("Login successful");
+      //     localStorage.setItem('userId' , res.data.id);
+      //     localStorage.setItem('userType' , res.data.userType);
+      //     navigate('/dashboard');
+      //   } 
+      // })
+      // .catch(err => {
+      //   if (axios.isAxiosError(err) && err.response) {
+      //     // Extract error message from response
+      //     const serverError = err.response.data;
+      //     alert(serverError.error.message || 'An error occurred while logging in.');
+      //     console.error('Server error:', serverError);
+      //   } else {
+      //     // Handle unexpected errors
+      //     alert('An unexpected error occurred.');
+      //     console.error('Unexpected error:', err);
+      //   }
+      // })
+      // .finally(() => {
+      //   setLoading(false);
+      // });    
    },
   });
 

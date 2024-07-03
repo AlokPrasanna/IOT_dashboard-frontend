@@ -63,7 +63,7 @@ interface UsersProps {
 
 const Users: React.FC<UsersProps> = ({isCollapsed}) => {
   const [fetchTrigger, setFetchTrigger] = useState<boolean>(false);
-  const {data , loading , error} = useFetch({path:"users/all", trigger:fetchTrigger});
+  const { loading , error} = useFetch({path:"users/all", trigger:fetchTrigger});
   const [addUser, setAddUser] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
@@ -72,6 +72,63 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
   const navigate  = useNavigate();
   const {baseUrl} = useBaseUrl();
   const { colors } = useTheme();
+
+  const sampleData = [
+    {
+      "_id": "60d21b4667d0d8992e610c85",
+      "fullName": "John Doe",
+      "nic": "123456789V",
+      "emailAddress": "john.doe@example.com",
+      "contact": "+1234567890",
+      "address": "1234 Elm Street, Springfield, USA",
+      "gender": "Male",
+      "birthday": "1990-01-01",
+      "imageUrl": "",
+      "userType": "Customer",
+      "sendEmailStatus": "Yes",
+      "password": "hashed_password_here",
+      "dateCreated": "2023-06-30",
+      "timeCreated": "10:30:45",
+      "dateUpdated": "2023-07-01",
+      "timeUpdated": "14:20:30"
+    },
+    {
+      "_id": "60d21b4667d0d8992e610c86",
+      "fullName": "Jane Smith",
+      "nic": "987654321V",
+      "emailAddress": "jane.smith@example.com",
+      "contact": "+0987654321",
+      "address": "5678 Oak Street, Metropolis, USA",
+      "gender": "Female",
+      "birthday": "1985-02-20",
+      "imageUrl": "",
+      "userType": "Moderator",
+      "sendEmailStatus": "No",
+      "password": "hashed_password_here",
+      "dateCreated": "2023-06-29",
+      "timeCreated": "09:15:30",
+      "dateUpdated": "2023-07-01",
+      "timeUpdated": "15:45:15"
+    },
+    {
+      "_id": "60d21b4667d0d8992e610c87",
+      "fullName": "Alice Johnson",
+      "nic": "456789123V",
+      "emailAddress": "alice.johnson@example.com",
+      "contact": "+1239876540",
+      "address": "910 Maple Avenue, Gotham, USA",
+      "gender": "Female",
+      "birthday": "1995-07-15",
+      "imageUrl": "",
+      "userType": "Admin",
+      "sendEmailStatus": "Yes",
+      "password": "hashed_password_here",
+      "dateCreated": "2023-06-28",
+      "timeCreated": "08:45:20",
+      "dateUpdated": "2023-07-01",
+      "timeUpdated": "13:10:10"
+    }
+  ]
 
   const handleRowSelect = (rowData: Record<string, any>) => {
     setSelectedRow(rowData);
@@ -474,8 +531,8 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
         </div>
       ) : (
         <div className='user-table'>
-          {data !== null && error === null ? (
-            <Table columns={columns} data={data.users} onRowSelect={handleRowSelect}/>
+          { error === null ? (
+            <Table columns={columns} data={sampleData} onRowSelect={handleRowSelect}/>
           ): <p>{error}</p>}
         </div>
       ))}

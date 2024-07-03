@@ -6,6 +6,51 @@ import useFetch from '../../hooks/UseFetch';
 import ReactLoading from 'react-loading'; 
 import { useNavigate } from 'react-router-dom';
 
+const sampleData = [
+  {
+    "_id": "60d21b4667d0d8992e610c88",
+    "id": "1625088888",
+    "name": "Device A",
+    "group": "Group A",
+    "owner": "Owner A",
+    "imageUrl": "",
+    "onState": true,
+    "activeState": true,
+    "dateCreated": "2023-06-30",
+    "timeCreated": "10:30:45",
+    "dateUpdated": "2023-07-01",
+    "timeUpdated": "14:20:30"
+  },
+  {
+    "_id": "60d21b4667d0d8992e610c89",
+    "id": "1625088899",
+    "name": "Device B",
+    "group": "Group B",
+    "owner": "Owner B",
+    "imageUrl": "",
+    "onState": false,
+    "activeState": false,
+    "dateCreated": "2023-06-29",
+    "timeCreated": "09:15:30",
+    "dateUpdated": "2023-07-01",
+    "timeUpdated": "15:45:15"
+  },
+  {
+    "_id": "60d21b4667d0d8992e610c90",
+    "id": "1625088900",
+    "name": "Device C",
+    "group": "Group C",
+    "owner": "Owner C",
+    "imageUrl": "",
+    "onState": true,
+    "activeState": false,
+    "dateCreated": "2023-06-28",
+    "timeCreated": "08:45:20",
+    "dateUpdated": "2023-07-01",
+    "timeUpdated": "13:10:10"
+  }
+]
+
 const Devices:React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<String>('');
   const {data , loading , error} = useFetch({path:"devices/all"})
@@ -41,7 +86,7 @@ const Devices:React.FC = () => {
     setSearchTerm(e.target.value);
   };
 
-  const filteredDevices = data?.devices.filter((device:any) => {
+  const filteredDevices = sampleData.filter((device:any) => {
     const lowerCaseSearchTerm = searchTerm.toLowerCase();
     
     const matchesActive = lowerCaseSearchTerm.startsWith('ac' || 'act') && device.activeState;

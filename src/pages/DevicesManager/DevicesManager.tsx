@@ -30,6 +30,49 @@ const initialValues: FormValues = {
   activeState: '',
 };
 
+const sampleData = [{
+  "_id": "60d21b4667d0d8992e610c88",
+  "id": "1625088888",
+  "name": "Device A",
+  "owner": "Owner A",
+  "group": "Group A",
+  "imageUrl": "",
+  "onState": true,
+  "activeState": true,
+  "dateCreated": "2023-06-30",
+  "timeCreated": "10:30:45",
+  "dateUpdated": "2023-07-01",
+  "timeUpdated": "14:20:30"
+},
+{
+  "_id": "60d21b4667d0d8992e610c89",
+  "id": "1625088899",
+  "name": "Device B",
+  "owner": "Owner B",
+  "group": "Group B",
+  "imageUrl": "",
+  "onState": false,
+  "activeState": false,
+  "dateCreated": "2023-06-29",
+  "timeCreated": "09:15:30",
+  "dateUpdated": "2023-07-01",
+  "timeUpdated": "15:45:15"
+},
+{
+  "_id": "60d21b4667d0d8992e610c90",
+  "id": "1625088900",
+  "name": "Device C",
+  "owner": "Owner C",
+  "group": "Group C",
+  "imageUrl": "",
+  "onState": true,
+  "activeState": false,
+  "dateCreated": "2023-06-28",
+  "timeCreated": "08:45:20",
+  "dateUpdated": "2023-07-01",
+  "timeUpdated": "13:10:10"
+}]
+
 const DevicesManager:React.FC = () => {
   const [addDevice, setAddDevice] = useState<boolean>(false);
   const [selectedRow, setSelectedRow] = useState<Record<string, any> | null>(null);
@@ -39,7 +82,7 @@ const DevicesManager:React.FC = () => {
   const {colors} = useTheme();
   const navigate = useNavigate();
   const [fetchTrigger, setFetchTrigger] = useState<boolean>(false);
-  const {data , loading , error} = useFetch({path:"devices/all" , trigger:fetchTrigger});
+  const { loading , error} = useFetch({path:"devices/all" , trigger:fetchTrigger});
 
   const {baseUrl} = useBaseUrl();
 
@@ -379,7 +422,7 @@ const DevicesManager:React.FC = () => {
         <div className='device-table'>
           <Table 
             columns={columns} 
-            data={data.devices} 
+            data={sampleData} 
             onRowSelect={handleRowSelect} 
             onActionButtonClick={handleActionButtonClick}
           />
