@@ -8,7 +8,7 @@ import { useTheme } from '../../context/Theme/ThemeContext';
 
 const UserView:React.FC = () => {
     const {userId} = useParams();
-    const {data , loading , error} = useFetch({path:`users/one/${userId}`});
+    const { loading , error} = useFetch({path:`users/one/${userId}`});
     const {colors} = useTheme();
 
     if (colors) {
@@ -31,17 +31,18 @@ const UserView:React.FC = () => {
         </div>
       ): !loading && error !== null ? (
         <span className='error-msg'>{error}</span>
-      ): !loading && error === null && data !== null && (
+      ): !loading && error === null && (
         <div className='user-view-profile-body'>
-            <img src={data.user.imageUrl === "" ? "../../../../unknown-user.png" : data.user.imageUrl} alt='User-Profile'/>
+            <img src="../../../../unknown-user.png" alt='User-Profile'/>
             <div className='user-view-profile-data'>
-                <span>Name: {data.user.fullName}</span>
-                <span>Email: {data.user.emailAddress}</span>
-                <span>NIC: {data.user.nic}</span>
-                <span>Contact: {data.user.contact}</span>
-                <span>Address: {data.user.address}</span>
-                <span>Gender: {data.user.gender}</span>
-                <span>Birthday: {data.user.birthday}</span>
+                <span>Name: John Doe</span>
+                <span>Email: john.doe@example.com</span>
+                <span>NIC: 123456789V</span>
+                <span>Contact: +1234567890</span>
+                <span>Address: 1234 Elm Street, Springfield, USA</span>
+                <span>Gender: Male</span>
+                <span>User Type: Admin</span>
+                <span>Birthday: 1990-01-01</span>
             </div>
         </div>
       )}
