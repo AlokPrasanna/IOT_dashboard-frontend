@@ -40,7 +40,7 @@ const SideBar: React.FC<SideBarProps> = ({isCollapsed , toggleSidebar}) => {
         <div className={`sidebar ${isCollapsed === true ? "collaps" : ""}`} style={{backgroundColor:colors.primary[400]}}>
             <div className="top">
                 <div className="logo">
-                    <span className='sidebar-header-title' style={{color: colors.grey[100]}}>IOT Dashboard</span>
+                    <span className='sidebar-header-title' style={{color: colors.grey[100]}}>Xpac Dashboard</span>
                     <Icon 
                         icon={
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6">
