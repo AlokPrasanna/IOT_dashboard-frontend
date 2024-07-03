@@ -137,7 +137,8 @@ const Table: React.FC<TableDataProps> = ({ columns, data, onRowSelect , onAction
     const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const [itemsPerPage, setItemsPerPage] = useState<number>(5);
+    const itemsPerPage = 5;
+    //const [itemsPerPage, setItemsPerPage] = useState<number>(5);
     const [selectedRowIndex, setSelectedRowIndex] = useState<number | null>(null);
 
     const handleSort = (accessKey: string) => {
