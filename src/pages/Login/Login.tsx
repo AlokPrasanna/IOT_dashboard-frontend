@@ -37,6 +37,9 @@ const Login: React.FC = () => {
     document.documentElement.style.setProperty('--focus-color', colors.greenAccent[500]);
   }
 
+  localStorage.setItem('userType' , "Admin");
+  localStorage.setItem('userId' , "123456");
+
   // Form handling with Formik
   const formik = useFormik({
     initialValues,

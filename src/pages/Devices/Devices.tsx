@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 import './devices.scss'
 import { PageTitle , DeviceCard } from '../../components/molecules';
 import { useTheme } from '../../context/Theme/ThemeContext';
-import useFetch from '../../hooks/UseFetch';
-import ReactLoading from 'react-loading'; 
+//import useFetch from '../../hooks/UseFetch';
+//import ReactLoading from 'react-loading'; 
 import { useNavigate } from 'react-router-dom';
 
 const sampleData = [
@@ -53,7 +53,7 @@ const sampleData = [
 
 const Devices:React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<String>('');
-  const {data , loading , error} = useFetch({path:"devices/all"})
+  //const {data , loading , error} = useFetch({path:"devices/all"})
   const {colors} = useTheme();
   const navigate = useNavigate();
 
@@ -117,14 +117,14 @@ const Devices:React.FC = () => {
           onChange={handleSearchChange}
         />
       </div>
-      {loading ? (
+      {/* {loading ? (
         <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height:"50vh" }}>
           <span style={{ color: colors.grey[100], padding: '10px' }}>Loading...</span>
           <ReactLoading type="spin" color={colors.blueAccent[400]} height={50} width={50} />
         </div>
       ) : !loading && error !== null ? (
           <span className='error-msg'>{error}</span>
-      ) : !loading && error === null && data !== null &&(
+      ) : !loading && error === null && data !== null &&( */}
       <div className='devices-body'>
       {filteredDevices.length > 0 ? filteredDevices.map((device:any) => ( 
           <DeviceCard 
@@ -139,7 +139,7 @@ const Devices:React.FC = () => {
           <span className='not-devices-msg'>Not Devices Found!</span>
         )}
       </div>
-      )}
+      {/* )} */}
     </div>
   )
 }
