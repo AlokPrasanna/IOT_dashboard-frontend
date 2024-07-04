@@ -3,7 +3,7 @@ import { useTheme } from '../../../context/Theme/ThemeContext';
 import { Icon  , Image} from '../../atoms';
 import "./sidebar.scss";
 import { useNavigate , useLocation } from 'react-router-dom';
-import useFetch from '../../../hooks/UseFetch';
+//import useFetch from '../../../hooks/UseFetch';
 
 interface SideBarProps {
     isCollapsed: boolean;
@@ -14,13 +14,11 @@ const SideBar: React.FC<SideBarProps> = ({isCollapsed , toggleSidebar}) => {
     const navigate = useNavigate();
     const location = useLocation();
     const { colors, theme } = useTheme();
-    const userId = localStorage.getItem('userId');
-    const {data} = useFetch({path:`users/one/${userId}`});
+    //const userId = localStorage.getItem('userId');
+    //const {data} = useFetch({path:`users/one/${userId}`});
     const [isMenuOpen, setIsMenuOpen] = useState(false); 
 
     const userType = localStorage.getItem('userType');
-
-    console.log(data)
     
     if(colors){
         document.documentElement.style.setProperty('--hover-color', colors.blueAccent[400]);
