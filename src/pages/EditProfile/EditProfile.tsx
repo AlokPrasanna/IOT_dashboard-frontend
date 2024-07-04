@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef} from 'react';
 import { PageTitle } from '../../components/molecules';
 import './editProfile.scss';
 import { useTheme } from '../../context/Theme/ThemeContext';
