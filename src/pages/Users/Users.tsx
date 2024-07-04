@@ -62,7 +62,7 @@ interface UsersProps {
 }
 
 const Users: React.FC<UsersProps> = ({isCollapsed}) => {
-  const [fetchTrigger, setFetchTrigger] = useState<boolean>(false);
+  //const [fetchTrigger, setFetchTrigger] = useState<boolean>(false);
   //const { loading , error} = useFetch({path:"users/all", trigger:fetchTrigger});
   const [addUser, setAddUser] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);

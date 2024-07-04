@@ -2,14 +2,16 @@ import React from 'react';
 import "./deviceView.scss"
 import { PageTitle } from '../../components/molecules';
 import { useTheme } from '../../context/Theme/ThemeContext';
-import { useParams } from 'react-router-dom';
-import useFetch from '../../hooks/UseFetch';
+// import { useParams } from 'react-router-dom';
+// import useFetch from '../../hooks/UseFetch';
 import ReactLoading from 'react-loading';
 
 const DeviceView:React.FC = () => {
   const {colors} = useTheme();
-  const {deviceId} = useParams();
-  const { loading , error} = useFetch({path:`devices/one/${deviceId}`})
+  //const {deviceId} = useParams();
+  //const { loading , error} = useFetch({path:`devices/one/${deviceId}`})
+  const loading = false;
+  const error = null;
 
   if(colors){
     document.documentElement.style.setProperty('--btn-bg', colors.greenAccent[500]);
