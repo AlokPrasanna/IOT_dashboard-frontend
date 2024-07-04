@@ -5,10 +5,10 @@ import { useTheme } from '../../context/Theme/ThemeContext';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Icon } from '../../components/atoms';
-import useFetch from '../../hooks/UseFetch';
+//import useFetch from '../../hooks/UseFetch';
 import ReactLoading from 'react-loading';
-import { useBaseUrl } from '../../context/BaseUrl/BaseUrlContext';
-import axios from 'axios';
+// import { useBaseUrl } from '../../context/BaseUrl/BaseUrlContext';
+// import axios from 'axios';
 
 const validationSchema = Yup.object({
   emailAddress: Yup.string().email('Invalid email format'),
@@ -23,11 +23,13 @@ const EditProfile: React.FC<EditeProps> = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
   const [showNewPassword, setShowNewPassword] = useState<boolean>(false);
-  const userId = localStorage.getItem('userId');
+  //const userId = localStorage.getItem('userId');
   const [imageFile, setImageFile] = useState<File | null>(null);
-  const { data, loading, error } = useFetch({ path: `users/one/${userId}` });
+  //const { data, loading, error } = useFetch({ path: `users/one/${userId}` });
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const {baseUrl} = useBaseUrl();
+  //const {baseUrl} = useBaseUrl();
+  const loading = false;
+  const error = null;
 
   const { colors } = useTheme();
 
@@ -62,67 +64,68 @@ const EditProfile: React.FC<EditeProps> = () => {
         });
       }
       if(window.confirm("Are you sure to save changes?")){
-        const currentDate = new Date();
+        alert("User details updated successfully!");
+        // const currentDate = new Date();
 
-        // Current Date
-        const year = currentDate.getFullYear();
-        const month = String(currentDate.getMonth() + 1).padStart(2, '0');
-        const day = String(currentDate.getDate()).padStart(2, '0');
-        const formattedDate = `${year}-${month}-${day}`;
+        // // Current Date
+        // const year = currentDate.getFullYear();
+        // const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+        // const day = String(currentDate.getDate()).padStart(2, '0');
+        // const formattedDate = `${year}-${month}-${day}`;
     
-        // Current Time
-        const hours = String(currentDate.getHours()).padStart(2, '0');
-        const minutes = String(currentDate.getMinutes()).padStart(2, '0');
-        const seconds = String(currentDate.getSeconds()).padStart(2, '0');
-        const formattedTime = `${hours}:${minutes}:${seconds}`;
+        // // Current Time
+        // const hours = String(currentDate.getHours()).padStart(2, '0');
+        // const minutes = String(currentDate.getMinutes()).padStart(2, '0');
+        // const seconds = String(currentDate.getSeconds()).padStart(2, '0');
+        // const formattedTime = `${hours}:${minutes}:${seconds}`;
 
-        const data = {
-          fullName:values.fullName,
-          emailAddress:values.emailAddress,
-          imageUrl:'',
-          nic:values.nic,
-          contact:values.contact,
-          address:values.address,
-          birthday:values.birthday,
-          gender:values.gender,
-          dateCreated:values.dateCreated,
-          timeCreated:values.timeCreated,
-          dateUpdated:formattedDate,
-          timeUpdated:formattedTime
-        }
-        const url = `${baseUrl}users/update/${userId}`
-        await axios
-          .put(url , data)
-          .then( res => {
-            console.log(res);
-            alert("User details updated successfully!");
-          })
-          .catch(error => {
-            console.log(error);
-            alert(error.response.data.error.message);
-          })
+        // const data = {
+        //   fullName:values.fullName,
+        //   emailAddress:values.emailAddress,
+        //   imageUrl:'',
+        //   nic:values.nic,
+        //   contact:values.contact,
+        //   address:values.address,
+        //   birthday:values.birthday,
+        //   gender:values.gender,
+        //   dateCreated:values.dateCreated,
+        //   timeCreated:values.timeCreated,
+        //   dateUpdated:formattedDate,
+        //   timeUpdated:formattedTime
+        // }
+        // const url = `${baseUrl}users/update/${userId}`
+        // await axios
+        //   .put(url , data)
+        //   .then( res => {
+        //     console.log(res);
+        //     alert("User details updated successfully!");
+        //   })
+        //   .catch(error => {
+        //     console.log(error);
+        //     alert(error.response.data.error.message);
+        //   })
       }
     },
   });
 
-  useEffect(() => {
-    if (data && data.user) {
-      formik.setValues({
-        fullName: data.user.fullName || '',
-        nic: data.user.nic || '',
-        emailAddress: data.user.emailAddress || '',
-        contact: data.user.contact || '',
-        address: data.user.address || '',
-        gender: data.user.gender || '',
-        birthday: data.user.birthday || '',
-        dateCreated: data.user.dateCreated,
-        timeCreated: data.user.timeCreated,
-        currentPassword: '',
-        newPassword: '',
-        confirmPassword:''
-      });
-    }
-  }, [data]);
+  // useEffect(() => {
+  //   if (data && data.user) {
+  //     formik.setValues({
+  //       fullName: data.user.fullName || '',
+  //       nic: data.user.nic || '',
+  //       emailAddress: data.user.emailAddress || '',
+  //       contact: data.user.contact || '',
+  //       address: data.user.address || '',
+  //       gender: data.user.gender || '',
+  //       birthday: data.user.birthday || '',
+  //       dateCreated: data.user.dateCreated,
+  //       timeCreated: data.user.timeCreated,
+  //       currentPassword: '',
+  //       newPassword: '',
+  //       confirmPassword:''
+  //     });
+  //   }
+  // }, [data]);
 
   const handleClearButton = () => {
     formik.resetForm();
@@ -158,7 +161,8 @@ const EditProfile: React.FC<EditeProps> = () => {
       <div className='edit-form'>
       <form onSubmit={formik.handleSubmit}>
       <div className='add-image'>
-        <span className='personal-header'>{data?.user?.imageUrl === "" || undefined ? "Add Image" : "Change Image"}</span>
+      <span className='personal-header'>Add Image</span>
+        {/* <span className='personal-header'>{data?.user?.imageUrl === "" || undefined ? "Add Image" : "Change Image"}</span> */}
         <div>
           <input
             type='file'
