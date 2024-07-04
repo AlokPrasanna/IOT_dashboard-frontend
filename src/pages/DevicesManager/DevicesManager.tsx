@@ -4,9 +4,9 @@ import "./devicesManager.scss"
 import { Table } from '../../components/atoms';
 import { useTheme } from '../../context/Theme/ThemeContext';
 import { useFormik } from 'formik';
-import { useBaseUrl } from '../../context/BaseUrl/BaseUrlContext';
-import axios from 'axios';
-import useFetch from '../../hooks/UseFetch';
+// import { useBaseUrl } from '../../context/BaseUrl/BaseUrlContext';
+// import axios from 'axios';
+// import useFetch from '../../hooks/UseFetch';
 import ReactLoading from 'react-loading';
 import { useNavigate } from 'react-router-dom';
 
@@ -81,10 +81,10 @@ const DevicesManager:React.FC = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const {colors} = useTheme();
   const navigate = useNavigate();
-  const [fetchTrigger, setFetchTrigger] = useState<boolean>(false);
-  const { loading , error} = useFetch({path:"devices/all" , trigger:fetchTrigger});
+  //const [fetchTrigger, setFetchTrigger] = useState<boolean>(false);
+  //const { loading , error} = useFetch({path:"devices/all" , trigger:fetchTrigger});
 
-  const {baseUrl} = useBaseUrl();
+  //const {baseUrl} = useBaseUrl();
 
   if (colors) {
     document.documentElement.style.setProperty('--btn-bg', colors.greenAccent[500]);
@@ -113,62 +113,63 @@ const DevicesManager:React.FC = () => {
     { accessKey: "activeState", value: "Change State" },
   ];
 
-  const GenerateID = () => {
-    const currentDate = new Date();
-    const milliseconds = currentDate.getTime().toString();
-    const deviceID = milliseconds.slice(-8);
+  // const GenerateID = () => {
+  //   const currentDate = new Date();
+  //   const milliseconds = currentDate.getTime().toString();
+  //   const deviceID = milliseconds.slice(-8);
   
-    return deviceID;
-  };
+  //   return deviceID;
+  // };
 
   const formik = useFormik({
   initialValues,
   onSubmit: async(values) =>{
     if(window.confirm("Are you sure to continue?")){
 
-      const id = GenerateID();
-
-      const currentDate = new Date();
+      //const id = GenerateID();
+      console.log(values)
+      //const currentDate = new Date();
 
       // Current Date
-      const year = currentDate.getFullYear();
-      const month = String(currentDate.getMonth() + 1).padStart(2, '0');
-      const day = String(currentDate.getDate()).padStart(2, '0');
-      const formattedDate = `${year}-${month}-${day}`;
+      // const year = currentDate.getFullYear();
+      // const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+      // const day = String(currentDate.getDate()).padStart(2, '0');
+      //const formattedDate = `${year}-${month}-${day}`;
   
       // Current Time
-      const hours = String(currentDate.getHours()).padStart(2, '0');
-      const minutes = String(currentDate.getMinutes()).padStart(2, '0');
-      const seconds = String(currentDate.getSeconds()).padStart(2, '0');
-      const formattedTime = `${hours}:${minutes}:${seconds}`;
+      // const hours = String(currentDate.getHours()).padStart(2, '0');
+      // const minutes = String(currentDate.getMinutes()).padStart(2, '0');
+      // const seconds = String(currentDate.getSeconds()).padStart(2, '0');
+      //const formattedTime = `${hours}:${minutes}:${seconds}`;
 
-      const data = {
-        id:id,
-        name:values.deviceName,
-        imageUrl:'',
-        group:values.group,
-        owner:values.owner,
-        onState: false,
-        activeState:false,
-        dateCreated:formattedDate,
-        timeCreated:formattedTime,
-        dateUpdated:formattedDate,
-        timeUpdated:formattedTime
-      }
+      // const data = {
+      //   id:id,
+      //   name:values.deviceName,
+      //   imageUrl:'',
+      //   group:values.group,
+      //   owner:values.owner,
+      //   onState: false,
+      //   activeState:false,
+      //   dateCreated:formattedDate,
+      //   timeCreated:formattedTime,
+      //   dateUpdated:formattedDate,
+      //   timeUpdated:formattedTime
+      // }
 
-      const url = `${baseUrl}devices/create-new-device`;
+      //const url = `${baseUrl}devices/create-new-device`;
+      alert("Devices created successfully!");
 
-      await axios
-        .post(url , data)
-        .then( res => {
-          console.log(res);
-          alert("Devices created successfully!");
-          setFetchTrigger(!fetchTrigger);
-        })
-        .catch(error => {
-          console.log(error);
-          alert(error.response.data.error.message);
-        })
+      // await axios
+      //   .post(url , data)
+      //   .then( res => {
+      //     console.log(res);
+      //     alert("Devices created successfully!");
+      //     setFetchTrigger(!fetchTrigger);
+      //   })
+      //   .catch(error => {
+      //     console.log(error);
+      //     alert(error.response.data.error.message);
+      //   })
     }
   }
   })
@@ -213,86 +214,88 @@ const DevicesManager:React.FC = () => {
 
   const HandleSaveChangesButton = async() => {
     if(window.confirm("Are you sure to save changes?")){
-      const currentDate = new Date();
+      // const currentDate = new Date();
 
-      // Current Date
-      const year = currentDate.getFullYear();
-      const month = String(currentDate.getMonth() + 1).padStart(2, '0');
-      const day = String(currentDate.getDate()).padStart(2, '0');
-      const formattedDate = `${year}-${month}-${day}`;
+      // // Current Date
+      // const year = currentDate.getFullYear();
+      // const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+      // const day = String(currentDate.getDate()).padStart(2, '0');
+      // const formattedDate = `${year}-${month}-${day}`;
   
-      // Current Time
-      const hours = String(currentDate.getHours()).padStart(2, '0');
-      const minutes = String(currentDate.getMinutes()).padStart(2, '0');
-      const seconds = String(currentDate.getSeconds()).padStart(2, '0');
-      const formattedTime = `${hours}:${minutes}:${seconds}`;
+      // // Current Time
+      // const hours = String(currentDate.getHours()).padStart(2, '0');
+      // const minutes = String(currentDate.getMinutes()).padStart(2, '0');
+      // const seconds = String(currentDate.getSeconds()).padStart(2, '0');
+      // const formattedTime = `${hours}:${minutes}:${seconds}`;
 
-      const data = {
-        id:selectedRow?.id,
-        name:selectedRow?.name,
-        imageUrl:'',
-        group:selectedRow?.group,
-        owner:selectedRow?.owner,
-        onState: selectedRow?.onState === "true" ? true : false,
-        dateCreated:selectedRow?.dateCreated,
-        timeCreated:selectedRow?.timeCreated,
-        dateUpdated:formattedDate,
-        timeUpdated:formattedTime
-      }
+      // const data = {
+      //   id:selectedRow?.id,
+      //   name:selectedRow?.name,
+      //   imageUrl:'',
+      //   group:selectedRow?.group,
+      //   owner:selectedRow?.owner,
+      //   onState: selectedRow?.onState === "true" ? true : false,
+      //   dateCreated:selectedRow?.dateCreated,
+      //   timeCreated:selectedRow?.timeCreated,
+      //   dateUpdated:formattedDate,
+      //   timeUpdated:formattedTime
+      // }
 
-      console.log("Request data ",data)
+      // console.log("Request data ",data)
 
-      const url = `${baseUrl}devices/update/${selectedRow?._id}`;
+      // const url = `${baseUrl}devices/update/${selectedRow?._id}`;
+      alert("Device details Updated successfully!");
 
-      await axios
-          .put(url , data)
-          .then( res => {
-            console.log(res);
-            alert("Device details Updated successfully!");
-            setFetchTrigger(!fetchTrigger);
-          })
-          .catch(error => {
-            console.log(error);
-            alert(error.response.data.error.message);
-          })
+      // await axios
+      //     .put(url , data)
+      //     .then( res => {
+      //       console.log(res);
+      //       alert("Device details Updated successfully!");
+      //       setFetchTrigger(!fetchTrigger);
+      //     })
+      //     .catch(error => {
+      //       console.log(error);
+      //       alert(error.response.data.error.message);
+      //     })
     }
   }
 
   const HandleActiceState = async(rowData: Record<string, any>) => {
     console.log(rowData);
-    const currentDate = new Date();
+    alert("Device details Updated successfully!");
+    // const currentDate = new Date();
 
-      // Current Date
-      const year = currentDate.getFullYear();
-      const month = String(currentDate.getMonth() + 1).padStart(2, '0');
-      const day = String(currentDate.getDate()).padStart(2, '0');
-      const formattedDate = `${year}-${month}-${day}`;
+    //   // Current Date
+    //   const year = currentDate.getFullYear();
+    //   const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+    //   const day = String(currentDate.getDate()).padStart(2, '0');
+    //   const formattedDate = `${year}-${month}-${day}`;
   
-      // Current Time
-      const hours = String(currentDate.getHours()).padStart(2, '0');
-      const minutes = String(currentDate.getMinutes()).padStart(2, '0');
-      const seconds = String(currentDate.getSeconds()).padStart(2, '0');
-      const formattedTime = `${hours}:${minutes}:${seconds}`;
+    //   // Current Time
+    //   const hours = String(currentDate.getHours()).padStart(2, '0');
+    //   const minutes = String(currentDate.getMinutes()).padStart(2, '0');
+    //   const seconds = String(currentDate.getSeconds()).padStart(2, '0');
+    //   const formattedTime = `${hours}:${minutes}:${seconds}`;
 
-      const data = {
-        activeState: rowData.activeState === true ? false : true,
-        dateUpdated:formattedDate,
-        timeUpdated:formattedTime
-      }
+    //   const data = {
+    //     activeState: rowData.activeState === true ? false : true,
+    //     dateUpdated:formattedDate,
+    //     timeUpdated:formattedTime
+    //   }
 
-      const url = `${baseUrl}devices/update/${rowData?._id}`;
+    //   const url = `${baseUrl}devices/update/${rowData?._id}`;
 
-      await axios
-          .put(url , data)
-          .then( res => {
-            console.log(res);
-            alert("Device details Updated successfully!");
-            setFetchTrigger(!fetchTrigger);
-          })
-          .catch(error => {
-            console.log(error);
-            alert(error.response.data.error.message);
-          })
+    //   await axios
+    //       .put(url , data)
+    //       .then( res => {
+    //         console.log(res);
+    //         alert("Device details Updated successfully!");
+    //         setFetchTrigger(!fetchTrigger);
+    //       })
+    //       .catch(error => {
+    //         console.log(error);
+    //         alert(error.response.data.error.message);
+    //       })
   }
 
   const HandleDeleteDeviceButton = async() => {
@@ -301,18 +304,19 @@ const DevicesManager:React.FC = () => {
       return;
     }else{
       if(window.confirm("Are you sure to delete this device?")){
-        const url = `${baseUrl}devices/delete/${selectedRow?._id}`;
-        await axios
-          .delete(url)
-          .then( res => {
-            console.log(res);
-            alert("Device deleted successfully!");
-            setFetchTrigger(!fetchTrigger);
-          })
-          .catch(error => {
-            console.log(error);
-            alert(error.response.data.error.message);
-          })
+        alert("Device deleted successfully!");
+        // const url = `${baseUrl}devices/delete/${selectedRow?._id}`;
+        // await axios
+        //   .delete(url)
+        //   .then( res => {
+        //     console.log(res);
+        //     alert("Device deleted successfully!");
+        //     setFetchTrigger(!fetchTrigger);
+        //   })
+        //   .catch(error => {
+        //     console.log(error);
+        //     alert(error.response.data.error.message);
+        //   })
       }
     }
   }
@@ -321,6 +325,9 @@ const DevicesManager:React.FC = () => {
     setAddDevice(false);
     setShowEditPopup(false);
   }
+
+  const loading = false;
+  const error = null;
   
   return (
     <div className='devices-content'>
