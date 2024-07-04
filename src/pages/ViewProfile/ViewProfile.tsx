@@ -3,13 +3,15 @@ import "./viewProfile.scss";
 import { PageTitle } from '../../components/molecules';
 import { Image } from '../../components/atoms';
 import { useTheme } from '../../context/Theme/ThemeContext';
-import useFetch from '../../hooks/UseFetch';
+//import useFetch from '../../hooks/UseFetch';
 import ReactLoading from 'react-loading';
 
 const ViewProfile:React.FC = () => {
   const {colors} = useTheme();
-  const userId = localStorage.getItem('userId');
-  const { error , loading } = useFetch({path:`users/one/${userId}`}); 
+  //const userId = localStorage.getItem('userId');
+  //const { error , loading } = useFetch({path:`users/one/${userId}`}); 
+  const loading = false;
+  const error = null;
  
   if(colors){
     document.documentElement.style.setProperty("--text-color" , colors.grey[100]);
