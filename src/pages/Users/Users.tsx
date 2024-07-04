@@ -5,10 +5,10 @@ import { useTheme } from '../../context/Theme/ThemeContext';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Table } from '../../components/atoms';
-import useFetch from '../../hooks/UseFetch';
+//import useFetch from '../../hooks/UseFetch';
 import ReactLoading from 'react-loading';
-import axios from 'axios';
-import { useBaseUrl } from '../../context/BaseUrl/BaseUrlContext';
+// import axios from 'axios';
+// import { useBaseUrl } from '../../context/BaseUrl/BaseUrlContext';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -63,14 +63,14 @@ interface UsersProps {
 
 const Users: React.FC<UsersProps> = ({isCollapsed}) => {
   const [fetchTrigger, setFetchTrigger] = useState<boolean>(false);
-  const { loading , error} = useFetch({path:"users/all", trigger:fetchTrigger});
+  //const { loading , error} = useFetch({path:"users/all", trigger:fetchTrigger});
   const [addUser, setAddUser] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
   const [selectedRow, setSelectedRow] = useState<Record<string, any> | null>(null);
   const [showEditPopup , setShowEditPopup] = useState<boolean>(false);
   const navigate  = useNavigate();
-  const {baseUrl} = useBaseUrl();
+  // const {baseUrl} = useBaseUrl();
   const { colors } = useTheme();
 
   const sampleData = [
@@ -130,12 +130,13 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
     }
   ]
 
+  const loading = false;
+  const error = null;
+
   const handleRowSelect = (rowData: Record<string, any>) => {
     setSelectedRow(rowData);
     console.log('Selected Row Data:', selectedRow);
   };
-
-  console.log(error);
 
   useEffect(() => {
     if (selectedRow !== null) {
@@ -180,52 +181,54 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
     onSubmit: async(values) => {
 
       if(window.confirm("Are you sure to continue?")){
-        const currentDate = new Date();
+        console.log(values)
+        alert("User created successfully!");
+      //   const currentDate = new Date();
 
-        // Current Date
-        const year = currentDate.getFullYear();
-        const month = String(currentDate.getMonth() + 1).padStart(2, '0');
-        const day = String(currentDate.getDate()).padStart(2, '0');
-        const formattedDate = `${year}-${month}-${day}`;
+      //   // Current Date
+      //   const year = currentDate.getFullYear();
+      //   const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+      //   const day = String(currentDate.getDate()).padStart(2, '0');
+      //   const formattedDate = `${year}-${month}-${day}`;
     
-        // Current Time
-        const hours = String(currentDate.getHours()).padStart(2, '0');
-        const minutes = String(currentDate.getMinutes()).padStart(2, '0');
-        const seconds = String(currentDate.getSeconds()).padStart(2, '0');
-        const formattedTime = `${hours}:${minutes}:${seconds}`;
+      //   // Current Time
+      //   const hours = String(currentDate.getHours()).padStart(2, '0');
+      //   const minutes = String(currentDate.getMinutes()).padStart(2, '0');
+      //   const seconds = String(currentDate.getSeconds()).padStart(2, '0');
+      //   const formattedTime = `${hours}:${minutes}:${seconds}`;
 
-        const data = {
-          fullName:values.fullName,
-          emailAddress:values.email,
-          address:values.address,
-          imageUrl:values.imageUrl,
-          contact:values.contact,
-          nic:values.nic,
-          gender:values.gender,
-          birthday:values.birthday,
-          userType:values.userType,
-          sendEmailStatus:values.sendEmail,
-          password:values.password,
-          dateCreated:formattedDate,
-          timeCreated:formattedTime,
-          dateUpdated:formattedDate,
-          timeUpdated:formattedTime
-        }
-        const url = `${baseUrl}users/create-new-user`;
-        //console.log(url);
-        await axios
-          .post(url, data)
-          .then( res => {
-            console.log(res);
-            alert("User created successfully!");
-            setFetchTrigger(!fetchTrigger);
-          })
-          .catch(error => {
-            console.log(error);
-            alert(error.response.data.error.message);
-          })
-      };
-    },
+      //   const data = {
+      //     fullName:values.fullName,
+      //     emailAddress:values.email,
+      //     address:values.address,
+      //     imageUrl:values.imageUrl,
+      //     contact:values.contact,
+      //     nic:values.nic,
+      //     gender:values.gender,
+      //     birthday:values.birthday,
+      //     userType:values.userType,
+      //     sendEmailStatus:values.sendEmail,
+      //     password:values.password,
+      //     dateCreated:formattedDate,
+      //     timeCreated:formattedTime,
+      //     dateUpdated:formattedDate,
+      //     timeUpdated:formattedTime
+      //   }
+      //   const url = `${baseUrl}users/create-new-user`;
+      //   //console.log(url);
+      //   await axios
+      //     .post(url, data)
+      //     .then( res => {
+      //       console.log(res);
+      //       alert("User created successfully!");
+      //       setFetchTrigger(!fetchTrigger);
+      //     })
+      //     .catch(error => {
+      //       console.log(error);
+      //       alert(error.response.data.error.message);
+      //     })
+       };
+    }
   });
 
   const handleCancelButton = () => {
@@ -267,19 +270,20 @@ const Users: React.FC<UsersProps> = ({isCollapsed}) => {
     }
 
     if(window.confirm('Are you sure to delete selected user?')){
-      const url = `${baseUrl}users/delete/${selectedRow._id}`;
-      await axios
-        .delete(url)
-        .then( res => {
-          console.log(res);
-          alert("User delete successfully!");
-          setFetchTrigger(!fetchTrigger);
-          setSelectedRow(null);
-        })
-        .catch(error => {
-          console.log(error);
-          alert(error.response.data.error.message);
-        })
+      alert("User delete successfully!");
+      // const url = `${baseUrl}users/delete/${selectedRow._id}`;
+      // await axios
+      //   .delete(url)
+      //   .then( res => {
+      //     console.log(res);
+      //     alert("User delete successfully!");
+      //     setFetchTrigger(!fetchTrigger);
+      //     setSelectedRow(null);
+      //   })
+      //   .catch(error => {
+      //     console.log(error);
+      //     alert(error.response.data.error.message);
+      //   })
     }
 
   }
