@@ -32,9 +32,10 @@
     border-bottom: 3px solid var(--border-b-color);
 }
 
-.devices-body{
+.devices-body{ 
     width: 100%;
-    margin-top: 20px;
+    margin-top: 6%;
+    position: absolute;
     display: flex;
     flex-direction: column;
     align-items: center;
