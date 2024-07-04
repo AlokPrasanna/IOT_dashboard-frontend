@@ -1,15 +1,17 @@
 import React from 'react';
 import "./userView.scss"
 import { PageTitle } from '../../components/molecules';
-import { useParams } from 'react-router-dom';
-import useFetch from '../../hooks/UseFetch';
+//import { useParams } from 'react-router-dom';
+//import useFetch from '../../hooks/UseFetch';
 import ReactLoading from 'react-loading';
 import { useTheme } from '../../context/Theme/ThemeContext';
 
 const UserView:React.FC = () => {
-    const {userId} = useParams();
-    const { loading , error} = useFetch({path:`users/one/${userId}`});
+    //const {userId} = useParams();
+    //const { loading , error} = useFetch({path:`users/one/${userId}`});
     const {colors} = useTheme();
+    const loading = false;
+    const error = null;
 
     if (colors) {
         document.documentElement.style.setProperty('--btn-bg', colors.greenAccent[500]);
