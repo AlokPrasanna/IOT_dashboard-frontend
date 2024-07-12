@@ -5,6 +5,7 @@
     align-items: center;
     justify-content:end;
     margin-right: 10px;
+    position: relative;
 }
 
 .body-content {
@@ -12,4 +13,30 @@
     justify-content: end;
     align-items: center;
     gap: 10px;
+}
+
+.svg {
+    position: relative;
+    cursor: pointer;
+}
+
+.svg::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    color: var(--text-color);
+    background: var(--bg-color);
+    font-size: 11px;
+    top: 100%;
+    right: var(--right-value, 0);
+    padding: 5px 4px;
+    border: none;
+    border-radius: 4px;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+}
+
+.svg:hover::after {
+    opacity: 1;
 }
